@@ -14,14 +14,17 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "android": {
+      "package": "com.fudlkr.consumer",
+      "config": {
+        "googleMaps": { "apiKey": "AIzaSyCuXI-e9d_P59QqM9KR5rZmKRq0ppWNfOA" }
+      }
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true
     }
-  }
-}
+  }}
+

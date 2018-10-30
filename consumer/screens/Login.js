@@ -6,11 +6,21 @@ import styles from "./Style";
 import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView} from 'react-native';
 import { Button } from 'react-native-elements';
 import {Image} from 'react-native' ;
+import { Scene, Router, Actions } from 'react-native-router-flux';
 
+import HomeScreen from '../screens/HomeScreen';
 
 const appId = "1047121222092614"
 
 export default class LoginScreen extends Component {
+constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: true,
+      markers: [],
+    };
+  }
 
   render() {
     return (
@@ -55,8 +65,8 @@ export default class LoginScreen extends Component {
   componentWillUnmount() {
   }
 
-  onLoginPress() {
-
+  onLoginPress(props) {
+    Actions.home();
   }
 
   async onFbLoginPress() {
