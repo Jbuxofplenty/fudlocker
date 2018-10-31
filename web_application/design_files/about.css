@@ -1,0 +1,145 @@
+/* Name: about_css
+/* Author: Fudlkr Inc. (Josiah Buxton)
+/* Author URI: https://fudlkr.com/
+/* License: <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>  *Adaptations were made
+
+/* Base CSS */
+
+* {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+    color: #325050;
+    background: #fff;
+    font-family: 'Poor Story', cursive;
+    font-size: 70%;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+}
+
+.container-fluid {
+    background-image: linear-gradient(#fff, #fff);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    font-family: 'Poor Story', cursive;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+/* Fonts from Google */
+@import url('https://fonts.googleapis.com/css?family=Poor+Story');
+
+/* Menu Bar */
+
+.menu-logo {
+    transition: ease-in-out .25s;
+}
+
+    .menu-logo:hover {
+        transform: scale(1.5);
+    }
+
+.site-header {
+    background-color: rgba(0, 0, 0, .85);
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+    .site-header a {
+        color: #fff;
+        opacity: 0.9;
+        transition: ease-in-out color .15s;
+    }
+
+        .site-header a:hover {
+            color: #fff;
+            opacity: 1.0;
+            text-decoration: none;
+        }
+
+    /* Hide the link that should open and close the topnav on small screens */
+    .site-header .icon {
+        display: none;
+    }
+
+/* Responsive Implementation */
+
+/* When the screen is less than 768 pixels wide, hide all links, except for the first one (index.html). Show the link that contains should open and close the site-header (.icon) */
+@media screen and (max-width: 768px) {
+    .site-header a:not(:first-child) {
+        display: none;
+    }
+
+    .site-header a.icon {
+        display: inline;
+        padding-top: 1vh;
+    }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: 768px) {
+    .site-header.responsive {
+        position: relative;
+    }
+
+    .site-header a.icon {
+        display: inline;
+        padding-top: 1vh;
+    }
+
+    .site-header.responsive a {
+        float: none;
+        display: block;
+        text-align: center;
+    }
+}
+
+/* Main Body */
+.participating_rest {
+    width: 100%;
+    left: 50%;
+}
+
+/* Headshots */
+.headshot {
+    height: 100%;
+    width: 100%;
+}
+
+    .headshot img {
+        position: center;
+        height: 350px;
+        width: 300px;
+        padding-bottom: 50px;
+    }
+
+/* Footer */
+.foot {
+    background-image: linear-gradient(white, white);
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+/* Borders */
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
