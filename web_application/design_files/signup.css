@@ -102,14 +102,14 @@ body {
 
 /* Main Body */
 #info-form {
-    font-family: 'Poor Story', cursive;
+    font-family: 'Poor Story';
     width: 75%;
     display: inline-block;
 }
 
 /* Footer */
 .foot {
-    font-family: 'Poor Story', cursive;
+    font-family: 'Poor Story';
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
 
