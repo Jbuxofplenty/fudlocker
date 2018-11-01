@@ -1,26 +1,24 @@
 import React, { Component } from "react";
 import { LinearGradient } from 'expo';
-
-
 import styles from "./Style";
+
+
 import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView} from 'react-native';
 import { Button } from 'react-native-elements';
 import {Image} from 'react-native' ;
 import { Scene, Router, Actions } from 'react-native-router-flux';
 
-import HomeScreen from '../screens/HomeScreen';
-
-const appId = "1047121222092614"
-
 export default class LoginScreen extends Component {
-constructor(props) {
+  constructor(props) {
     super(props);
-
-    this.state = {
-      isLoading: true,
-      markers: [],
-    };
   }
+
+  logInUser() {
+    // logic to log in user through your server/API/whatever
+    this.props.screenProps.isLoggedIn(); // sets state in parent component which will now update and render Home
+    // set logged in status in AsyncStorage
+  }
+
 
   render() {
     return (
@@ -43,7 +41,7 @@ constructor(props) {
             <TextInput placeholder="Password" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true}/>
             <Button
               buttonStyle={styles.loginButton}
-              onPress={() => this.onLoginPress()}
+              onPress={() => this.logInUser()}
               title="Login"
             />
             <Button
@@ -66,7 +64,7 @@ constructor(props) {
   }
 
   onLoginPress(props) {
-    Actions.home();
+
   }
 
   async onFbLoginPress() {

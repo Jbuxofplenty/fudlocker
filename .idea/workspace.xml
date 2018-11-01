@@ -7,84 +7,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5524729b-1005-4067-b333-ee6dbcc61efb" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.babelrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.idea/consumer.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.watchmanconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/__tests__/App-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/BUCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/assets/fonts/SpaceMono-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/java/com/fudlocker-consumer/MainActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/java/com/fudlocker-consumer/MainApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/keystores/BUCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/keystores/debug.keystore.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/app.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/fonts/SpaceMono-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/images/fudlkr_logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/images/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/images/robot-dev.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/images/robot-prod.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/images/splash.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/components/Secured.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/components/StyledText.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/components/TabBarIcon.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/components/__tests__/StyledText-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/constants/Colors.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/constants/Layout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/fudlocker-consumer.jks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer-tvOS/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer-tvOSTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer.xcodeproj/project.pbxproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer.xcodeproj/xcshareddata/xcschemes/fudlocker-consumer-tvOS.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer.xcodeproj/xcshareddata/xcschemes/fudlocker-consumer.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer/AppDelegate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer/AppDelegate.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer/Base.lproj/LaunchScreen.xib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer/Images.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer/Images.xcassets/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumer/main.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumerTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/fudlocker-consumerTests/fudlocker-consumerTests.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/navigation/AppNavigator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/HomeScreen.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/HomeScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/screens/LinksScreen.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/Login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/screens/SettingsScreen.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/Style.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/Style.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Style.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -94,88 +27,73 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="app.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer_old/app.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer_old/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StyledText.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer_old/components/StyledText.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="57" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="HomeScreen.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/consumer_old/screens/HomeScreen.js">
+        <entry file="file://$PROJECT_DIR$/consumer/screens/HomeScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="41" column="17" lean-forward="true" selection-start-line="37" selection-start-column="10" selection-end-line="41" selection-end-column="17" />
+            <state relative-caret-position="561">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Style.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/screens/Style.js">
+        <entry file="file://$PROJECT_DIR$/consumer/screens/Style.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainTabNavigator.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/navigation/MainTabNavigator.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="47" selection-start-line="5" selection-start-column="47" selection-end-line="5" selection-end-column="47" />
+            <state relative-caret-position="612">
+              <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppNavigator.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/navigation/AppNavigator.js">
+      <file leaf-file-name="Login.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/screens/Login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainTabNavigator.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer_old/navigation/MainTabNavigator.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="19" lean-forward="true" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+            <state relative-caret-position="34">
+              <caret line="2" column="29" selection-start-line="2" selection-end-line="2" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppNavigator.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer_old/navigation/AppNavigator.js">
+      <file leaf-file-name="MainTabNavigator.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TabBarIcon.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/components/TabBarIcon.js">
           <provider selected="true" editor-type-id="text-editor">
             <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer_old/App.js">
+        <entry file="file://$PROJECT_DIR$/consumer/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state />
+            <state relative-caret-position="17">
+              <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+            </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>status</find>
+      <find>image</find>
+      <find>actions</find>
+      <find>homescreen</find>
+      <find>hom</find>
+      <find>Settings</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Profile</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -188,10 +106,20 @@
         <option value="$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/navigation/MainTabNavigator.js" />
         <option value="$PROJECT_DIR$/consumer_old/navigation/MainTabNavigator.js" />
         <option value="$PROJECT_DIR$/consumer_old/screens/HomeScreen.js" />
+        <option value="$PROJECT_DIR$/consumer/app.json" />
+        <option value="$PROJECT_DIR$/consumer/screens/LinksScreen.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/home/HomeScreen.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/meal/Product.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/profile/Profile.js" />
+        <option value="$PROJECT_DIR$/consumer/App.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/Login.js" />
+        <option value="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/Style.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/HomeScreen.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="10" />
     <option name="y" value="20" />
     <option name="width" value="1260" />
@@ -212,51 +140,24 @@
             <path>
               <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
               <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
-              <item name="consumer_old" type="462c0819:PsiDirectoryNode" />
+              <item name="consumer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
               <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
-              <item name="consumer_old" type="462c0819:PsiDirectoryNode" />
+              <item name="consumer" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
               <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
-              <item name="consumer_old" type="462c0819:PsiDirectoryNode" />
-              <item name="navigation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
-              <item name="consumer_old" type="462c0819:PsiDirectoryNode" />
+              <item name="consumer" type="462c0819:PsiDirectoryNode" />
               <item name="screens" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
               <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
-              <item name="fudlocker-master" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
-              <item name="fudlocker-master" type="462c0819:PsiDirectoryNode" />
-              <item name="fudlocker-master" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
-              <item name="fudlocker-master" type="462c0819:PsiDirectoryNode" />
-              <item name="fudlocker-master" type="462c0819:PsiDirectoryNode" />
-              <item name="consumer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
-              <item name="fudlocker-master" type="462c0819:PsiDirectoryNode" />
-              <item name="fudlocker-master" type="462c0819:PsiDirectoryNode" />
-              <item name="consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="navigation" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -271,6 +172,15 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="android.studio.gradle" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens" />
+      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens\home" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\navigation" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -345,32 +255,32 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1293" height="693" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info id="Image Layers" order="6" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info id="Capture Tool" order="2" />
+      <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24960254" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24920969" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="right" id="Theme Preview" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info id="Captures" order="2" weight="0.25" />
+      <window_info id="Captures" order="4" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32897604" />
     </layout>
   </component>
   <component name="UnknownFeatures">
@@ -380,87 +290,179 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/consumer_old/app.json">
+    <entry file="file://$PROJECT_DIR$/consumer/screens/HomeScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/Style.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="29" selection-start-line="2" selection-end-line="2" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/components/TabBarIcon.js">
       <provider selected="true" editor-type-id="text-editor">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer_old/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer_old/components/StyledText.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="57" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/screens/HomeScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="50" column="28" selection-start-line="50" selection-start-column="28" selection-end-line="50" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer_old/screens/SettingsScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer_old/screens/LinksScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/screens/SettingsScreen.js">
+    <entry file="file://$PROJECT_DIR$/consumer/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="1" lean-forward="true" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="47" />
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/navigation/AppNavigator.js">
+    <entry file="file://$PROJECT_DIR$/consumer_old/app.json" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/package.json" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/components/StyledText.js" />
+    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/screens/Style.js" />
+    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/navigation/MainTabNavigator.js" />
+    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/navigation/AppNavigator.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/navigation/MainTabNavigator.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/navigation/AppNavigator.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/App.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/screens/HomeScreen.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/app.json" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/package.json" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/components/StyledText.js" />
+    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/screens/HomeScreen.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/screens/SettingsScreen.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/screens/LinksScreen.js" />
+    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/screens/SettingsScreen.js" />
+    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/navigation/AppNavigator.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/navigation/AppNavigator.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/App.js" />
+    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/screens/Style.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/navigation/MainTabNavigator.js" />
+    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/navigation/MainTabNavigator.js" />
+    <entry file="file://$PROJECT_DIR$/consumer_old/screens/HomeScreen.js" />
+    <entry file="file://$PROJECT_DIR$/consumer/assets/images/fudlkr_logo.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/app.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/navigation/HomeScreen.js" />
+    <entry file="file://$PROJECT_DIR$/consumer/screens/SettingsScreen.js" />
+    <entry file="file://$PROJECT_DIR$/consumer/screens/LinksScreen.js" />
+    <entry file="file://$PROJECT_DIR$/test/navigation/AppNavigator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer_old/navigation/AppNavigator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer_old/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/screens/Style.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer_old/navigation/MainTabNavigator.js">
+    <entry file="file://$PROJECT_DIR$/consumer/navigation/AppNavigator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="7" column="19" lean-forward="true" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+          <caret line="7" column="53" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="53" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fudlocker-master/fudlocker-master/consumer/navigation/MainTabNavigator.js">
+    <entry file="file://$PROJECT_DIR$/test/screens/SettingsScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/screens/LinksScreen.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="5" column="47" selection-start-line="5" selection-start-column="47" selection-end-line="5" selection-end-column="47" />
+          <caret line="5" column="2" lean-forward="true" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer_old/screens/HomeScreen.js">
+    <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Profile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="41" column="17" lean-forward="true" selection-start-line="37" selection-start-column="10" selection-end-line="41" selection-end-column="17" />
+        <state>
+          <caret selection-end-line="255" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/navigation/MainTabNavigator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="8" lean-forward="true" selection-start-line="21" selection-start-column="8" selection-end-line="24" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/meal/Product.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/screens/HomeScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/Style.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="29" selection-start-line="2" selection-end-line="2" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/components/TabBarIcon.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/HomeScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
