@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
-import { Constants, Location, Permissions } from 'expo';
+import { Platform, Text, View, StyleSheet, StatusBar } from 'react-native';
+import { SearchBar } from 'react-native-elements'
+import { Constants, Location, Permissions, Font } from 'expo';
 import MapView from 'react-native-maps'
+import FontText from './FontText';
+
 
 export default class App extends Component {
   state = {
     coords: null,
     location: null,
     errorMessage: null,
+    fontLoaded: false,
   };
 
+   async componentDidMount() {
+    await Font.loadAsync({
+        'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
+    });
+
+    this.setState({ fontLoaded: true });
+    }
   componentWillMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
@@ -26,6 +37,8 @@ export default class App extends Component {
       this.setState({
         errorMessage: 'Permission to access location was denied',
       });
+
+
     }
 
     let location = await Location.getCurrentPositionAsync({});
@@ -52,22 +65,43 @@ export default class App extends Component {
               longitudeDelta,
           }
       };
+   search() {
+
+   }
+   renderMarkers() {
+
+   }
 
   render() {
       return (
+
+      <View style={{ flex: 1 }}>
+      {
+         this.state.fontLoaded ? (
+           <SearchBar
+             ref='searchBar'
+             placeholder='Find fud'
+             round
+             onChangeText={this.search}
+             lightTheme
+             showLoading
+             showsCancelButtonWhileEditing={false}
+             inputStyle={{fontFamily: 'Poor Story'}}
+           />
+
+         ) : null
+      }
+
+
         <MapView
                   style={{
                     flex: 1
                   }}
-                  initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421
-                  }}
                   region={this.state.coords}
               />
+      </View>
       );
+      this.renderMarkers();
   }
 }
 

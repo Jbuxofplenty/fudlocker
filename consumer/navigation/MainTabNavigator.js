@@ -1,18 +1,24 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, AppRegistry, Text } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import MealScreen from '../screens/meal/Product';
+import CategoryScreen from '../screens/Categories';
 import ProfileScreen from '../screens/profile/Profile';
+import MealsScreen from '../screens/Meals';
+import MealScreen from '../screens/meal/Product';
+import WebViewScreen from '../screens/WebView';
+import MealModeScreen from '../screens/MealMode';
+import FontText from '../screens/FontText';
+
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: <FontText style={{fontFamily: 'Poor Story', textAlign: 'center'}}>Home</FontText>,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -25,11 +31,14 @@ HomeStack.navigationOptions = {
 };
 
 const MealStack = createStackNavigator({
-  Meals: MealScreen,
+  MealMode: MealModeScreen,
+  Categories: CategoryScreen,
+  Meal: MealScreen,
+  Meals: MealsScreen,
 });
 
 MealStack.navigationOptions = {
-  tabBarLabel: 'Meals',
+  tabBarLabel: <FontText style={{fontFamily: 'Poor Story', textAlign: 'center'}}>Meals</FontText>,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -40,10 +49,11 @@ MealStack.navigationOptions = {
 
 const ProfileStack = createStackNavigator({
   Profile: ProfileScreen,
+  WebView: WebViewScreen,
 });
 
 ProfileStack.navigationOptions = {
-  tabBarLabel: 'Profile',
+  tabBarLabel: <FontText style={{fontFamily: 'Poor Story', textAlign: 'center'}}>Profile</FontText>,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}

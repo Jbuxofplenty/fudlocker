@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { ScrollView, Switch, StyleSheet, Text, View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
-import PropTypes from 'prop-types'
+import { WebView, Linking } from 'react-native'
+import { Font } from 'expo'
 
 import BaseIcon from './Icon'
 import Chevron from './Chevron'
 import InfoText from './InfoText'
+import FontText from '../FontText'
 
 const styles = StyleSheet.create({
   scroll: {
@@ -24,27 +26,25 @@ const styles = StyleSheet.create({
   },
   listItemContainer: {
     height: 55,
+    borderStyle: 'solid',
     borderWidth: 0.5,
     borderColor: '#ECECEC',
   },
 })
 
 class SettingsScreen extends Component {
-  static propTypes = {
-    avatar: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    navigation: PropTypes.object.isRequired,
-    emails: PropTypes.arrayOf(
-      PropTypes.shape({
-        email: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-  }
 
   state = {
     pushNotifications: true,
+    fontLoaded: false,
   }
+  async componentDidMount() {
+    await Font.loadAsync({
+        'Poor Story': require('../../assets/fonts/PoorStory-Regular.ttf'),
+    });
 
+    this.setState({ fontLoaded: true });
+    }
   onPressOptions = () => {
     this.props.navigation.navigate('options')
   }
@@ -54,9 +54,16 @@ class SettingsScreen extends Component {
       pushNotifications: !state.pushNotifications,
     }))
   }
+  openURI(uri){
+    this.props.navigation.navigate('WebView', {uri:uri})
+  }
 
   render() {
-    const { avatar, name, emails: [firstEmail] } = this.props
+    const avatar="http://fudlkr.com/images/josiah_buxton.jpg";
+    const name="Josiah Buxton";
+    const emails={firstEmail: "josiah.buxton@colorado.edu"};
+    const firstEmail={email: "josiah.buxton@colorado.edu"};
+    if (this.state.fontLoaded){
     return (
       <ScrollView style={styles.scroll}>
         <View style={styles.userRow}>
@@ -70,22 +77,24 @@ class SettingsScreen extends Component {
             />
           </View>
           <View>
-            <Text style={{ fontSize: 16 }}>{name}</Text>
-            <Text
-              style={{
-                color: 'gray',
-                fontSize: 16,
-              }}
-            >
-              {firstEmail.email}
-            </Text>
-          </View>
+            <Text style={{ fontFamily: 'Poor Story', fontSize: 16 }}>{name}</Text>
+                        <Text
+                          style={{
+                            color: 'gray',
+                            fontSize: 16,
+                            fontFamily: 'Poor Story',
+                          }}
+                        >
+                          {firstEmail.email}
+                        </Text>
+           </View>
         </View>
         <InfoText text="Account" />
         <View>
           <ListItem
             hideChevron
             title="Push Notifications"
+            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
             containerStyle={styles.listItemContainer}
             rightElement={
               <Switch
@@ -107,14 +116,32 @@ class SettingsScreen extends Component {
           />
           <ListItem
             // chevron
-            title="Currency"
-            rightTitle="USD"
-            rightTitleStyle={{ fontSize: 15 }}
+            title="Meal Radius"
+            rightTitle="1.5 miles"
+            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
+            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15 }}
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
                 containerStyle={{ backgroundColor: '#FAD291' }}
+                icon={{
+                  type: 'ionicon',
+                  name: 'md-locate',
+                }}
+              />
+            }
+            rightIcon={<Chevron />}
+          />
+          <ListItem
+            title="Payment Information"
+            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
+            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15 }}
+            onPress={() => this.onPressOptions()}
+            containerStyle={styles.listItemContainer}
+            leftIcon={
+              <BaseIcon
+                containerStyle={{ backgroundColor: '#57DCE7' }}
                 icon={{
                   type: 'font-awesome',
                   name: 'money',
@@ -124,26 +151,10 @@ class SettingsScreen extends Component {
             rightIcon={<Chevron />}
           />
           <ListItem
-            title="Location"
-            rightTitle="New York"
-            rightTitleStyle={{ fontSize: 15 }}
-            onPress={() => this.onPressOptions()}
-            containerStyle={styles.listItemContainer}
-            leftIcon={
-              <BaseIcon
-                containerStyle={{ backgroundColor: '#57DCE7' }}
-                icon={{
-                  type: 'material',
-                  name: 'place',
-                }}
-              />
-            }
-            rightIcon={<Chevron />}
-          />
-          <ListItem
             title="Language"
             rightTitle="English"
-            rightTitleStyle={{ fontSize: 15 }}
+            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
+            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15 }}
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={
@@ -161,8 +172,9 @@ class SettingsScreen extends Component {
         <InfoText text="More" />
         <View>
           <ListItem
-            title="About US"
-            onPress={() => this.onPressOptions()}
+            title="About Us"
+            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
+            onPress={() => this.openURI("http://fudlkr.com")}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
@@ -177,6 +189,7 @@ class SettingsScreen extends Component {
           />
           <ListItem
             title="Terms and Policies"
+            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={
@@ -192,6 +205,7 @@ class SettingsScreen extends Component {
           />
           <ListItem
             title="Share our App"
+            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             leftIcon={
@@ -209,12 +223,13 @@ class SettingsScreen extends Component {
           />
           <ListItem
             title="Rate Us"
+            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
             onPress={() => this.onPressOptions()}
             containerStyle={styles.listItemContainer}
             badge={{
               value: 5,
-              textStyle: { color: 'white' },
-              containerStyle: { backgroundColor: 'gray', marginTop: 0 },
+              textStyle: { color: 'white', fontFamily: 'Poor Story', fontSize: 16 },
+              containerStyle: { backgroundColor: 'gray', marginTop: 0, marginRight: 15 },
             }}
             leftIcon={
               <BaseIcon
@@ -231,7 +246,8 @@ class SettingsScreen extends Component {
           />
           <ListItem
             title="Send FeedBack"
-            onPress={() => this.onPressOptions()}
+            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
+            onPress={() => this.openURI("http://fudlkr.com/signup.html")}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
@@ -248,7 +264,10 @@ class SettingsScreen extends Component {
           />
         </View>
       </ScrollView>
-    )
+    )}
+    else {
+        return null
+    }
   }
 }
 

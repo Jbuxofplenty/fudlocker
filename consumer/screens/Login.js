@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { LinearGradient } from 'expo';
+import { LinearGradient, Font } from 'expo';
 import styles from "./Style";
 
 
@@ -19,8 +19,19 @@ export default class LoginScreen extends Component {
     // set logged in status in AsyncStorage
   }
 
+  state = {
+    fontLoaded: false,
+  }
+  async componentDidMount() {
+    await Font.loadAsync({
+        'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
+    });
+
+    this.setState({ fontLoaded: true });
+    }
 
   render() {
+      if (this.state.fontLoaded){
     return (
       <KeyboardAvoidingView style={styles.containerView} behavior="padding">
 
@@ -37,14 +48,16 @@ export default class LoginScreen extends Component {
             source={require("./../assets/images/fudlkr_logo.png")}
           />
 
-            <TextInput placeholder="Username" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
-            <TextInput placeholder="Password" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true}/>
+            <TextInput placeholder="Username" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput, {fontSize: 16, fontFamily: 'Poor Story'}]} />
+            <TextInput placeholder="Password" placeholderColor="#c4c3cb" style={[styles.loginFormTextInput, {fontSize: 16, fontFamily: 'Poor Story'}]} secureTextEntry={true}/>
             <Button
               buttonStyle={styles.loginButton}
               onPress={() => this.logInUser()}
               title="Login"
+              textStyle={{fontSize: 30, fontFamily: "Poor Story"}}
             />
             <Button
+              textStyle={{fontSize: 20, fontFamily: 'Poor Story'}}
               buttonStyle={styles.fbLoginButton}
               onPress={() => this.onFbLoginPress()}
               title="Login with Facebook"
@@ -54,10 +67,11 @@ export default class LoginScreen extends Component {
         </View>
       </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-    );
-  }
-
-  componentDidMount() {
+    )
+    }
+    else {
+        return null
+    }
   }
 
   componentWillUnmount() {

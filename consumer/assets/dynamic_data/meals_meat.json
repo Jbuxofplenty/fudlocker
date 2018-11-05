@@ -1,0 +1,26 @@
+{
+  "meals": [
+    {
+      "idMeal": "1",
+      "strMeal": "Sirloin Steak",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/steak.jpg",
+      "strCost": 6.99,
+      "code": "#261860",
+      "calories": 500,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": "2",
+      "strMeal": "Spare Boneless Ribs",
+      "strArea": "Chinese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/ribs.jpg",
+      "strCost": 4.99,
+      "code": "#a19db2",
+      "calories": 450,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21
+    }
+
+  ]
+}

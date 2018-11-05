@@ -1,0 +1,24 @@
+{
+  "meal_categories": [
+    {
+      "idCategory": "1",
+      "strCategory": "Asian",
+      "strCategoryThumb": "http://fudlkr.com/mobile_assets/asian.jpg",
+      "strTags": null,
+      "strSource": "",
+      "code": "#1abc9c",
+      "strSourceData": "../assets/dynamic_data/meals_asian.json",
+      "dateModified": null
+    },
+    {
+      "idCategory": "1",
+      "strCategory": "Mexican",
+      "strCategoryThumb": "http://fudlkr.com/mobile_assets/mexican.jpg",
+      "strTags": null,
+      "code": "#1abc9c",
+      "strSource": "https:\/\/sueandgambo.com\/pages\/chicken-congee",
+      "dateModified": null
+    }
+
+  ]
+}

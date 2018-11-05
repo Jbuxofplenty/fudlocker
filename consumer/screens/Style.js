@@ -1,11 +1,11 @@
 const React = require("react-native");
 
 const { StyleSheet } = React;
-import { AppRegistry, Text, View,Dimensions } from 'react-native';
+import { Font } from 'expo';
+import { AppRegistry, Text, View, Dimensions } from 'react-native';
 
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
-
 
 export default {
   map: {
@@ -101,7 +101,7 @@ loginFormTextInput: {
   marginTop: 5,
   marginBottom: 5,
   width: width*0.75,
-
+  fontFamily: 'Poor Story',
 },
 loginButton: {
   backgroundColor: '#3897f1',
