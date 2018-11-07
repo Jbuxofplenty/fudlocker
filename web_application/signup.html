@@ -1,6 +1,6 @@
 ﻿<!--
 Name: signup_html
-Author: <a href="https://deja-food.com/">Fudlkr Inc.</a> (Josiah Buxton)
+Author: <a href="https://fudlkr.com/">Fudlkr Inc.</a> (Josiah Buxton)
 Author URI: https://fudlkr.com/
 License: <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>  *Adaptations were made
 -->
@@ -23,7 +23,7 @@ License: <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 
-<body id="deja-signup-html">
+<body id="fudlkr-signup-html">
     <!-- Overlay -->
     <div class="container-fluid text-center">
       <!-- Menu Bar -->
@@ -40,7 +40,7 @@ License: <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
 
         <!-- Introduction -->
         <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="images/deja_logo.png" alt="" width="72" height="72">
+            <img class="d-block mx-auto mb-4" src="images/fudlkr_logo.png" alt="" width="300" height="150">
             <h2>Information form</h2>
             <p class="lead">Send us your information if you're interested in purchasing a meal from a food locker.  We'll be in touch shortly.</p>
         </div>
@@ -49,7 +49,7 @@ License: <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
         <div id="info-form" class="row text-left">
             <div class="col-md-12 order-md-1 mx-auto">
                 <h4 class="mb-3">Contact Information</h4>
-                <form class="needs-validation" novalidate>
+                <form class="needs-validation" novalidate data-toggle="validator">
 
                     <!-- First and Last Name -->
                     <div class="row">
@@ -137,19 +137,18 @@ License: <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
                     <h4 class="mb-3">Restaurant Owner or Consumer</h4>
                     <div class="d-block my-2">
                         <div class="custom-control custom-radio">
-                            <input id="restaurant" name="contact-type" type="radio" class="custom-control-input" checked required>
+                            <input id="restaurant" name="contact-type" type="radio" class="custom-control-input" checked>
                             <label class="custom-control-label" for="restaurant">Restaurant Owner</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="consumer" name="contact-type" type="radio" class="custom-control-input" required>
+                            <input id="consumer" type="radio" name="contact-type" class="custom-control-input">
                             <label class="custom-control-label" for="consumer">Consumer</label>
                         </div>
                     </div>
-
-                    <!-- Submit Button -->
-                    <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Work in Progress!</button>
-                </form>
+                  </form>
+                  <!-- Submit Button -->
+                  <hr class="mb-4">
+                  <button id="submit_button" class="btn btn-primary btn-lg btn-block" type="submit">Sign Up!</button>
             </div>
         </div>
 
@@ -168,8 +167,8 @@ License: <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
                     <h5>Contact Us</h5>
                     <ul class="list-unstyled text-small">
                         <li><a class="text-muted" href="https://www.google.com/maps/place/Boulder,+CO/@40.0292888,-105.3100174,12z/data=!3m1!4b1!4m5!3m4!1s0x876b8d4e278dafd3:0xc8393b7ca01b8058!8m2!3d40.0149856!4d-105.2705456">Boulder, Colorado</a></li>
-                        <li><a class="text-muted" href="tel:17173276896">+1 (717) 327-6896</a></li>
-                        <li><a class="text-muted" href="mailto:fudlkrfoodinc@gmail.com">Email: fudlkrinc@gmail.com</a></li>
+                        <li><a class="text-muted" href="tel:17206638573">1 (720) 663-8573</a></li>
+                        <li><a class="text-muted" href="mailto:fudlkrinc@gmail.com">Email: fudlkrinc@gmail.com</a></li>
                     </ul>
                 </div>
                 <div class="col-9 col-md">
@@ -189,11 +188,14 @@ License: <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
     <!-- Validate Fields -->
     <script src="js/validate_fields.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.slim.min.js"><\/script>')</script>
-    <script src="js/vendor/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/vendor/jquery-3.3.1.min.js"></script>
     <script src="js/vendor/popper.min.js"></script>
     <script src="js/vendor/bootstrap.js"></script>
     <script src="js/vendor/holder.min.js"></script>
+
+    <!-- Contact us API call -->
+    <script src="js/signup.js"></script>
 
 </body>
 </html>

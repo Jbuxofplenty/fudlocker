@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, Text, View, StyleSheet, StatusBar } from 'react-native';
-import { SearchBar } from 'react-native-elements'
+import { SearchBar } from 'react-native-elements';
 import { Constants, Location, Permissions, Font } from 'expo';
 import MapView from 'react-native-maps'
 import FontText from './FontText';
