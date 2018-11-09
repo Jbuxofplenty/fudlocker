@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 1562,
+  "expoServerNgrokUrl": "https://nx-5pi.jbuxofplenty.consumer.exp.direct",
+  "packagerNgrokUrl": "https://packager.nx-5pi.jbuxofplenty.consumer.exp.direct",
+  "ngrokPid": 1623
 }

@@ -42,6 +42,15 @@ class SettingsScreen extends Component {
     await Font.loadAsync({
         'Poor Story': require('../../assets/fonts/PoorStory-Regular.ttf'),
     });
+    await Font.loadAsync({
+      'Ionicons': require('@expo/vector-icons/fonts/Ionicons.ttf')
+    });
+    await Font.loadAsync({
+      'Entypo': require('@expo/vector-icons/fonts/Entypo.ttf')
+    });
+    await Font.loadAsync({
+      'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')
+    });
 
     this.setState({ fontLoaded: true });
     }

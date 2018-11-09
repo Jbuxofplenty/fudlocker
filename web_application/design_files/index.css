@@ -19,7 +19,7 @@ html, body {
 body {
     color: #325050;
     background: #fff;
-    font-family: 'Poor Story', cursive;
+    font-family: 'Poor Story';
     font-size: 70%;
     text-align: center;
     display: inline-block;
@@ -35,7 +35,7 @@ body {
     background-repeat: no-repeat;
     background-position: center top;
     background-size: cover;
-    font-family: 'Poor Story', cursive;
+    font-family: 'Poor Story';
     left: 0;
     right: 0;
     width: 100%;
@@ -90,7 +90,7 @@ body {
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
 @media screen and (max-width: 768px) {
     .site-header.responsive {
-        position: relative;
+
     }
 
     .site-header a.icon {
@@ -115,6 +115,11 @@ body {
   font-size: 10em;
 }
 
+@media only screen and (max-device-width: 768px) {
+	.fudlkr-head {
+    font-size: 5em;
+   }
+}
 /* Main Logo */
 #main-logo {
     right: 25%;
