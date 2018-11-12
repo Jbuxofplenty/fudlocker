@@ -1,0 +1,77 @@
+{
+  "meals": [
+    {
+      "idMeal": 1,
+      "strMeal": "Chicken Tenders",
+      "strArea": "Farrand",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/chicken_tenders.jpg",
+      "strCost": 2.99,
+      "code": "#34db13",
+      "calories": 400,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": 2,
+      "strMeal": "Steak Fries",
+      "strArea": "Farrand",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/steak_fries.jpg",
+      "strCost": 1.99,
+      "code": "#c10b17",
+      "calories": 200,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": 3,
+      "strMeal": "Beef Lo Mein",
+      "strArea": "Farrand",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/lo_mein.jpg",
+      "strCost": 3.99,
+      "code": "#100a91",
+      "calories": 450,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": 4,
+      "strMeal": "Pasta Carbonara",
+      "strArea": "Farrand",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/pasta_carbonara.jpg",
+      "strCost": 3.99,
+      "code": "#514d0f",
+      "calories": 250,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": 5,
+      "strMeal": "Spare Boneless Ribs",
+      "strArea": "Farrand",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/ribs.jpg",
+      "strCost": 4.99,
+      "code": "#a19db2",
+      "calories": 450,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": 6,
+      "strMeal": "Tacos",
+      "strArea": "Farrand",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/tacos.jpg",
+      "strCost": 2.99,
+      "code": "#0c3d47",
+      "calories": 400,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    }
+
+  ]
+}

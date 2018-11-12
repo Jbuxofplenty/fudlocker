@@ -11,8 +11,6 @@ import { NavigationActions } from 'react-navigation';
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 
-const { navigation } = '';
-
 export default class Categories extends Component {
    state = {
     fontLoaded: false,
@@ -23,8 +21,6 @@ export default class Categories extends Component {
     });
 
     this.setState({ fontLoaded: true });
-    navigation = this.props.navigation;
-
     }
 
   render() {

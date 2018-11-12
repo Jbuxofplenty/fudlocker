@@ -1,0 +1,76 @@
+{
+  "meals": [
+    {
+      "idMeal": 1,
+      "strMeal": "Quarter Pound Burger",
+      "strArea": "C4C",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/burger.jpg",
+      "strCost": 3.99,
+      "code": "#e5e109",
+      "calories": 500,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": 2,
+      "strMeal": "Chicken Quesadilla",
+      "strArea": "C4C",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/chicken_dilla.jpg",
+      "strCost": 1.99,
+      "code": "#85db8b",
+      "calories": 350,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": 3,
+      "strMeal": "Grilled Chicken Salad",
+      "strArea": "C4C",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/grilled_chicken_salad.jpg",
+      "strCost": 2.99,
+      "code": "#0f5199",
+      "calories": 300,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": 4,
+      "strMeal": "Chicken Fried Rice",
+      "strArea": "C4C",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/fried_rice.jpg",
+      "strCost": 2.99,
+      "code": "#14abbc",
+      "calories": 300,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": 5,
+      "strMeal": "Pepperoni Pizza",
+      "strArea": "C4C",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/pep_pizza.jpg",
+      "strCost": 1.99,
+      "code": "#c9d8c0",
+      "calories": 200,
+      "datePackaged": "11/12/2018",
+      "json": "meal",
+      "netWeight": 4.21
+    },
+        {
+      "idMeal": 6,
+      "strMeal": "Caesar Salad",
+      "strArea": "C4C",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/caesar_salad.jpg",
+      "strCost": 2.99,
+      "code": "#990e31",
+      "calories": 200,
+      "datePackaged": "11/12/2018",
+          "json": "meal",
+      "netWeight": 4.21
+    }
+  ]
+}

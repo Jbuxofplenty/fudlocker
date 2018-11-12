@@ -7,18 +7,18 @@ import HomeScreen from '../screens/HomeScreen';
 import CategoryScreen from '../screens/Categories';
 import ProfileScreen from '../screens/profile/Profile';
 import MealsScreen from '../screens/Meals';
-import MealScreen from '../screens/meal/Product';
+import MealScreen from '../screens/Meal';
 import WebViewScreen from '../screens/WebView';
 import MealModeScreen from '../screens/MealMode';
-import FontText from '../screens/FontText';
-
+import LocationScreen from '../screens/Location';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
+  Location: LocationScreen
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: <FontText style={{fontFamily: 'Poor Story', textAlign: 'center'}}>Home</FontText>,
+  tabBarLabel: <Text style={{fontFamily: 'Poor Story', textAlign: 'center'}}>Home</Text>,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -38,7 +38,7 @@ const MealStack = createStackNavigator({
 });
 
 MealStack.navigationOptions = {
-  tabBarLabel: <FontText style={{fontFamily: 'Poor Story', textAlign: 'center'}}>Meals</FontText>,
+  tabBarLabel: <Text style={{fontFamily: 'Poor Story', textAlign: 'center'}}>Meals</Text>,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -53,7 +53,7 @@ const ProfileStack = createStackNavigator({
 });
 
 ProfileStack.navigationOptions = {
-  tabBarLabel: <FontText style={{fontFamily: 'Poor Story', textAlign: 'center'}}>Profile</FontText>,
+  tabBarLabel: <Text style={{fontFamily: 'Poor Story', textAlign: 'center'}}>Profile</Text>,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}

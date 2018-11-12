@@ -3,22 +3,25 @@
     {
       "idMeal": "1",
       "strMeal": "Grilled Chicken Salad",
+      "strArea": "C4C",
       "strMealThumb": "http://fudlkr.com/mobile_assets/grilled_chicken_salad.jpg",
       "strCost": 2.99,
       "code": "#0f5199",
       "calories": 300,
       "datePackaged": "11/12/2018",
+      "json": "meal",
       "netWeight": 4.21
     },
     {
       "idMeal": "2",
       "strMeal": "Caesar Salad",
-      "strArea": "Chinese",
+      "strArea": "Farrand",
       "strMealThumb": "http://fudlkr.com/mobile_assets/caesar_salad.jpg",
       "strCost": 2.99,
       "code": "#990e31",
       "calories": 200,
       "datePackaged": "11/12/2018",
+      "json": "meal",
       "netWeight": 4.21
     }
 

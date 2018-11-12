@@ -1,0 +1,40 @@
+{
+  "data": [
+  {
+    "latlng": {
+      "latitude": 40.005798,
+      "longitude": -105.265827
+    },
+    "title": "Farrand Hall",
+    "description": "Locker consisting of 6 individual meals",
+    "image": "http://fudlkr.com/mobile_assets/farrand.jpg",
+    "type": "Farrand",
+    "json": "location",
+    "id": 1
+  },
+  {
+    "latlng": {
+      "latitude": 40.004358,
+      "longitude": -105.265044
+    },
+    "title": "Center for Community (C4C)",
+    "description": "Locker consisting of 12 individual meals",
+    "image": "http://fudlkr.com/mobile_assets/c4c.jpg",
+    "type": "C4C",
+    "json": "location",
+    "id": 2
+  },
+  {
+    "latlng": {
+      "latitude": 39.997540,
+      "longitude": -105.251878
+    },
+    "title": "Village Center Dining",
+    "description": "Locker consisting of 12 individual meals",
+    "image": "http://fudlkr.com/mobile_assets/village.jpg",
+    "type": "Village",
+    "json": "location",
+    "id": 3
+  }
+]
+}

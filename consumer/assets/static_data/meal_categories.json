@@ -8,6 +8,7 @@
       "strSource": "",
       "code": "#2ecc71",
       "strSourceData": "../assets/dynamic_data/meals_asian.json",
+      "json": "category",
       "dateModified": null
     },
     {
@@ -17,16 +18,19 @@
       "strTags": null,
       "code": "#9b59b6",
       "strSource": "https:\/\/sueandgambo.com\/pages\/chicken-congee",
+      "json": "category",
       "dateModified": null
     },
     {
       "idCategory": "3",
       "strCategory": "Appetizers",
       "strCategoryThumb": "http://fudlkr.com/mobile_assets/apps.jpg",
+      "json": "category",
       "strTags": null,
       "strSource": "",
       "code": "#16a085",
       "strSourceData": "../assets/dynamic_data/meals_apps.json",
+      "json": "category",
       "dateModified": null
     },
     {
@@ -37,6 +41,7 @@
       "strSource": "",
       "code": "#27ae60",
       "strSourceData": "../assets/dynamic_data/meals_meat.json",
+      "json": "category",
       "dateModified": null
     },
     {
@@ -47,6 +52,7 @@
       "strSource": "",
       "code": "#34495e",
       "strSourceData": "../assets/dynamic_data/meals_italian.json",
+      "json": "category",
       "dateModified": null
     },
     {
@@ -57,6 +63,7 @@
       "strSource": "",
       "code": "#3498db",
       "strSourceData": "../assets/dynamic_data/meals_asian.json",
+      "json": "category",
       "dateModified": null
     },
     {
@@ -67,6 +74,7 @@
       "strSource": "",
       "code": "#1abc9c",
       "strSourceData": "../assets/dynamic_data/meals_asian.json",
+      "json": "category",
       "dateModified": null
     }
   ]

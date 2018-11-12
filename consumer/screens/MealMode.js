@@ -8,9 +8,6 @@ import { NavigationActions } from 'react-navigation';
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 
-const { navigation } = '';
-const { navigation_params } = '';
-
 export default class MealMode extends Component {
    state = {
     fontLoaded: false,
@@ -21,7 +18,6 @@ export default class MealMode extends Component {
     });
 
     this.setState({ fontLoaded: true });
-    navigation = this.props.navigation;
 
     }
 

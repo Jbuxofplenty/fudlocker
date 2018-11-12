@@ -4,7 +4,8 @@ import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
 import LoginScreen from './screens/Login';
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/profile/Profile';
-import MealScreen from './screens/meal/Product';
+import MealScreen from './screens/Meal';
+import LocationScreen from './screens/Location'
 
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import AppNavigator from './navigation/AppNavigator';
@@ -26,7 +27,7 @@ export default class App extends React.Component {
 
   render() {
         if (this.state.loggedInStatus === 'loggedIn') {
-          return <AppNavigator/>
+          return <AppNavigator screenProps={{ coords: "get_location" }}/>
         }
         else {
           return <LoginScreen screenProps={{ isLoggedIn: () => this.setState({ loggedInStatus: 'loggedIn' }) }}/>
@@ -41,6 +42,7 @@ const scenes = Actions.create(
         <Scene key="home" component={HomeScreen}/>
         <Scene key="profile" component={ProfileScreen}/>
         <Scene key="meal" component={MealScreen}/>
+        <Scene key="location" component={LocationScreen}/>
   </Scene>
 );
 

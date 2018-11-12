@@ -3,22 +3,25 @@
     {
       "idMeal": "1",
       "strMeal": "Pepperoni Pizza",
+      "strArea": "Farrand",
       "strMealThumb": "http://fudlkr.com/mobile_assets/pep_pizza.jpg",
       "strCost": 1.99,
       "code": "#c9d8c0",
       "calories": 200,
       "datePackaged": "11/12/2018",
+      "json": "meal",
       "netWeight": 4.21
     },
     {
       "idMeal": "2",
       "strMeal": "Pasta Carbonara",
-      "strArea": "Chinese",
+      "strArea": "C4C",
       "strMealThumb": "http://fudlkr.com/mobile_assets/pasta_carbonara.jpg",
       "strCost": 3.99,
       "code": "#514d0f",
       "calories": 250,
       "datePackaged": "11/12/2018",
+      "json": "meal",
       "netWeight": 4.21
     }
 

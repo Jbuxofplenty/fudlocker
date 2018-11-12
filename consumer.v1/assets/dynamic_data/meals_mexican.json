@@ -1,0 +1,26 @@
+{
+  "meals": [
+    {
+      "idMeal": "1",
+      "strMeal": "Tacos",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/tacos.jpg",
+      "strCost": 2.99,
+      "code": "#0c3d47",
+      "calories": 400,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21
+    },
+    {
+      "idMeal": "1",
+      "strMeal": "Chicken Quesadilla",
+      "strArea": "Chinese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/chicken_dilla.jpg",
+      "strCost": 1.99,
+      "code": "#85db8b",
+      "calories": 350,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21
+    }
+
+  ]
+}

@@ -16,9 +16,6 @@ import GridView from 'react-native-super-grid';
 import { LinearGradient, Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
 
-
-import MealScreen from './meal/Product';
-
 // json data, will be converted to DB
 import asian_data from '../assets/dynamic_data/meals_asian.json';
 import mexican_data from '../assets/dynamic_data/meals_mexican.json';
@@ -27,7 +24,12 @@ import salad_data from '../assets/dynamic_data/meals_salads.json';
 import apps_data from '../assets/dynamic_data/meals_apps.json';
 import italian_data from '../assets/dynamic_data/meals_italian.json';
 import meat_data from '../assets/dynamic_data/meals_meat.json';
+
+import farrand_data from '../assets/dynamic_data/meals_farrand.json';
+import c4c_data from '../assets/dynamic_data/meals_c4c.json';
+import village_data from '../assets/dynamic_data/meals_village.json';
 import all_data from '../assets/dynamic_data/all_meals.json';
+
 
 const meal_data = {
     'Asian': asian_data.meals,
@@ -37,27 +39,17 @@ const meal_data = {
     'Appetizers': apps_data.meals,
     'Italian': italian_data.meals,
     'Meat': meat_data.meals,
+    'Farrand': farrand_data.meals,
+    'C4C': c4c_data.meals,
+    'Village': village_data.meals,
     'All': all_data.meals,
 }
 
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 
-const { navigation } = '';
-const { navigation_params } = '';
-
 export default class Meals extends Component {
-   state = {
-    fontLoaded: false,
-    };
-   async componentDidMount() {
-    await Font.loadAsync({
-        'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
-    });
 
-    this.setState({ fontLoaded: true });
-    navigation = this.props.navigation;
-    }
 render() {
     return (
     <View style={styles.mealsScreenContainer}>
@@ -75,11 +67,12 @@ render() {
             <TouchableHighlight style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}} onPress={() => {
         			    title = item.strMeal;
         			    img = item.strMealThumb;
+        			    location = item.strArea;
         			    data_location = item.strSourceData;
         			    cost = item.strCost;
         			    calories = item.calories;
         			    desc = item.desc;
-        			    this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'data_location': data_location});
+        			    this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'data_location': data_location, 'location': location});
                 }}>
             <ImageBackground
               source={{ uri: item.strMealThumb }}
@@ -90,9 +83,7 @@ render() {
               <View style={[styles.itemContainer]}>
               {
 
-                  this.state.fontLoaded ? (
                      <Text style={{fontFamily: 'Poor Story', textAlign: 'center', width: '100%', fontSize: 28, color: '#fff', backgroundColor: item.code, borderRadius:25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>{item.strMeal}</Text>
-                 ) : null
               }
               </View>
               </ImageBackground>

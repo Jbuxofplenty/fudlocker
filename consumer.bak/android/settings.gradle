@@ -1,9 +1,0 @@
-rootProject.name = 'empty-project-template'
-include ':react-native-splash-screen'
-project(':react-native-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-splash-screen/android')
-include ':react-native-smart-splash-screen'
-project(':react-native-smart-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-smart-splash-screen/android')
-include ':@remobile/react-native-splashscreen'
-project(':@remobile/react-native-splashscreen').projectDir = new File(rootProject.projectDir, '../node_modules/@remobile/react-native-splashscreen/android')
-
-include ':app'

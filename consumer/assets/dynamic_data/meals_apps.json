@@ -3,22 +3,25 @@
     {
       "idMeal": "1",
       "strMeal": "Chicken Tenders",
+      "strArea": "Farrand",
       "strMealThumb": "http://fudlkr.com/mobile_assets/chicken_tenders.jpg",
       "strCost": 2.99,
       "code": "#34db13",
       "calories": 400,
       "datePackaged": "11/12/2018",
+      "json": "meal",
       "netWeight": 4.21
     },
     {
       "idMeal": "2",
       "strMeal": "Steak Fries",
-      "strArea": "Chinese",
+      "strArea": "Village",
       "strMealThumb": "http://fudlkr.com/mobile_assets/steak_fries.jpg",
       "strCost": 1.99,
       "code": "#c10b17",
       "calories": 200,
       "datePackaged": "11/12/2018",
+      "json": "meal",
       "netWeight": 4.21
     }
 
