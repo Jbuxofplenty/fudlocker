@@ -7,200 +7,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5524729b-1005-4067-b333-ee6dbcc61efb" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_c4c.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_farrand.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_village.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/assets/static_data/fudlkr_locations.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/screens/Location.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/screens/Search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/screens/profile/Button.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/screens/profile/MealRadius.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/screens/profile/NativeModal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/.babelrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/.buckconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/.expo/packager-info.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/.expo/packager-info.json.2538444596" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/.expo/packager-info.json.3533462366" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/.expo/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/.flowconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/.watchmanconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/BUCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/assets/fonts/PoorStory-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/assets/fonts/SpaceMono-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/java/com/empty-project-template/MainActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/java/com/empty-project-template/MainApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/keystores/BUCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/keystores/debug.keystore.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/android/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/app.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/dynamic_data/meals_asian.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/dynamic_data/meals_mexican.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/fonts/PoorStory-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/fonts/SpaceMono-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/droplet.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/fudlkr_logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/meal_categories/american.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/meal_categories/apps.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/meal_categories/asian.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/meal_categories/beef.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/meal_categories/italian.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/meal_categories/mexican.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/meal_categories/salad.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/robot-dev.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/robot-prod.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/splash.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/images/twitter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/splash.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/static_data/meal_categories.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/assets/static_data/meal_modes.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/components/Secured.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/components/StyledText.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/components/TabBarIcon.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/components/__tests__/StyledText-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/constants/Colors.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/constants/Layout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/constants/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template-tvOS/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template-tvOSTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template.xcodeproj/project.pbxproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template.xcodeproj/xcshareddata/xcschemes/empty-project-template-tvOS.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template.xcodeproj/xcshareddata/xcschemes/empty-project-template.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template/AppDelegate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template/AppDelegate.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template/Base.lproj/LaunchScreen.xib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template/Images.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template/Images.xcassets/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-template/main.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-templateTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/ios/empty-project-templateTests/empty-project-templateTests.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/navigation/AppNavigator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/navigation/MainTabNavigator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/Categories.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/HomeScreen.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/Login.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/MealMode.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/Meals.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/Style.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/WebView.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/asian.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/meal/PhotoButton.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/meal/Product.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/meal/ProductStyle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/meal/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/meal/product.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/profile/Chevron.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/profile/Icon.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/profile/InfoText.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/profile/Options.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/profile/Profile.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/profile/constants.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer.bak/screens/profile/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.babelrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.buckconfig" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/.expo/packager-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.expo/packager-info.json.2538444596" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.expo/packager-info.json.3533462366" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/.expo/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/.expo/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.flowconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.watchmanconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/BUCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/assets/fonts/PoorStory-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/assets/fonts/SpaceMono-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/java/com/empty-project-template/MainActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/java/com/empty-project-template/MainApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/keystores/BUCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/keystores/debug.keystore.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/android/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/dynamic_data/all_meals.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/all_meals.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/dynamic_data/all_meals.py" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/all_meals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_american.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_american.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_apps.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_apps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_asian.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_asian.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_italian.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_italian.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_meat.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_meat.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_mexican.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_mexican.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_salads.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_salads.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/assets/static_data/meal_categories.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/assets/static_data/meal_categories.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template-tvOS/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template-tvOSTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template.xcodeproj/project.pbxproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template.xcodeproj/xcshareddata/xcschemes/empty-project-template-tvOS.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template.xcodeproj/xcshareddata/xcschemes/empty-project-template.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template/AppDelegate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template/AppDelegate.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template/Base.lproj/LaunchScreen.xib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template/Images.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template/Images.xcassets/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-template/main.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-templateTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/ios/empty-project-templateTests/empty-project-templateTests.m" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/screens/Categories.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Categories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/FontText.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/FontText.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/HomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/HomeScreen.js.bak" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/MealMode.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/MealMode.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/Meals.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Meals.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/Style.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Style.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/WebView.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/WebView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/asian.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/meal/PhotoButton.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/meal/Product.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Meal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/meal/ProductStyle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/meal/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/meal/product.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/profile/Chevron.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/profile/Icon.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/profile/InfoText.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/profile/Options.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/screens/profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/profile/Profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/profile/constants.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/profile/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_application/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_application/about.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_application/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_application/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_application/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_application/signup.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -211,56 +32,81 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HomeScreen.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HomeScreen.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/consumer/screens/HomeScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="210" column="41" selection-start-line="210" selection-start-column="41" selection-end-line="210" selection-end-column="41" />
+            <state relative-caret-position="-1258">
+              <caret line="148" column="45" selection-start-line="148" selection-start-column="45" selection-end-line="148" selection-end-column="45" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="meal_categories.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer/assets/static_data/meal_categories.json">
+      <file leaf-file-name="MealRadius.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/consumer/screens/profile/MealRadius.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="23" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="23" />
+            <state relative-caret-position="119">
+              <caret line="111" column="8" lean-forward="true" selection-start-line="111" selection-start-column="8" selection-end-line="111" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Categories.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer/screens/Categories.js">
+      <file leaf-file-name="Login.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/screens/Login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="43" column="19" selection-start-line="41" selection-start-column="16" selection-end-line="43" selection-end-column="19" />
+            <state relative-caret-position="143">
+              <caret line="42" column="37" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="37" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fudlkr_locations.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer/assets/static_data/fudlkr_locations.json">
+      <file leaf-file-name="NativeModal.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/screens/profile/NativeModal.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="11" selection-start-line="12" selection-end-line="13" />
+            <state relative-caret-position="187">
+              <caret line="11" lean-forward="true" selection-start-line="9" selection-start-column="2" selection-end-line="11" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Location.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer/screens/Location.js">
+      <file leaf-file-name="Button.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Button.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="951">
-              <caret line="257" column="17" selection-start-line="257" selection-start-column="17" selection-end-line="257" selection-end-column="17" />
+            <state relative-caret-position="459">
+              <caret line="27" column="3" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="3" />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainTabNavigator.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="245">
+              <caret line="53" column="31" selection-start-line="53" selection-start-column="31" selection-end-line="53" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Profile.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Profile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1871">
+              <caret line="11" column="34" selection-start-line="11" selection-end-line="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Options.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Options.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Meals.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/consumer/screens/Meals.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1513">
-              <caret line="89" column="30" selection-start-line="89" selection-end-line="90" />
+            <state relative-caret-position="373">
+              <caret line="116" column="16" selection-start-line="116" selection-end-line="117" />
             </state>
           </provider>
         </entry>
@@ -268,17 +114,8 @@
       <file leaf-file-name="Meal.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/consumer/screens/Meal.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="587">
-              <caret line="300" column="19" selection-start-line="300" selection-start-column="19" selection-end-line="300" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="all_meals.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer/assets/dynamic_data/all_meals.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            <state relative-caret-position="186">
+              <caret line="183" column="35" selection-start-line="183" selection-start-column="8" selection-end-line="183" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -287,7 +124,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>navigatorText</find>
       <find>descriptionText</find>
       <find>material</find>
       <find>this.state.markers</find>
@@ -302,7 +138,6 @@
       <find>onpres</find>
       <find>detail</find>
       <find>navigation</find>
-      <find>FontText</find>
       <find>InfoText</find>
       <find>Chevron</find>
       <find>product</find>
@@ -317,6 +152,8 @@
       <find>idCategory</find>
       <find>image</find>
       <find>priceText</find>
+      <find>scrollview</find>
+      <find>FontText</find>
     </findStrings>
     <replaceStrings>
       <replace>Profile</replace>
@@ -333,10 +170,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/consumer_old/screens/HomeScreen.js" />
-        <option value="$PROJECT_DIR$/consumer/screens/LinksScreen.js" />
-        <option value="$PROJECT_DIR$/consumer/screens/home/HomeScreen.js" />
-        <option value="$PROJECT_DIR$/consumer/screens/meal_categories.json" />
         <option value="$PROJECT_DIR$/consumer/screens/WebView.js" />
         <option value="$PROJECT_DIR$/consumer/assets/static_data/meal_modes.json" />
         <option value="$PROJECT_DIR$/consumer/screens/FontText.js" />
@@ -344,7 +177,6 @@
         <option value="$PROJECT_DIR$/consumer/node_modules/expo-location/.babelrc" />
         <option value="$PROJECT_DIR$/consumer/node_modules/babel-preset-expo/.babelrc" />
         <option value="$PROJECT_DIR$/consumer/android/app/build.gradle" />
-        <option value="$PROJECT_DIR$/consumer/screens/profile/Profile.js" />
         <option value="$PROJECT_DIR$/consumer/android/settings.gradle" />
         <option value="$PROJECT_DIR$/consumer/components/StyledText.js" />
         <option value="$PROJECT_DIR$/consumer.bak1/app.json" />
@@ -362,10 +194,8 @@
         <option value="$PROJECT_DIR$/consumer/screens/meal/Meal.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Meals.js" />
         <option value="$PROJECT_DIR$/consumer/assets/dynamic_data/all_meals.py" />
-        <option value="$PROJECT_DIR$/consumer/screens/Categories.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Search.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Login.js" />
-        <option value="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" />
         <option value="$PROJECT_DIR$/consumer/App.js" />
         <option value="$PROJECT_DIR$/consumer/assets/static_data/fudlkr_locations.json" />
         <option value="$PROJECT_DIR$/consumer/assets/static_data/meal_categories.json" />
@@ -383,14 +213,21 @@
         <option value="$PROJECT_DIR$/consumer/assets/dynamic_data/all_meals.json" />
         <option value="$PROJECT_DIR$/consumer/screens/Meal.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Location.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/Categories.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/profile/Languages.js" />
+        <option value="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" />
         <option value="$PROJECT_DIR$/consumer/screens/HomeScreen.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/profile/Profile.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/profile/Button.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/profile/NativeModal.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/profile/MealRadius.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="width" value="976" />
-    <option name="height" value="1048" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-10" />
+    <option name="width" value="980" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -400,7 +237,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -417,19 +256,6 @@
               <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
               <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
               <item name="consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
-              <item name="consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="static_data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
-              <item name="consumer" type="462c0819:PsiDirectoryNode" />
               <item name="navigation" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -438,12 +264,17 @@
               <item name="consumer" type="462c0819:PsiDirectoryNode" />
               <item name="screens" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
+              <item name="consumer" type="462c0819:PsiDirectoryNode" />
+              <item name="screens" type="462c0819:PsiDirectoryNode" />
+              <item name="profile" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -452,17 +283,17 @@
     <property name="settings.editor.selected.configurable" value="android.studio.gradle" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens" />
-      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\assets\static_data" />
-      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens\home" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens\profile" />
       <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens" />
       <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\assets\dynamic_data" />
       <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer" />
       <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\assets\static_data" />
-      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\navigation" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens" />
+      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\assets\static_data" />
+      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens\home" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -538,7 +369,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-6" y="-6" width="1293" height="693" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -546,16 +377,16 @@
       <window_info id="Image Layers" order="6" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14699684" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14626391" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info id="Captures" order="4" weight="0.25" />
@@ -565,6 +396,31 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32897604" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Captures" order="4" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14626391" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info id="Image Layers" order="6" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32897604" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+    </layout-to-restore>
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
@@ -573,17 +429,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/consumer.broken/package.json" />
-    <entry file="file://$PROJECT_DIR$/consumer.d/package.json" />
-    <entry file="file://$PROJECT_DIR$/consumer.bak/package.json" />
-    <entry file="file://$PROJECT_DIR$/test/app.json" />
-    <entry file="file://$PROJECT_DIR$/test/App.js" />
-    <entry file="file://$PROJECT_DIR$/test/babel.config.js" />
-    <entry file="file://$PROJECT_DIR$/consumer/babel.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/package.json" />
     <entry file="file://$PROJECT_DIR$/consumer.bak1/package.json" />
     <entry file="file://$PROJECT_DIR$/consumer.bak1/App.js" />
@@ -656,13 +501,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/screens/Login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="18" selection-start-line="33" selection-end-line="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consumer/screens/Search.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -670,24 +508,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="49" selection-start-line="12" selection-start-column="49" selection-end-line="12" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consumer/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="765">
           <caret line="45" selection-start-line="45" selection-end-line="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="49" column="7" selection-start-line="49" selection-start-column="7" selection-end-line="52" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -775,20 +599,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/screens/Meals.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1513">
-          <caret line="89" column="30" selection-start-line="89" selection-end-line="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/screens/Categories.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="43" column="19" selection-start-line="41" selection-start-column="16" selection-end-line="43" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consumer/assets/static_data/meal_categories.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -803,24 +613,104 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/screens/Meal.js">
+    <entry file="file://$PROJECT_DIR$/consumer/screens/Location.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="300" column="19" selection-start-line="300" selection-start-column="19" selection-end-line="300" selection-end-column="19" />
+        <state relative-caret-position="2465">
+          <caret line="145" column="19" selection-start-line="145" selection-start-column="9" selection-end-line="145" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/screens/Location.js">
+    <entry file="file://$PROJECT_DIR$/consumer/node_modules/react-native/Libraries/Components/ScrollView/ScrollViewStickyHeader.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="951">
-          <caret line="257" column="17" selection-start-line="257" selection-start-column="17" selection-end-line="257" selection-end-column="17" />
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/node_modules/react-native/Libraries/Components/ScrollView/ScrollView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Options.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Languages.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="78" column="2" selection-start-line="78" selection-start-column="2" selection-end-line="78" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/Categories.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="53" selection-start-line="6" selection-start-column="53" selection-end-line="6" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="53" column="31" selection-start-line="53" selection-start-column="31" selection-end-line="53" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1871">
+          <caret line="11" column="34" selection-start-line="11" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/Meal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="183" column="35" selection-start-line="183" selection-start-column="8" selection-end-line="183" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/Meals.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="116" column="16" selection-start-line="116" selection-end-line="117" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/consumer/screens/HomeScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="210" column="41" selection-start-line="210" selection-start-column="41" selection-end-line="210" selection-end-column="41" />
+        <state relative-caret-position="-1258">
+          <caret line="148" column="45" selection-start-line="148" selection-start-column="45" selection-end-line="148" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Button.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="3" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/profile/NativeModal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" lean-forward="true" selection-start-line="9" selection-start-column="2" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="42" column="37" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/profile/MealRadius.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="111" column="8" lean-forward="true" selection-start-line="111" selection-start-column="8" selection-end-line="111" selection-end-column="8" />
         </state>
       </provider>
     </entry>

@@ -6,8 +6,6 @@ import category_data from '../assets/static_data/meal_categories.json';
 import { Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
 
-
-
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 

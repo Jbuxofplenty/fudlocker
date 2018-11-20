@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import CategoryScreen from '../screens/Categories';
 import ProfileScreen from '../screens/profile/Profile';
+import MealRadiusScreen from '../screens/profile/MealRadius'
 import MealsScreen from '../screens/Meals';
 import MealScreen from '../screens/Meal';
 import WebViewScreen from '../screens/WebView';
@@ -50,6 +51,7 @@ MealStack.navigationOptions = {
 const ProfileStack = createStackNavigator({
   Profile: ProfileScreen,
   WebView: WebViewScreen,
+  MealRadius: MealRadiusScreen,
 });
 
 ProfileStack.navigationOptions = {

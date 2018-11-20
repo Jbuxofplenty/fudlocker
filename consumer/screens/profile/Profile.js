@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { ScrollView, Switch, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, Switch, StyleSheet, Text, View, Share } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { WebView, Linking } from 'react-native'
 import { Font } from 'expo'
+import Rate, { AndroidMarket } from 'react-native-rate'
+import ToggleSwitch from 'toggle-switch-react-native'
 
 import BaseIcon from './Icon'
 import Chevron from './Chevron'
@@ -37,6 +39,7 @@ class SettingsScreen extends Component {
   state = {
     pushNotifications: true,
     fontLoaded: false,
+    mealRadius: 1.5,
   }
   async componentDidMount() {
     await Font.loadAsync({
@@ -58,6 +61,40 @@ class SettingsScreen extends Component {
     this.props.navigation.navigate('options')
   }
 
+  shareApp = () => {
+      Share.share({
+        message: 'Hey, check out this new app I found where you can use meal swipes outside normal business hours outside of the C4C!',
+        url: 'http://fudlkr.com',
+        title: 'Fudlkr Application'
+      }, {
+        // Android only:
+        dialogTitle: 'Share Fudlkr',
+        // iOS only:
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter'
+        ]
+      })
+
+  }
+  rateUs = () => {
+        let options = {
+              AppleAppID:"",
+              GooglePackageName:"com.fudlkr.consumer",
+              AmazonPackageName:"com.fudlkr.consumer",
+              preferredAndroidMarket: AndroidMarket.Google,
+              preferInApp:false,
+              openAppStoreIfInAppFails:true,
+              fallbackPlatformURL:"http://www.fudlkr.com/index.html",
+          }
+                  console.log('hi');
+
+          Rate.rate(options, success=>{
+              if (success) {
+                  // this technically only tells us if the user successfully went to the Review Page. Whether they actually did anything, we do not know.
+                  this.setState({rated:true})
+              }
+          })
+  }
   onChangePushNotifications = () => {
     this.setState(state => ({
       pushNotifications: !state.pushNotifications,
@@ -101,16 +138,8 @@ class SettingsScreen extends Component {
         <InfoText text="Account" />
         <View>
           <ListItem
-            hideChevron
             title="Push Notifications"
             titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
-            containerStyle={styles.listItemContainer}
-            rightElement={
-              <Switch
-                onValueChange={this.onChangePushNotifications}
-                value={this.state.pushNotifications}
-              />
-            }
             leftIcon={
               <BaseIcon
                 containerStyle={{
@@ -122,14 +151,23 @@ class SettingsScreen extends Component {
                 }}
               />
             }
+            rightIcon={
+              <ToggleSwitch
+                  isOn={this.state.pushNotifications}
+                  onColor='green'
+                  offColor='grey'
+                  size='small'
+                  onToggle={this.onChangePushNotifications}
+              />
+            }
           />
           <ListItem
             // chevron
             title="Meal Radius"
-            rightTitle="1.5 miles"
+            rightTitle={this.state.mealRadius + " miles"}
             titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
             rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15 }}
-            onPress={() => this.onPressOptions()}
+            onPress={() => this.props.navigation.navigate('MealRadius', {radius: this.state.mealRadius})}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
@@ -159,24 +197,6 @@ class SettingsScreen extends Component {
             }
             rightIcon={<Chevron />}
           />
-          <ListItem
-            title="Language"
-            rightTitle="English"
-            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
-            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15 }}
-            onPress={() => this.onPressOptions()}
-            containerStyle={styles.listItemContainer}
-            leftIcon={
-              <BaseIcon
-                containerStyle={{ backgroundColor: '#FEA8A1' }}
-                icon={{
-                  type: 'material',
-                  name: 'language',
-                }}
-              />
-            }
-            rightIcon={<Chevron />}
-          />
         </View>
         <InfoText text="More" />
         <View>
@@ -199,7 +219,7 @@ class SettingsScreen extends Component {
           <ListItem
             title="Terms and Policies"
             titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
-            onPress={() => this.onPressOptions()}
+            onPress={() => this.openURI("http://fudlkr.com/conditions.html")}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
@@ -215,7 +235,7 @@ class SettingsScreen extends Component {
           <ListItem
             title="Share our App"
             titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
-            onPress={() => this.onPressOptions()}
+            onPress={() => this.shareApp()}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
@@ -233,7 +253,7 @@ class SettingsScreen extends Component {
           <ListItem
             title="Rate Us"
             titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
-            onPress={() => this.onPressOptions()}
+            onPress={() => this.rateUs()}
             containerStyle={styles.listItemContainer}
             badge={{
               value: 5,

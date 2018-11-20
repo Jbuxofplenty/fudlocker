@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, Text, View, StyleSheet, ScrollView, Image, Button, TouchableOpacity, TouchableHighlight, SectionList, Keyboard } from 'react-native';
+import { Platform, Text, View, StyleSheet, Image, Button, TouchableOpacity, TouchableHighlight, SectionList, Keyboard } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { Constants, Location, Permissions, Font } from 'expo';
 import MapView, { Marker, Callout } from 'react-native-maps'
@@ -121,6 +121,7 @@ export default class Home extends Component {
     return (
         <View style={{backgroundColor: '#fff', marginBottom: 5, paddingTop: 5, borderStyle: 'solid', borderTopWidth: 1, borderTopColor: 'grey'}}>
             <TouchableHighlight onPress={() => {
+                 this.toggleSearching();
                  this.props.navigation.navigate('Location', {'title': item.title, 'img': item.image, 'detail': item.description, 'meal_type': item.type, 'lat': item.latlng.latitude, 'lng': item.latlng.longitude });
                             }}>
                  <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
@@ -140,15 +141,16 @@ export default class Home extends Component {
       return (
         <View style={{backgroundColor: '#fff', marginBottom: 5, paddingTop: 5, borderStyle: 'solid', borderTopWidth: 1, borderTopColor: 'grey'}}>
             <TouchableHighlight onPress={() => {
-                                    title = item.strMeal;
-                                    img = item.strMealThumb;
-                                    location = item.strArea;
-                                    data_location = item.strSourceData;
-                                    cost = item.strCost;
-                                    calories = item.calories;
-                                    desc = item.desc;
-                                    this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'data_location': data_location, 'location': location});
-                            }}>
+                    title = item.strMeal;
+                    img = item.strMealThumb;
+                    location = item.strArea;
+                    data_location = item.strSourceData;
+                    cost = item.strCost;
+                    calories = item.calories;
+                    desc = item.desc;
+                    this.toggleSearching();
+                    this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'data_location': data_location, 'location': location});
+            }}>
                  <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
                  <View style={{flex: 1, flexDirection: 'column'}}>
                         <Text style={{fontFamily: 'Poor Story', fontSize: 20, marginLeft: 10}}>{`${item.strMeal}`}</Text>
@@ -168,6 +170,7 @@ export default class Home extends Component {
       <View style={{backgroundColor: '#fff', marginBottom: 5, paddingTop: 5, borderStyle: 'solid', borderTopWidth: 1, borderTopColor: 'grey'}}>
           <TouchableHighlight onPress={() => {
                   meal_type = item.strCategory;
+                  this.toggleSearching();
                   this.props.navigation.navigate('Meals', {'meal_type': meal_type});
                   }}>
                <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
@@ -208,7 +211,7 @@ export default class Home extends Component {
         const renderMealItem = ({item, section}) => (this._renderMealItem(item, section))
         const renderCategoryItem = ({item, section}) => (this._renderCategoryItem(item, section))
         const SearchResults = ({show}) =>
-        <View style={{height: show ? "60%" : 0, backgroundColor: '#fff'}}>
+        <View style={{height: show ? "100%" : 0, backgroundColor: '#fff'}}>
             <SectionList
               renderItem={this._renderLocationItem}
               renderSectionHeader={this._renderSectionHeader}
@@ -259,7 +262,7 @@ export default class Home extends Component {
                 description={marker.description}
                 key={marker.id}
                 >
-                      <Callout onPress={()=>{this.props.navigation.navigate('Location', {'title': marker.title, 'img': marker.image, 'detail': marker.description, 'meal_type': marker.type, 'lat': marker.latlng.latitude, 'lng': marker.latlng.longitude })}}>
+                      <Callout onPress={()=>{this.toggleSearching(); this.props.navigation.navigate('Location', {'title': marker.title, 'img': marker.image, 'detail': marker.description, 'meal_type': marker.type, 'lat': marker.latlng.latitude, 'lng': marker.latlng.longitude })}}>
                       </Callout>
               </Marker>
             ))}
