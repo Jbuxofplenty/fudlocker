@@ -3,26 +3,27 @@
     {
       "idMeal": "1",
       "strMeal": "Beef Lo Mein",
-      "strArea": "Farrand",
       "strMealThumb": "http://fudlkr.com/mobile_assets/lo_mein.jpg",
+      "strCategory": "Asian",
       "strCost": 3.99,
       "code": "#100a91",
       "calories": 450,
       "datePackaged": "11/12/2018",
-      "json": "meal",
-      "netWeight": 4.21
+      "netWeight": 4.21,
+      "location": "C4C"
     },
     {
       "idMeal": "2",
       "strMeal": "Chicken Fried Rice",
-      "strArea": "Farrand",
+      "strArea": "Chinese",
       "strMealThumb": "http://fudlkr.com/mobile_assets/fried_rice.jpg",
+      "strCategory": "Asian",
       "strCost": 2.99,
       "code": "#14abbc",
       "calories": 300,
       "datePackaged": "11/12/2018",
-      "json": "meal",
-      "netWeight": 4.21
+      "netWeight": 4.21,
+      "location": "C4C"
     }
 
   ]

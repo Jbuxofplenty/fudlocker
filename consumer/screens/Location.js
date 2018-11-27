@@ -15,9 +15,35 @@ import { Colors } from '../constants'
 const dateformat = require('dateformat');
 import getDirections from 'react-native-google-maps-directions';
 
+import farrand_data from '../assets/dynamic_data/meals_farrand.json';
+import c4c_data from '../assets/dynamic_data/meals_c4c.json';
+import village_data from '../assets/dynamic_data/meals_village.json';
+import all_data from '../assets/dynamic_data/all_meals.json';
+
+
+const meal_data = {
+    'Farrand': farrand_data.meals,
+    'C4C': c4c_data.meals,
+    'Village': village_data.meals,
+    'All': all_data.meals,
+}
 
 class Location extends Component {
-
+    static navigationOptions = ({ navigation }) => {
+       return {
+         title: navigation.getParam('title'),
+         headerStyle: {
+             backgroundColor: '#2ECC71',
+           },
+           headerTintColor: '#fff',
+           headerTitleStyle: {
+             textAlign: 'center',
+             alignSelf: 'center',
+             flex: 1,
+           },
+           headerRight: (<View></View>),
+       };
+     };
     state = {
         fontLoaded: false,
         paramsLoaded: false,
@@ -39,14 +65,46 @@ class Location extends Component {
 
 
   renderDescription = () => {
-    if (this.props.navigation.state.params.cost==0){
+    if (this.props.navigation.state.params.cost==0 || !this.state.fontLoaded){
         return null
     }
     return (
     <View>
-        <View>
+        <View style={styles.infoContainer}>
             <Text style={styles.priceText}>{this.props.navigation.state.params.title}</Text>
             <Text style={styles.descriptionText}>{this.props.navigation.state.params.detail}</Text>
+            <View style={styles.mealsContainer}>
+                <Text style={styles.mealsLabel}>Meals</Text>
+                <View style={styles.columnsContainer}>
+                    <Text style={styles.columnLabel}>ID</Text>
+                    <Text style={styles.columnLabel}>Meal Name</Text>
+                    <Text style={styles.columnLabel}>Cuisine Category</Text>
+                    <Text style={styles.columnLabel}>Cost</Text>
+                </View>
+            </View>
+            <ScrollView>
+              {meal_data[this.props.navigation.state.params.meal_type].map(datum => {
+                return (
+                  <TouchableOpacity key={datum.strMeal} onPress={() => {
+                        title = datum.strMeal;
+                        img = datum.strMealThumb;
+                        location = datum.location;
+                        strCategory = datum.strCategory;
+                        cost = datum.strCost;
+                        calories = datum.calories;
+                        desc = datum.desc;
+                        this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location});
+                   }}>
+                    <View style={styles.mealContainer}>
+                      <Text style={styles.mealItem}>{datum.idMeal}</Text>
+                      <Text style={styles.mealItem}>{datum.strMeal}</Text>
+                      <Text style={styles.mealItem}>{datum.strCategory}</Text>
+                      <Text style={styles.mealItem}>${datum.strCost}</Text>
+                    </View>
+                  </TouchableOpacity>
+                )
+              })}
+            </ScrollView>
           </View>
     </View>
 
@@ -151,8 +209,6 @@ class Location extends Component {
           </View>
          <View style={styles.productRow}>{this.renderDescription()}</View>
 
-
-
         </ScrollView>
         <View style={styles.footer}>
           <TouchableOpacity onPress={()=>{this.handleGetDirections()}} style={styles.buttonFooter}>
@@ -217,7 +273,7 @@ cardContainer: {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#228B22',
+    backgroundColor: '#2ECC71',
     flexDirection: 'row',
     height: 65,
     alignItems: 'center',
@@ -227,6 +283,57 @@ cardContainer: {
     justifyContent: 'center',
     flex: 1,
   },
+  infoContainer: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  mealContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        borderBottomWidth: 0.5,
+        borderColor: 'rgba(0,0,0,0.3)',
+        padding: 10,
+    },
+  mealItem:{
+        fontFamily: 'Poor Story',
+        textAlign: 'center',
+        fontSize: 14,
+        width: '25%',
+        alignSelf: 'center',
+        color: 'darkgray',
+    },
+  mealsContainer:{
+    borderColor: 'rgba(0,0,0,0.3)',
+    padding: 10,
+    borderBottomWidth: 0.5,
+    alignItems: 'center',
+    width: '90%',
+    alignSelf: 'center',
+    justifyContent: 'space-between'
+  },
+  mealsLabel:{
+      fontFamily: 'Poor Story',
+      textAlign: 'center',
+      fontSize: 24,
+      width: '90%',
+      alignSelf: 'center',
+      padding: 10,
+    },
+  columnsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  columnLabel:{
+      fontFamily: 'Poor Story',
+      textAlign: 'center',
+      fontSize: 12,
+      width: '27%',
+      alignSelf: 'center',
+    },
   navigatorButton: {
     alignItems: 'flex-start',
     justifyContent: 'center',

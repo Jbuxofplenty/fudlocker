@@ -28,6 +28,18 @@ const MEAL_KEYS_TO_FILTERS = ['strMeal', 'datePackaged', 'calories'];
 const CATEGORY_KEYS_TO_FILTERS = ['strCategory'];
 
 export default class Home extends Component {
+    static navigationOptions = {
+          title: 'Home',
+          headerStyle: {
+            backgroundColor: '#2ECC71',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            textAlign: 'center',
+            alignSelf: 'center',
+            flex: 1,
+          },
+      };
     constructor(props) {
         super(props);
         this.state = {
@@ -67,7 +79,7 @@ export default class Home extends Component {
 }
 
   componentWillMount() {
-
+    this.state.searching = false;
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
         errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -87,7 +99,7 @@ export default class Home extends Component {
 
     }
     let location = await Location.getCurrentPositionAsync({});
-    var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, 1000);
+    var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, 20000);
     if(!this.location_selected){
         this.setState({coords: coords});
     }
@@ -143,7 +155,7 @@ export default class Home extends Component {
             <TouchableHighlight onPress={() => {
                     title = item.strMeal;
                     img = item.strMealThumb;
-                    location = item.strArea;
+                    location = item.location;
                     data_location = item.strSourceData;
                     cost = item.strCost;
                     calories = item.calories;
@@ -156,7 +168,7 @@ export default class Home extends Component {
                         <Text style={{fontFamily: 'Poor Story', fontSize: 20, marginLeft: 10}}>{`${item.strMeal}`}</Text>
                         <View style={{flex: 1, justifyContent: 'flex-start', flexDirection: 'row'}}>
                             <Text style={{fontFamily: 'Poor Story', marginLeft: 20}}>${`${item.strCost}`}</Text>
-                            <Text style={{fontFamily: 'Poor Story', marginLeft: 40}}>{`${locs[item.strArea]}`}</Text>
+                            <Text style={{fontFamily: 'Poor Story', marginLeft: 40}}>{`${locs[item.location]}`}</Text>
                         </View>
                       </View>
                       <Image source={{ uri: item.strMealThumb }} style={{width: 48, height: 48, marginRight: 20}}></Image>
@@ -237,7 +249,7 @@ export default class Home extends Component {
               round
               platform="android"
               clearIcon={{ type: 'font-awesome', name: 'chevron-left' }}
-              placeholder="Find Fud"
+              placeholder="Find F&#xFC;d"
               lightTheme
               showLoading
               inputStyle={{fontFamily: 'Poor Story'}}
@@ -262,7 +274,11 @@ export default class Home extends Component {
                 description={marker.description}
                 key={marker.id}
                 >
-                      <Callout onPress={()=>{this.toggleSearching(); this.props.navigation.navigate('Location', {'title': marker.title, 'img': marker.image, 'detail': marker.description, 'meal_type': marker.type, 'lat': marker.latlng.latitude, 'lng': marker.latlng.longitude })}}>
+                      <Callout tooltip={true} onPress={()=>{this.props.navigation.navigate('Location', {'title': marker.title, 'img': marker.image, 'detail': marker.description, 'meal_type': marker.type, 'lat': marker.latlng.latitude, 'lng': marker.latlng.longitude })}}>
+                        <View style={styles.tooltip}>
+                            <Text style={styles.title}>{marker.title}</Text>
+                            <Text style={styles.description}>{marker.description}</Text>
+                        </View>
                       </Callout>
               </Marker>
             ))}
@@ -275,15 +291,34 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'flex-start'
-  },
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: 'flex-start'
+    },
+  tooltip: {
+        flex: 1,
+        backgroundColor: '#2ECC71',
+        justifyContent: 'flex-start',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: 10,
+        borderRadius: 10,
+    },
+  title: {
+        fontFamily: 'Poor Story',
+        fontSize: 16,
+        color: '#fff',
+    },
+  description: {
+        fontFamily: 'Poor Story',
+        fontSize: 12,
+        color: '#fff',
+    },
   searchInput:{
-    padding: 10,
-    borderColor: '#CCC',
-    borderWidth: 1
-  },
+        padding: 10,
+        borderColor: '#CCC',
+        borderWidth: 1
+    },
     sectionHeader: {
         height: 50,
         flex: 1,

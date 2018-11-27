@@ -18,7 +18,21 @@ import getDirections from 'react-native-google-maps-directions';
 import fudlkr_locations from '../assets/static_data/fudlkr_locations.json';
 
 class Meal extends Component {
-
+    static navigationOptions = ({ navigation }) => {
+       return {
+         title: navigation.getParam('title'),
+         headerStyle: {
+             backgroundColor: '#2ECC71',
+           },
+           headerTintColor: '#fff',
+           headerTitleStyle: {
+             textAlign: 'center',
+             alignSelf: 'center',
+             flex: 1,
+           },
+           headerRight: (<View></View>),
+       };
+     };
     state = {
         fontLoaded: false,
         paramsLoaded: false,
@@ -71,7 +85,7 @@ class Meal extends Component {
           handleGetDirections () {
                 var arrayLength = fudlkr_locations.data.length;
                    for (var i = 0; i < arrayLength; i++) {
-                      if( fudlkr_locations.data[i].type == this.props.navigation.state.params.location) {
+                      if( fudlkr_locations.data[i].strArea == this.props.navigation.state.params.location) {
                           latitude = fudlkr_locations.data[i].latlng.latitude;
                           longitude = fudlkr_locations.data[i].latlng.longitude;
                       }
@@ -125,6 +139,8 @@ class Meal extends Component {
             <Text style={styles.descriptionText}>{this.props.navigation.state.params.title}</Text>
             <Text style={styles.descriptionText}>Date Packaged: {this.randomDate()}</Text>
             <Text style={styles.descriptionText}>Estimated Calories: {this.props.navigation.state.params.calories}</Text>
+            <Text style={styles.descriptionText}>Location: {this.props.navigation.state.params.location}</Text>
+            <Text style={styles.descriptionText}>Cuisine Category: {this.props.navigation.state.params.strCategory}</Text>
           </View>
     </View>
 
@@ -154,7 +170,7 @@ class Meal extends Component {
                     }
                  }
 
-                 this.props.navigation.navigate('Home', {coords: {latitude: latitude, longitude: longitude}});
+                 this.props.navigation.navigate('Home', {coords: {latitude: latitude, longitude: longitude}, searching: false});
                 }}>
           <Text style={styles.descriptionText}>MAP</Text>
         </TouchableOpacity>
@@ -260,7 +276,7 @@ cardContainer: {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#228B22',
+    backgroundColor: '#2ECC71',
     flexDirection: 'row',
     height: 65,
     alignItems: 'center',

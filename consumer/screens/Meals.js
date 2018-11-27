@@ -49,6 +49,21 @@ var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 
 export default class Meals extends Component {
+    static navigationOptions = ({ navigation }) => {
+       return {
+         title: navigation.getParam('meal_type'),
+         headerStyle: {
+             backgroundColor: '#2ECC71',
+           },
+           headerTintColor: '#fff',
+           headerTitleStyle: {
+             textAlign: 'center',
+             alignSelf: 'center',
+             flex: 1,
+           },
+           headerRight: (<View></View>),
+       };
+     };
 
 render() {
     return (
@@ -67,12 +82,12 @@ render() {
             <TouchableHighlight style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}} onPress={() => {
         			    title = item.strMeal;
         			    img = item.strMealThumb;
-        			    location = item.strArea;
-        			    data_location = item.strSourceData;
+        			    location = item.location;
+        			    strCategory = item.strCategory;
         			    cost = item.strCost;
         			    calories = item.calories;
         			    desc = item.desc;
-        			    this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'data_location': data_location, 'location': location});
+        			    this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location});
                 }}>
             <ImageBackground
               source={{ uri: item.strMealThumb }}

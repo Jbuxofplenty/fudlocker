@@ -1,0 +1,165 @@
+{
+  "meals": [
+    {
+      "idMeal": 1,
+      "strMeal": "Macaroni and Cheese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/mac_n_cheese.jpeg",
+      "strCost": 3.99,
+      "code": "#c11313",
+      "calories": 300,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "Farrand"
+    },
+    {
+      "idMeal": 2,
+      "strMeal": "Quarter Pound Burger",
+      "strArea": "Chinese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/burger.jpg",
+      "strCost": 3.99,
+      "code": "#e5e109",
+      "calories": 500,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "C4C"
+    },
+    {
+      "idMeal": 3,
+      "strMeal": "Chicken Tenders",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/chicken_tenders.jpg",
+      "strCost": 2.99,
+      "code": "#34db13",
+      "calories": 400,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "C4C"
+    },
+    {
+      "idMeal": 4,
+      "strMeal": "Steak Fries",
+      "strArea": "Chinese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/steak_fries.jpg",
+      "strCost": 1.99,
+      "code": "#c10b17",
+      "calories": 200,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "Village"
+    },
+    {
+      "idMeal": 5,
+      "strMeal": "Beef Lo Mein",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/lo_mein.jpg",
+      "strCost": 3.99,
+      "code": "#100a91",
+      "calories": 450,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "C4C"
+    },
+    {
+      "idMeal": 6,
+      "strMeal": "Chicken Fried Rice",
+      "strArea": "Chinese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/fried_rice.jpg",
+      "strCost": 2.99,
+      "code": "#14abbc",
+      "calories": 300,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "C4C"
+    },
+    {
+      "idMeal": 7,
+      "strMeal": "Pepperoni Pizza",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/pep_pizza.jpg",
+      "strCost": 1.99,
+      "code": "#c9d8c0",
+      "calories": 200,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "C4C"
+    },
+    {
+      "idMeal": 8,
+      "strMeal": "Pasta Carbonara",
+      "strArea": "Chinese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/pasta_carbonara.jpg",
+      "strCost": 3.99,
+      "code": "#514d0f",
+      "calories": 250,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "C4C"
+    },
+    {
+      "idMeal": 9,
+      "strMeal": "Sirloin Steak",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/steak.jpg",
+      "strCost": 6.99,
+      "code": "#261860",
+      "calories": 500,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "Village"
+    },
+    {
+      "idMeal": 10,
+      "strMeal": "Spare Boneless Ribs",
+      "strArea": "Chinese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/ribs.jpg",
+      "strCost": 4.99,
+      "code": "#a19db2",
+      "calories": 450,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "Village"
+    },
+    {
+      "idMeal": 11,
+      "strMeal": "Tacos",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/tacos.jpg",
+      "strCost": 2.99,
+      "code": "#0c3d47",
+      "calories": 400,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "Farrand"
+    },
+    {
+      "idMeal": 12,
+      "strMeal": "Chicken Quesadilla",
+      "strArea": "Chinese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/chicken_dilla.jpg",
+      "strCost": 1.99,
+      "code": "#85db8b",
+      "calories": 350,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "Village"
+    },
+    {
+      "idMeal": 13,
+      "strMeal": "Grilled Chicken Salad",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/grilled_chicken_salad.jpg",
+      "strCost": 2.99,
+      "code": "#0f5199",
+      "calories": 300,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "C4C"
+    },
+    {
+      "idMeal": 14,
+      "strMeal": "Caesar Salad",
+      "strArea": "Chinese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/caesar_salad.jpg",
+      "strCost": 2.99,
+      "code": "#990e31",
+      "calories": 200,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "C4C"
+    }
+  ]
+}
