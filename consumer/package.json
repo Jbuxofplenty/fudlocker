@@ -11,8 +11,12 @@
   "dependencies": {
     "dateformat": "^3.0.3",
     "material-design-icons": "^3.0.1",
+    "payment-icons": "^1.1.0",
     "react": "^16.6.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-native": "^0.57.7",
+    "react-native-awesome-card-io": "^0.8.1",
+    "react-native-checkout": "0.0.8",
+    "react-native-credit-card-input": "^0.4.1",
     "react-native-elements": "^0.19.1",
     "react-native-google-maps-directions": "^2.0.0",
     "react-native-keyboard-aware-scroll-view": "^0.7.4",

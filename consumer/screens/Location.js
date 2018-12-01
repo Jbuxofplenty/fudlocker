@@ -41,7 +41,6 @@ class Location extends Component {
              alignSelf: 'center',
              flex: 1,
            },
-           headerRight: (<View></View>),
        };
      };
     state = {

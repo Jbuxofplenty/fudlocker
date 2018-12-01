@@ -45,6 +45,7 @@ class SettingsScreen extends Component {
         alignSelf: 'center',
         flex: 1,
       },
+      headerLeft: (<View></View>),
   };
   state = {
     pushNotifications: true,
@@ -195,7 +196,7 @@ class SettingsScreen extends Component {
             title="Payment Information"
             titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
             rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15 }}
-            onPress={() => this.onPressOptions()}
+            onPress={() => this.props.navigation.navigate('PaymentInfo')}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon

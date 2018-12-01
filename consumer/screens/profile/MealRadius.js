@@ -38,7 +38,6 @@ export default class MealRadius extends Component {
             alignSelf: 'center',
             flex: 1,
           },
-          headerRight: (<View></View>),
       };
     constructor(props) {
         super(props);

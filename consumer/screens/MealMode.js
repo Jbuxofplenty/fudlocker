@@ -20,6 +20,7 @@ export default class MealMode extends Component {
            alignSelf: 'center',
            flex: 1,
          },
+         headerLeft: (<View></View>),
      };
    state = {
     fontLoaded: false,

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, Switch, Button, StyleSheet, Text, View, Share, WebView, Linking, TouchableOpacity, Image, Dimensions, Modal, TextInput, Platform } from 'react-native'
+import { ScrollView, Keyboard, StyleSheet, Text, View, Share, WebView, Linking, TouchableOpacity, Image, Dimensions, Modal, TextInput, Platform } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Font } from 'expo'
 import Rate, { AndroidMarket } from 'react-native-rate'
 import ToggleSwitch from 'toggle-switch-react-native'
+import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input"
 
 import BaseIcon from './Icon'
 import Chevron from './Chevron'
@@ -23,57 +24,38 @@ class PaymentInfo extends Component {
           alignSelf: 'center',
           flex: 1,
         },
-        headerRight: (<View></View>),
     };
   state = {
     pushNotifications: true,
     fontLoaded: false,
     mealRadius: 1.5,
-    showNameEdit: true,
-    name: 'Josiah Buxton',
-    tempName: 'Josiah Buxton',
-    showEmailEdit: true,
-    email: 'josiah.buxton@colorado.edu',
-    tempEmail: 'josiah.buxton@colorado.edu',
-    showPhoneEdit: true,
-    phone: '(720) 663-8573',
-    tempPhone: '',
-    showPassEdit: true,
-    oldPass: 'password',
-    newPass: '',
-    tempPass: '',
-    temp1Pass: '',
-    showPassVerify: true,
+    showCardEdit: true,
     modalVisible: false,
-    modal1Visible: false,
+    pEvents: 'none',
+    values: { number: "4242 4242 4242 4242", expiry: "02/22", cvc: "300", name: "Josiah Buxton", type: "visa" },
+    showAddressEdit: true,
+    name: "Josiah Buxton",
+    address1: "1234 Main Street",
+    address2: "Apt 920",
+    state: "PA",
+    zip: "18444",
+    country: "USA",
+    tempName: "",
+    tempAddress1: "",
+    tempAddress2: "",
+    tempState: "",
+    tempZip: "",
+    tempCountry: "",
   }
 
-  toggleNameEdit() {
+  toggleCardEdit() {
       this.setState({
-          showNameEdit: !this.state.showNameEdit
+          showCardEdit: !this.state.showCardEdit
       });
   }
-  toggleEmailEdit() {
-        this.setState({
-            showEmailEdit: !this.state.showEmailEdit
-        });
-  }
-  togglePhoneEdit() {
-      this.setState({
-          showPhoneEdit: !this.state.showPhoneEdit
-      });
-  }
-  togglePassEdit() {
-      this.setState({
-          showPassEdit: !this.state.showPassEdit
-      });
-  }
-  togglePassVerify() {
+  toggleAddressEdit() {
     this.setState({
-      showPassVerify: !this.state.showPassVerify
-    });
-    this.setState({
-      tempPass: ''
+        showAddressEdit: !this.state.showAddressEdit
     });
   }
 
@@ -91,33 +73,72 @@ class PaymentInfo extends Component {
       'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')
     });
 
-    this.setState({ fontLoaded: true });
+        this.setState({ fontLoaded: true });
+        if(this.state.showCardEdit){
+            this._CCInput.setValues(this.state.values);
+            Keyboard.dismiss();
+        }
+        else {
+            this._CCInputEdit.setValues(this.state.values);
+            Keyboard.dismiss();
+        }
+
     }
+
 
    closeModal = () => {
        this.setState({ modalVisible: false });
        this.setState({ tempPass: "" });
    };
-   close1Modal = () => {
-       this.setState({ modal1Visible: false });
-       this.setState({ tempPass: "" });
-       this.setState({ temp1Pass: "" });
-   };
+
   render() {
-    const avatar="http://fudlkr.com/images/josiah_buxton.jpg";
-    const emails={firstEmail: "josiah.buxton@colorado.edu"};
-    const firstEmail={email: "josiah.buxton@colorado.edu"};
-    if (this.state.fontLoaded){
-        if (this.state.showNameEdit && this.state.showPhoneEdit && this.state.showEmailEdit && this.state.showPassEdit && this.state.showPassVerify) {
+    if ( this.state.fontLoaded ){
+        if ( this.state.showCardEdit && this.state.showAddressEdit ) {
             return (
               <View style={styles.container}>
-                <Image style={styles.avatar}
-                    source={{ uri: avatar }}
-                  />
                 <View style={styles.nameContainer}>
                     <View style={styles.nameSubContainer}>
+                        <Text style={styles.category}>
+                            Credit Cards
+                        </Text>
                         <View style={styles.labelContainer}>
                             <View style={styles.labelContainer}>
+                                <Text style={styles.label}>
+                                    Primary Credit Card
+                                </Text>
+                                <Text style={styles.label}>
+                                    Expiry Date
+                                </Text>
+                                <Text style={styles.label}>
+                                    CVC Code
+                                </Text>
+                            </View>
+                        </View>
+                        <View ref={component => this._CCInputView = component} pointerEvents={this.state.pEvents}>
+                            <LiteCreditCardInput
+                                ref={component => this._CCInput = component}
+                            />
+                        </View>
+                        <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
+                            <TouchableOpacity style={styles.editContainer} onPress={() => {this.props.navigation.navigate('AddNewCard')}}>
+                               <Text style={styles.edit}>add </Text>
+                            </TouchableOpacity>
+                            <View style={styles.separatorContainer}>
+                                   <Text style={styles.edit}>|</Text>
+                               </View>
+                            <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({pEvents: 'auto'});this._CCInput.focus("number");this.toggleCardEdit();}}>
+                                <Text style={styles.edit}>edit</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.nameContainer}>
+                    <View style={styles.nameSubContainer}>
+                        <Text style={styles.category}>
+                            Billing Address
+                        </Text>
+                        <View style={styles.labelContainer}>
+                            <View style={[styles.labelContainer, {marginVertical: 10}]}>
                                 <Text style={styles.label}>
                                     Name:
                                 </Text>
@@ -126,656 +147,332 @@ class PaymentInfo extends Component {
                                 {this.state.name}
                             </Text>
                         </View>
-                        <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempName: this.state.name}); this.toggleNameEdit()}}>
-                            <Text style={styles.edit}>edit</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={styles.nameContainer}>
-                    <View style={styles.nameSubContainer}>
-                        <View style={styles.labelContainer}>
+                        <View style={[styles.labelContainer, {marginVertical: 10}]}>
                             <View style={styles.labelContainer}>
                                 <Text style={styles.label}>
-                                    Email Address:
+                                    Address:
                                 </Text>
                             </View>
-                            <Text style={styles.email}>
-                                {this.state.email}
+                            <Text style={styles.name}>
+                                {this.state.address1}
                             </Text>
                         </View>
-                        <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempEmail: this.state.email}); this.toggleEmailEdit()}}>
-                            <Text style={styles.edit}>edit</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={styles.nameContainer}>
-                    <View style={styles.nameSubContainer}>
-                        <View style={styles.labelContainer}>
+                        <View style={[styles.labelContainer, {marginVertical: 10}]}>
                             <View style={styles.labelContainer}>
                                 <Text style={styles.label}>
-                                    Phone:
+                                    Address 2:
                                 </Text>
                             </View>
-                            <Text style={styles.phone}>
-                                {this.state.phone}
+                            <Text style={styles.name}>
+                                {this.state.address2}
                             </Text>
                         </View>
-                        <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempPhone: this.state.phone}); this.togglePhoneEdit()}}>
-                            <Text style={styles.edit}>edit</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={styles.nameContainer}>
-                    <View style={styles.nameSubContainer}>
-                        <View style={styles.labelContainer}>
+                        <View style={[styles.labelContainer, {marginVertical: 10}]}>
                             <View style={styles.labelContainer}>
                                 <Text style={styles.label}>
-                                    Password:
+                                    State:
                                 </Text>
                             </View>
-                            <TextInput
-                                style={styles.phone}
-                                secureTextEntry={true}
-                                >
-                                {this.state.oldPass}
-                            </TextInput>
+                            <Text style={styles.name}>
+                                {this.state.state}
+                            </Text>
                         </View>
-                        <TouchableOpacity style={styles.editContainer} onPress={() => {this.togglePassEdit()}}>
-                            <Text style={styles.edit}>edit</Text>
-                        </TouchableOpacity>
+                        <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                            <View style={styles.labelContainer}>
+                                <Text style={styles.label}>
+                                    Zip Code:
+                                </Text>
+                            </View>
+                            <Text style={styles.name}>
+                                {this.state.zip}
+                            </Text>
+                        </View>
+                        <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                            <View style={styles.labelContainer}>
+                                <Text style={styles.label}>
+                                    Country:
+                                </Text>
+                            </View>
+                            <Text style={styles.name}>
+                                {this.state.country}
+                            </Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
+                            <TouchableOpacity style={styles.editContainer} onPress={() => {this.toggleAddressEdit();}}>
+                                <Text style={styles.edit}>edit</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-                <View style={{height: Dimensions.get('window').width/2}}>
                 </View>
               </View>
             )}
-        if ( !this.state.showNameEdit ){
+        if ( !this.state.showCardEdit ){
             return (
-                <KeyboardAwareScrollView
-                    resetScrollToCoords={{ x: 0, y: 0 }}
-                    contentContainerStyle={styles.scrollContainer}
-                    scrollEnabled={true}
-                    enableOnAndroid={true}
-                    enableAutoAutomaticScroll={(Platform.OS === 'ios')}
-                    automaticallyAdjustContentInsets={false}
-                    extraHeight={200}
-                    >
-                   <Image style={styles.avatar}
-                       source={{ uri: avatar }}
-                     />
-                   <View style={styles.nameContainer}>
-                       <View style={styles.nameSubContainer}>
-                           <View style={styles.labelContainer}>
-                               <View style={styles.labelContainer}>
-                                   <Text style={styles.label}>
-                                       Name:
-                                   </Text>
-                               </View>
-                               <TextInput
-                                    style={styles.nameInput}
-                                    autoCapitalize={'words'}
-                                    onChangeText={(name) => this.setState({name})}
-                                    value={this.state.name}
-                                    textContentType={'name'}
-                                    autoFocus={true}
-                               >
-                               </TextInput>
-                           </View>
-                           <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-                               <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({name: this.state.tempName}); this.toggleNameEdit()}}>
-                                   <Text style={styles.edit}>cancel </Text>
-                               </TouchableOpacity>
-                               <View style={styles.separatorContainer}>
-                                      <Text style={styles.edit}>|</Text>
-                                  </View>
-                               <TouchableOpacity style={styles.editContainer} onPress={() => {this.toggleNameEdit()}}>
-                                   <Text style={styles.edit}>save</Text>
-                               </TouchableOpacity>
-                           </View>
-                       </View>
-                   </View>
-                   <View style={styles.nameContainer}>
-                      <View style={styles.nameSubContainer}>
-                          <View style={styles.labelContainer}>
-                              <View style={styles.labelContainer}>
-                                  <Text style={styles.label}>
-                                      Email Address:
-                                  </Text>
-                              </View>
-                              <Text style={styles.email}>
-                                  {this.state.email}
-                              </Text>
-                          </View>
-                          <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempEmail: this.state.email}); this.toggleEmailEdit()}}>
-                              <Text style={styles.edit}>edit</Text>
-                          </TouchableOpacity>
-                      </View>
-                  </View>
-                  <View style={styles.nameContainer}>
-                      <View style={styles.nameSubContainer}>
-                          <View style={styles.labelContainer}>
-                              <View style={styles.labelContainer}>
-                                  <Text style={styles.label}>
-                                      Phone:
-                                  </Text>
-                              </View>
-                              <Text style={styles.phone}>
-                                  {this.state.phone}
-                              </Text>
-                          </View>
-                          <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempPhone: this.state.phone}); this.togglePhoneEdit()}}>
-                              <Text style={styles.edit}>edit</Text>
-                          </TouchableOpacity>
-                      </View>
-                  </View>
-                  <View style={styles.nameContainer}>
-                      <View style={styles.nameSubContainer}>
-                          <View style={styles.labelContainer}>
-                              <View style={styles.labelContainer}>
-                                  <Text style={styles.label}>
-                                      Password:
-                                  </Text>
-                              </View>
-                              <TextInput
-                                  style={styles.phone}
-                                  secureTextEntry={true}
-                                  >
-                                  {this.state.oldPass}
-                              </TextInput>
-                          </View>
-                          <TouchableOpacity style={styles.editContainer} onPress={() => {this.togglePassEdit()}}>
-                              <Text style={styles.edit}>edit</Text>
-                          </TouchableOpacity>
-                      </View>
-                  </View>
-            <View style={{height: Dimensions.get('window').width/2}}>
-           </View>
-         </KeyboardAwareScrollView >
-       )}
-    if ( !this.state.showEmailEdit ){
-        return (
-        <KeyboardAwareScrollView
-            resetScrollToCoords={{ x: 0, y: 0 }}
-            contentContainerStyle={styles.scrollContainer}
-            scrollEnabled={true}
-            enableOnAndroid={true}
-            enableAutoAutomaticScroll={(Platform.OS === 'ios')}
-            automaticallyAdjustContentInsets={false}
-            extraHeight={200}
-            >
-                 <Image style={styles.avatar}
-                   source={{ uri: avatar }}
-                 />
-               <View style={styles.nameContainer}>
-                   <View style={styles.nameSubContainer}>
-                       <View style={styles.labelContainer}>
-                           <View style={styles.labelContainer}>
-                               <Text style={styles.label}>
-                                   Name:
-                               </Text>
-                           </View>
-                           <Text style={styles.name}>
-                               {this.state.name}
-                           </Text>
-                       </View>
-                       <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempName: this.state.name}); this.toggleNameEdit()}}>
-                           <Text style={styles.edit}>edit</Text>
-                       </TouchableOpacity>
-                   </View>
-               </View>
-               <View style={styles.nameContainer}>
-                   <View style={styles.nameSubContainer}>
-                       <View style={styles.labelContainer}>
-                           <View style={styles.labelContainer}>
-                               <Text style={styles.label}>
-                                   Email Address:
-                               </Text>
-                           </View>
-                           <TextInput
-                                style={styles.emailInput}
-                                onChangeText={(email) => this.setState({email})}
-                                value={this.state.email}
-                                textContentType={'emailAddress'}
+              <View style={styles.container}>
+                <View style={styles.nameContainer}>
+                    <View style={styles.nameSubContainer}>
+                        <View style={styles.labelContainer}>
+                            <View style={styles.labelContainer}>
+                                <Text style={styles.label}>
+                                    Primary Credit Card
+                                </Text>
+                                <Text style={styles.label}>
+                                    Expiry Date
+                                </Text>
+                                <Text style={styles.label}>
+                                    CVC Code
+                                </Text>
+                            </View>
+                        </View>
+                        <View ref={component => this._CCInputViewEdit = component} pointerEvents={this.state.pEvents}>
+                            <LiteCreditCardInput
                                 autoFocus={true}
-                           >
-                           </TextInput>
-                       </View>
-                       <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-                           <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({email: this.state.tempEmail}); this.toggleEmailEdit()}}>
+                                ref={component => this._CCInputEdit = component}
+                            />
+                        </View>
+                        <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
+                            <TouchableOpacity style={styles.editContainer} onPress={() => {Keyboard.dismiss();this.setState({pEvents: 'none'}); this.toggleCardEdit();}}>
                                <Text style={styles.edit}>cancel </Text>
-                           </TouchableOpacity>
-                           <View style={styles.separatorContainer}>
-                                  <Text style={styles.edit}>|</Text>
-                              </View>
-                           <TouchableOpacity style={styles.editContainer} onPress={() => {this.toggleEmailEdit()}}>
-                               <Text style={styles.edit}>save</Text>
-                           </TouchableOpacity>
-                       </View>
-                   </View>
-               </View>
-               <View style={styles.nameContainer}>
-                  <View style={styles.nameSubContainer}>
-                      <View style={styles.labelContainer}>
-                          <View style={styles.labelContainer}>
-                              <Text style={styles.label}>
-                                  Phone:
-                              </Text>
-                          </View>
-                          <Text style={styles.phone}>
-                              {this.state.phone}
-                          </Text>
-                      </View>
-                      <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempPhone: this.state.phone}); this.togglePhoneEdit()}}>
-                          <Text style={styles.edit}>edit</Text>
-                      </TouchableOpacity>
-                  </View>
+                            </TouchableOpacity>
+                            <View style={styles.separatorContainer}>
+                                   <Text style={styles.edit}>|</Text>
+                               </View>
+                            <TouchableOpacity style={styles.editContainer} onPress={() => {Keyboard.dismiss();this.setState({pEvents: 'none'});this.toggleCardEdit();}}>
+                                <Text style={styles.edit}>save</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.nameContainer}>
+                    <View style={styles.nameSubContainer}>
+                        <Text style={styles.category}>
+                            Billing Address
+                        </Text>
+                        <View style={styles.labelContainer}>
+                            <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                                <Text style={styles.label}>
+                                    Name:
+                                </Text>
+                            </View>
+                            <Text style={styles.name}>
+                                {this.state.name}
+                            </Text>
+                        </View>
+                        <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                            <View style={styles.labelContainer}>
+                                <Text style={styles.label}>
+                                    Address:
+                                </Text>
+                            </View>
+                            <Text style={styles.name}>
+                                {this.state.address1}
+                            </Text>
+                        </View>
+                        <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                            <View style={styles.labelContainer}>
+                                <Text style={styles.label}>
+                                    Address 2:
+                                </Text>
+                            </View>
+                            <Text style={styles.name}>
+                                {this.state.address2}
+                            </Text>
+                        </View>
+                        <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                            <View style={styles.labelContainer}>
+                                <Text style={styles.label}>
+                                    State:
+                                </Text>
+                            </View>
+                            <Text style={styles.name}>
+                                {this.state.state}
+                            </Text>
+                        </View>
+                        <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                            <View style={styles.labelContainer}>
+                                <Text style={styles.label}>
+                                    Zip Code:
+                                </Text>
+                            </View>
+                            <Text style={styles.name}>
+                                {this.state.zip}
+                            </Text>
+                        </View>
+                        <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                            <View style={styles.labelContainer}>
+                                <Text style={styles.label}>
+                                    Country:
+                                </Text>
+                            </View>
+                            <Text style={styles.name}>
+                                {this.state.country}
+                            </Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
+                            <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({pEvents: 'auto'});this._CCInput.focus("number");this.toggleAddressEdit();}}>
+                                <Text style={styles.edit}>edit</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
               </View>
-              <View style={styles.nameContainer}>
-                  <View style={styles.nameSubContainer}>
-                      <View style={styles.labelContainer}>
-                          <View style={styles.labelContainer}>
-                              <Text style={styles.label}>
-                                  Password:
-                              </Text>
-                          </View>
-                          <TextInput
-                              style={styles.phone}
-                              secureTextEntry={true}
-                              >
-                              {this.state.oldPass}
-                          </TextInput>
-                      </View>
-                      <TouchableOpacity style={styles.editContainer} onPress={() => {this.togglePassEdit()}}>
-                          <Text style={styles.edit}>edit</Text>
-                      </TouchableOpacity>
+            )}
+            if ( !this.state.showAddressEdit ) {
+                return (
+                  <View style={styles.container}>
+                    <View style={styles.nameContainer}>
+                        <View style={styles.nameSubContainer}>
+                            <Text style={styles.category}>
+                                Credit Cards
+                            </Text>
+                            <View style={styles.labelContainer}>
+                                <View style={styles.labelContainer}>
+                                    <Text style={styles.label}>
+                                        Primary Credit Card
+                                    </Text>
+                                    <Text style={styles.label}>
+                                        Expiry Date
+                                    </Text>
+                                    <Text style={styles.label}>
+                                        CVC Code
+                                    </Text>
+                                </View>
+                            </View>
+                            <View ref={component => this._CCInputView = component} pointerEvents={this.state.pEvents}>
+                                <LiteCreditCardInput
+                                    ref={component => this._CCInput = component}
+                                />
+                            </View>
+                            <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
+                                <TouchableOpacity style={styles.editContainer} onPress={() => {this.props.navigation.navigate('AddNewCard')}}>
+                                   <Text style={styles.edit}>add </Text>
+                                </TouchableOpacity>
+                                <View style={styles.separatorContainer}>
+                                       <Text style={styles.edit}>|</Text>
+                                   </View>
+                                <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({pEvents: 'auto'});this._CCInput.focus("number");this.toggleCardEdit();}}>
+                                    <Text style={styles.edit}>edit</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.nameContainer}>
+                        <View style={styles.nameSubContainer}>
+                            <Text style={styles.category}>
+                                Billing Address
+                            </Text>
+                            <View style={styles.labelContainer}>
+                                <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                                    <Text style={styles.label}>
+                                        Name:
+                                    </Text>
+                                </View>
+                                <TextInput
+                                    style={styles.nameInput}
+                                    ref={component => this._in1 = component}
+                                    onEndEditing={() => {this._in2.focus();}}
+                                >
+                                {this.state.name}
+                                </TextInput>
+                            </View>
+                            <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                                <View style={styles.labelContainer}>
+                                    <Text style={styles.label}>
+                                        Address:
+                                    </Text>
+                                </View>
+                                <TextInput
+                                    style={styles.nameInput}
+                                    ref={component => this._in2 = component}
+                                    onEndEditing={() => {this._in3.focus();}}
+                                >
+                                {this.state.address1}
+                                </TextInput>
+                            </View>
+                            <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                                <View style={styles.labelContainer}>
+                                    <Text style={styles.label}>
+                                        Address 2:
+                                    </Text>
+                                </View>
+                                <TextInput
+                                    style={styles.nameInput}
+                                    ref={component => this._in3 = component}
+                                    onEndEditing={() => {this._in4.focus();}}
+                                >
+                                {this.state.address2}
+                                </TextInput>
+                            </View>
+                            <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                                <View style={styles.labelContainer}>
+                                    <Text style={styles.label}>
+                                        State:
+                                    </Text>
+                                </View>
+                                <TextInput
+                                    style={styles.nameInput}
+                                    ref={component => this._in4 = component}
+                                    onEndEditing={() => {this._in5.focus();}}
+                                >
+                                {this.state.state}
+                                </TextInput>
+                            </View>
+                            <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                                <View style={styles.labelContainer}>
+                                    <Text style={styles.label}>
+                                        Zip Code:
+                                    </Text>
+                                </View>
+                                <TextInput
+                                    style={styles.nameInput}
+                                    ref={component => this._in5 = component}
+                                    onEndEditing={() => {this._in6.focus();}}
+                                    >
+                                {this.state.zip}
+                                </TextInput>
+                            </View>
+                            <View style={[styles.labelContainer, {marginVertical: 10}]}>
+                                <View style={styles.labelContainer}>
+                                    <Text style={styles.label}>
+                                        Country:
+                                    </Text>
+                                </View>
+                                <TextInput
+                                    style={styles.nameInput}
+                                    ref={component => this._in6 = component}
+                                    onEndEditing={() => {Keyboard.dismiss();}}
+                                >
+                                {this.state.country}
+                                </TextInput>
+                            </View>
+                            <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
+                                <TouchableOpacity style={styles.editContainer} onPress={() => {
+                                        Keyboard.dismiss();
+                                        this.toggleAddressEdit();
+                                        }}>
+                                   <Text style={styles.edit}>cancel </Text>
+                                </TouchableOpacity>
+                                <View style={styles.separatorContainer}>
+                                       <Text style={styles.edit}>|</Text>
+                                   </View>
+                                <TouchableOpacity style={styles.editContainer} onPress={() => {
+                                        Keyboard.dismiss();
+                                        this.toggleAddressEdit();
+                                        }}>
+                                    <Text style={styles.edit}>save</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
                   </View>
-              </View>
-            <View style={{height: Dimensions.get('window').width/2}}>
-           </View>
-         </KeyboardAwareScrollView >
-         )}
-    if ( !this.state.showPhoneEdit ){
-        return (
-         <KeyboardAwareScrollView
-            resetScrollToCoords={{ x: 0, y: 0 }}
-            contentContainerStyle={styles.scrollContainer}
-            scrollEnabled={true}
-            enableOnAndroid={true}
-            enableAutoAutomaticScroll={(Platform.OS === 'ios')}
-            automaticallyAdjustContentInsets={false}
-            extraHeight={200}
-            >
-           <Image style={styles.avatar}
-               source={{ uri: avatar }}
-             />
-           <View style={styles.nameContainer}>
-               <View style={styles.nameSubContainer}>
-                   <View style={styles.labelContainer}>
-                       <View style={styles.labelContainer}>
-                           <Text style={styles.label}>
-                               Name:
-                           </Text>
-                       </View>
-                       <Text style={styles.name}>
-                           {this.state.name}
-                       </Text>
-                   </View>
-                   <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempName: this.state.name}); this.toggleNameEdit()}}>
-                       <Text style={styles.edit}>edit</Text>
-                   </TouchableOpacity>
-               </View>
-           </View>
-           <View style={styles.nameContainer}>
-                 <View style={styles.nameSubContainer}>
-                     <View style={styles.labelContainer}>
-                         <View style={styles.labelContainer}>
-                             <Text style={styles.label}>
-                                 Email Address:
-                             </Text>
-                         </View>
-                         <Text style={styles.email}>
-                             {this.state.email}
-                         </Text>
-                     </View>
-                     <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempEmail: this.state.email}); this.toggleEmailEdit()}}>
-                         <Text style={styles.edit}>edit</Text>
-                     </TouchableOpacity>
-                 </View>
-             </View>
-           <View style={styles.nameContainer}>
-               <View style={styles.nameSubContainer}>
-                   <View style={styles.labelContainer}>
-                       <View style={styles.labelContainer}>
-                           <Text style={styles.label}>
-                               Phone:
-                           </Text>
-                       </View>
-                       <TextInput
-                            style={styles.nameInput}
-                            onChangeText={(phone) => this.setState({phone})}
-                            value={this.state.phone}
-                            textContentType={'telephoneNumber'}
-                            autoFocus={true}
-                       >
-                       </TextInput>
-                   </View>
-                   <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-                       <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({phone: this.state.tempPhone}); this.togglePhoneEdit()}}>
-                           <Text style={styles.edit}>cancel </Text>
-                       </TouchableOpacity>
-                       <View style={styles.separatorContainer}>
-                              <Text style={styles.edit}>|</Text>
-                          </View>
-                       <TouchableOpacity style={styles.editContainer} onPress={() => {this.togglePhoneEdit()}}>
-                           <Text style={styles.edit}>save</Text>
-                       </TouchableOpacity>
-                   </View>
-               </View>
-           </View>
-           <View style={styles.nameContainer}>
-                 <View style={styles.nameSubContainer}>
-                     <View style={styles.labelContainer}>
-                         <View style={styles.labelContainer}>
-                             <Text style={styles.label}>
-                                 Password:
-                             </Text>
-                         </View>
-                         <TextInput
-                             style={styles.phone}
-                             secureTextEntry={true}
-                             >
-                             {this.state.oldPass}
-                         </TextInput>
-                     </View>
-                     <TouchableOpacity style={styles.editContainer} onPress={() => {this.togglePassEdit()}}>
-                         <Text style={styles.edit}>edit</Text>
-                     </TouchableOpacity>
-                 </View>
-             </View>
-           <View style={{height: Dimensions.get('window').width/2}}>
-           </View>
-         </KeyboardAwareScrollView >
-       )}
-    if ( !this.state.showPassEdit ){
-        return (
-         <KeyboardAwareScrollView
-            resetScrollToCoords={{ x: 0, y: 0 }}
-            contentContainerStyle={styles.scrollContainer}
-            scrollEnabled={true}
-            enableOnAndroid={true}
-            enableAutoAutomaticScroll={(Platform.OS === 'ios')}
-            automaticallyAdjustContentInsets={false}
-            extraHeight={400}
-            >
-           <Image style={styles.avatar}
-               source={{ uri: avatar }}
-             />
-           <View style={styles.nameContainer}>
-               <View style={styles.nameSubContainer}>
-                   <View style={styles.labelContainer}>
-                       <View style={styles.labelContainer}>
-                           <Text style={styles.label}>
-                               Name:
-                           </Text>
-                       </View>
-                       <Text style={styles.name}>
-                           {this.state.name}
-                       </Text>
-                   </View>
-                   <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempName: this.state.name}); this.toggleNameEdit()}}>
-                       <Text style={styles.edit}>edit</Text>
-                   </TouchableOpacity>
-               </View>
-           </View>
-           <View style={styles.nameContainer}>
-                 <View style={styles.nameSubContainer}>
-                     <View style={styles.labelContainer}>
-                         <View style={styles.labelContainer}>
-                             <Text style={styles.label}>
-                                 Email Address:
-                             </Text>
-                         </View>
-                         <Text style={styles.email}>
-                             {this.state.email}
-                         </Text>
-                     </View>
-                     <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempEmail: this.state.email}); this.toggleEmailEdit()}}>
-                         <Text style={styles.edit}>edit</Text>
-                     </TouchableOpacity>
-                 </View>
-             </View>
-           <View style={styles.nameContainer}>
-              <View style={styles.nameSubContainer}>
-                  <View style={styles.labelContainer}>
-                      <View style={styles.labelContainer}>
-                          <Text style={styles.label}>
-                              Phone:
-                          </Text>
-                      </View>
-                      <Text style={styles.phone}>
-                          {this.state.phone}
-                      </Text>
-                  </View>
-                  <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempPhone: this.state.phone}); this.togglePhoneEdit()}}>
-                      <Text style={styles.edit}>edit</Text>
-                  </TouchableOpacity>
-              </View>
-           </View>
-           <View style={styles.nameContainer}>
-               <View style={styles.nameSubContainer}>
-                   <View style={styles.labelContainer}>
-                       <View style={styles.labelContainer}>
-                           <Text style={styles.label}>
-                               Verify Old Password:
-                           </Text>
-                       </View>
-                       <TextInput
-                            style={styles.nameInput}
-                            onChangeText={(tempPass) => this.setState({tempPass})}
-                            value={this.state.tempPass}
-                            textContentType={'password'}
-                            autoFocus={true}
-                            secureTextEntry={true}
-                            autoCapitalize={'none'}
-                       >
-                       </TextInput>
-                   </View>
-                   <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-                       <TouchableOpacity style={styles.editContainer} onPress={() => {this.togglePassEdit()}}>
-                           <Text style={styles.edit}>cancel </Text>
-                       </TouchableOpacity>
-                       <View style={styles.separatorContainer}>
-                              <Text style={styles.edit}>|</Text>
-                          </View>
-                       <TouchableOpacity style={styles.editContainer} onPress={() => {
-                        if(this.state.tempPass==this.state.oldPass){
-                            this.togglePassVerify();
-                            this.togglePassEdit();
-                        }
-                        else {
-                            this.setState({modalVisible: true});
-                        }}}>
-                           <Text style={styles.edit}>verify</Text>
-                       </TouchableOpacity>
-                   </View>
-               </View>
-           </View>
-           <View style={{height: Dimensions.get('window').width}}>
-           </View>
-           <Modal
-             animationType="fade"
-             transparent={true}
-             visible={this.state.modalVisible}
-             onRequestClose={this.closeModal}
-            >
-             <View style={styles.modalContainer}>
-               <Text style={styles.title}>
-                 {"Invalid Password! "}
-               </Text>
-               <Text style={styles.description}>
-                 {"Please correctly enter your current password. \n\n"}
-               </Text>
-               <Button
-                 color="#ABEBC6"
-                 onPress={this.closeModal}
-                 title="    OK    "
-               />
-             </View>
-           </Modal>
-         </KeyboardAwareScrollView >
-       )}
-    if ( !this.state.showPassVerify ){
-        return (
-         <KeyboardAwareScrollView
-            resetScrollToCoords={{ x: 0, y: 0 }}
-            contentContainerStyle={styles.scrollContainer}
-            scrollEnabled={true}
-            enableOnAndroid={true}
-            enableAutoAutomaticScroll={(Platform.OS === 'ios')}
-            automaticallyAdjustContentInsets={false}
-            extraHeight={200}
-            >
-           <Image style={styles.avatar}
-               source={{ uri: avatar }}
-             />
-           <View style={styles.nameContainer}>
-               <View style={styles.nameSubContainer}>
-                   <View style={styles.labelContainer}>
-                       <View style={styles.labelContainer}>
-                           <Text style={styles.label}>
-                               Name:
-                           </Text>
-                       </View>
-                       <Text style={styles.name}>
-                           {this.state.name}
-                       </Text>
-                   </View>
-                   <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempName: this.state.name}); this.toggleNameEdit()}}>
-                       <Text style={styles.edit}>edit</Text>
-                   </TouchableOpacity>
-               </View>
-           </View>
-           <View style={styles.nameContainer}>
-                 <View style={styles.nameSubContainer}>
-                     <View style={styles.labelContainer}>
-                         <View style={styles.labelContainer}>
-                             <Text style={styles.label}>
-                                 Email Address:
-                             </Text>
-                         </View>
-                         <Text style={styles.email}>
-                             {this.state.email}
-                         </Text>
-                     </View>
-                     <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempEmail: this.state.email}); this.toggleEmailEdit()}}>
-                         <Text style={styles.edit}>edit</Text>
-                     </TouchableOpacity>
-                 </View>
-             </View>
-           <View style={styles.nameContainer}>
-              <View style={styles.nameSubContainer}>
-                  <View style={styles.labelContainer}>
-                      <View style={styles.labelContainer}>
-                          <Text style={styles.label}>
-                              Phone:
-                          </Text>
-                      </View>
-                      <Text style={styles.phone}>
-                          {this.state.phone}
-                      </Text>
-                  </View>
-                  <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({tempPhone: this.state.phone}); this.togglePhoneEdit()}}>
-                      <Text style={styles.edit}>edit</Text>
-                  </TouchableOpacity>
-              </View>
-           </View>
-           <View style={styles.nameContainer}>
-               <View style={styles.nameSubContainer}>
-                   <View style={{flex: 1, flexDirection: 'column'}}>
-                       <View style={styles.labelContainer}>
-                           <View style={styles.labelContainer}>
-                               <Text style={styles.label}>
-                                   New Password:
-                               </Text>
-                           </View>
-                           <TextInput style={styles.nameInput}
-                                   onChangeText={(tempPass) => this.setState({tempPass})}
-                                   value={this.state.tempPass}
-                                   textContentType={'password'}
-                                   autoFocus={true}
-                                   secureTextEntry={true}
-                                   autoCapitalize={'none'}
-                              >
-                              </TextInput>
-                       </View>
-                       <View style={styles.labelContainer}>
-                           <View style={styles.labelContainer}>
-                              <Text style={styles.label}>
-                                  Verify Password:
-                              </Text>
-                          </View>
-                          <TextInput
-                             style={styles.nameInput}
-                             onChangeText={(temp1Pass) => this.setState({temp1Pass})}
-                             value={this.state.temp1Pass}
-                             textContentType={'password'}
-                             secureTextEntry={true}
-                             autoCapitalize={'none'}
-                        >
-                        </TextInput>
-                       </View>
-                   </View>
-                   <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-                       <TouchableOpacity style={styles.editContainer} onPress={() => {this.togglePassVerify()}}>
-                           <Text style={styles.edit}>cancel </Text>
-                       </TouchableOpacity>
-                       <View style={styles.separatorContainer}>
-                              <Text style={styles.edit}>|</Text>
-                          </View>
-                       <TouchableOpacity style={styles.editContainer} onPress={() => {
-                        if(this.state.tempPass==this.state.temp1Pass) {
-                            this.setState({oldPass: this.state.tempPass});
-                            this.togglePassVerify();
-                        }
-                        else {
-                            this.setState({modal1Visible: true});
-                        }}}>
-                           <Text style={styles.edit}>save</Text>
-                       </TouchableOpacity>
-                   </View>
-               </View>
-           </View>
-           <View style={{height: Dimensions.get('window').width}}>
-           </View>
-           <Modal
-             animationType="fade"
-             transparent={true}
-             visible={this.state.modal1Visible}
-             onRequestClose={this.close1Modal}
-            >
-             <View style={styles.modalContainer}>
-               <Text style={styles.title}>
-                 {"Passwords Do Not Match! "}
-               </Text>
-               <Text style={styles.description}>
-                 {"Please correctly enter your new password. \n\n"}
-               </Text>
-               <Button
-                 color="#ABEBC6"
-                 onPress={this.close1Modal}
-                 title="    OK    "
-               />
-             </View>
-           </Modal>
-         </KeyboardAwareScrollView >
-       )}
+        )}
     } else {
         return null
     }
   }
 }
 
-export default PersonalInfo;
+export default PaymentInfo;
 
 const styles = StyleSheet.create({
   container: {
@@ -841,7 +538,7 @@ const styles = StyleSheet.create({
   },
   nameInput: {
       fontFamily: 'Poor Story',
-      fontSize: 35,
+      fontSize: 20,
       textAlign: 'center',
       textAlignVertical: 'center',
       backgroundColor: '#FFF',
@@ -873,15 +570,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlignVertical: 'center'
   },
-  phone: {
+  category: {
     fontFamily: 'Poor Story',
-    fontSize: 20,
-    textAlignVertical: 'center'
+    fontSize: 24,
+    textAlignVertical: 'center',
+    alignSelf: 'center',
+    marginBottom: 10,
   },
   label: {
     fontFamily: 'Poor Story',
     textAlignVertical: 'center',
-    fontSize: 16
+    fontSize: 16,
+    marginHorizontal: 10,
   },
   modalContainer: {
       flex: 1,
@@ -905,5 +605,10 @@ const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: 'center',
       fontFamily: 'Poor Story'
-    }
+    },
+    phone: {
+        fontFamily: 'Poor Story',
+        fontSize: 20,
+        textAlignVertical: 'center'
+    },
 });

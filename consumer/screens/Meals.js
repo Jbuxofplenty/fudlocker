@@ -61,7 +61,6 @@ export default class Meals extends Component {
              alignSelf: 'center',
              flex: 1,
            },
-           headerRight: (<View></View>),
        };
      };
 

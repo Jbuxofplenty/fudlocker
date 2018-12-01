@@ -6,6 +6,7 @@ import MapView, { Marker, Callout } from 'react-native-maps'
 import FontText from './FontText';
 import getDirections from 'react-native-google-maps-directions';
 import { NavigationActions } from 'react-navigation';
+import { DrawerActions } from 'react-navigation-drawer';
 import { createFilter } from 'react-native-search-filter';
 
 import LOCATION_DATA from '../assets/static_data/fudlkr_locations.json';
@@ -28,18 +29,12 @@ const MEAL_KEYS_TO_FILTERS = ['strMeal', 'datePackaged', 'calories'];
 const CATEGORY_KEYS_TO_FILTERS = ['strCategory'];
 
 export default class Home extends Component {
-    static navigationOptions = {
-          title: 'Home',
-          headerStyle: {
-            backgroundColor: '#2ECC71',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            textAlign: 'center',
-            alignSelf: 'center',
-            flex: 1,
-          },
-      };
+static navigationOptions = ({ navigation }) => {
+       return {
+          title: "Home",
+          headerLeft: (<View></View>),
+    }
+  };
     constructor(props) {
         super(props);
         this.state = {

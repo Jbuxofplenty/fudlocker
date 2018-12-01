@@ -30,7 +30,6 @@ class Meal extends Component {
              alignSelf: 'center',
              flex: 1,
            },
-           headerRight: (<View></View>),
        };
      };
     state = {
@@ -85,19 +84,19 @@ class Meal extends Component {
           handleGetDirections () {
                 var arrayLength = fudlkr_locations.data.length;
                    for (var i = 0; i < arrayLength; i++) {
-                      if( fudlkr_locations.data[i].strArea == this.props.navigation.state.params.location) {
+                      if( fudlkr_locations.data[i].type == this.props.navigation.state.params.location) {
                           latitude = fudlkr_locations.data[i].latlng.latitude;
                           longitude = fudlkr_locations.data[i].latlng.longitude;
                       }
                    }
                   const data = {
-                    source: {
-                     latitude: this.state.your_lat,
-                     longitude: this.state.your_lng
+                source: {
+                    latitude: this.state.your_lat,
+                    longitude: this.state.your_lng
                },
                    destination: {
-                     latitude: latitude,
-                     longitude: longitude
+                    latitude: latitude,
+                    longitude: longitude
                },
                    params: [
                      {
@@ -134,50 +133,30 @@ class Meal extends Component {
     }
     return (
     <View>
-        <View>
-            <Text style={styles.priceText}>${this.props.navigation.state.params.cost}</Text>
-            <Text style={styles.descriptionText}>{this.props.navigation.state.params.title}</Text>
-            <Text style={styles.descriptionText}>Date Packaged: {this.randomDate()}</Text>
-            <Text style={styles.descriptionText}>Estimated Calories: {this.props.navigation.state.params.calories}</Text>
-            <Text style={styles.descriptionText}>Location: {this.props.navigation.state.params.location}</Text>
-            <Text style={styles.descriptionText}>Cuisine Category: {this.props.navigation.state.params.strCategory}</Text>
+      <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
+          <Text style={styles.priceText}>${this.props.navigation.state.params.cost}</Text>
+          <Text style={styles.descriptionText}>{this.props.navigation.state.params.title}</Text>
+          <View style={styles.lineItemContainer} >
+              <Text style={styles.labelText}>Cuisine Category:</Text>
+              <Text style={styles.valueText}>{this.props.navigation.state.params.strCategory}</Text>
           </View>
+          <View style={styles.lineItemContainer} >
+              <Text style={styles.labelText}>Estimated Calories:</Text>
+              <Text style={styles.valueText}>{this.props.navigation.state.params.calories}</Text>
+          </View>
+          <View style={styles.lineItemContainer} >
+              <Text style={styles.labelText}>Date Packaged:</Text>
+              <Text style={styles.valueText}>{this.randomDate(0,5)}</Text>
+          </View>
+          <View style={styles.lineItemContainer} >
+            <Text style={styles.labelText}>Location:</Text>
+            <Text style={styles.valueText}>{this.props.navigation.state.params.location}</Text>
+        </View>
+      </View>
     </View>
 
     )
   }
-
-  renderNavigator = () => {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly'
-        }}
-      >
-        <TouchableOpacity style={[styles.navigatorButton, { flex: 2 }]}
-            onPress={() => {this.handleGetDirections()
-        }}>
-          <Text style={styles.descriptionText}>DIRECTIONS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.navigatorButton, { flex: 2 }]}
-            onPress={() => {
-                 var arrayLength = fudlkr_locations.data.length;
-                 for (var i = 0; i < arrayLength; i++) {
-                    if( fudlkr_locations.data[i].type == this.props.navigation.state.params.location) {
-                        latitude = fudlkr_locations.data[i].latlng.latitude;
-                        longitude = fudlkr_locations.data[i].latlng.longitude;
-                    }
-                 }
-
-                 this.props.navigation.navigate('Home', {coords: {latitude: latitude, longitude: longitude}, searching: false});
-                }}>
-          <Text style={styles.descriptionText}>MAP</Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
-
   renderContactHeader = () => {
     const img  = this.props.navigation.state.params.img;
     return (
@@ -211,13 +190,19 @@ class Meal extends Component {
               {this.renderContactHeader()}
           </View>
           </View>
-
           <View style={styles.productRow}>{this.renderDescription()}</View>
-          <View style={styles.productRow}>{this.renderNavigator()}</View>
-          <View style={styles.productRow}>{this.renderDetail()}</View>
         </ScrollView>
         <View style={styles.footer}>
-          <TouchableOpacity style={styles.buttonFooter}>
+          <TouchableOpacity style={styles.buttonFooter} onPress={() => {
+                    title = params.title;
+                    img = params.img;
+                    location = params.location;
+                    strCategory = params.strCategory;
+                    cost = params.cost;
+                    calories = params.calories;
+                    desc = "Purchase " + params.title;
+                    this.props.navigation.navigate('Purchase', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location});
+               }}>
             <Text style={styles.buttonText}>Purchase</Text>
           </TouchableOpacity>
          </View>
@@ -246,6 +231,11 @@ cardContainer: {
     height: Dimensions.get('window').width * (3 / 4),
     width: Dimensions.get('window').width,
   },
+  lineItemContainer : {
+    flex: 1,
+    flexDirection: 'row',
+    marginVertical: 5,
+},
   headerContainer: {
     alignItems: 'center',
     backgroundColor: '#FFF',
@@ -303,6 +293,32 @@ cardContainer: {
     fontSize: 18,
     fontFamily: 'Poor Story',
   },
+  labelText: {
+  fontFamily: 'Poor Story',
+  fontSize: 18,
+  color: 'black',
+  width: '50%',
+  textAlignVertical: 'center',
+  textAlign: 'left',
+  paddingLeft: 5,
+},
+location: {
+    fontFamily: 'Poor Story',
+    fontSize: 24,
+    color: 'black',
+    width: '100%',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+valueText: {
+  fontFamily: 'Poor Story',
+  fontSize: 18,
+  width: '50%',
+  color: 'black',
+  textAlignVertical: 'center',
+  textAlign: 'right',
+  paddingRight: 5,
+},
   priceText: {
     marginBottom: 5,
     letterSpacing: 1,
@@ -310,6 +326,7 @@ cardContainer: {
     fontSize: 36,
     fontWeight: '400',
     fontFamily: 'Poor Story',
+    alignSelf: 'center'
   },
   buttonText: {
       marginBottom: 5,
@@ -342,5 +359,6 @@ cardContainer: {
     fontWeight: '400',
     letterSpacing: 1,
     fontFamily: 'Poor Story',
+    alignSelf: 'center',
   },
 });

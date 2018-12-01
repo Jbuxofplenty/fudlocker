@@ -25,6 +25,7 @@ export default class Search extends Component {
                 alignSelf: 'center',
                 flex: 1,
               },
+              headerLeft: (<View></View>),
           };
     constructor(props) {
         super(props);

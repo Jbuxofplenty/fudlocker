@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { LinearGradient, Font } from 'expo';
 import styles from "./Style";
+import { NavigationActions } from 'react-navigation';
 
 
 import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView} from 'react-native';

@@ -1,25 +1,60 @@
 import React from 'react';
-import { Platform, AppRegistry, Text } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { Platform, AppRegistry, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
+import { DrawerActions } from 'react-navigation-drawer';
+import { Icon } from 'react-native-elements';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import LoginScreen from '../screens/Login';
 import CategoryScreen from '../screens/Categories';
 import ProfileScreen from '../screens/profile/Profile';
 import MealsScreen from '../screens/Meals';
+import OrdersScreen from '../screens/Orders';
+import OrderModeScreen from '../screens/OrderMode';
+import OrderScreen from '../screens/Order';
 import MealScreen from '../screens/Meal';
 import WebViewScreen from '../screens/WebView';
 import MealModeScreen from '../screens/MealMode';
 import SearchScreen from '../screens/Search';
 import LocationScreen from '../screens/Location';
+import PurchaseScreen from '../screens/Purchase';
 import PersonalInfoScreen from '../screens/profile/PersonalInfo';
 import MealRadiusScreen from '../screens/profile/MealRadius';
+import PaymentInfoScreen from '../screens/profile/PaymentInfo';
+import AddCardScreen from '../screens/profile/AddNewCard';
+import DrawerScreen from '../screens/Drawer';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Search: SearchScreen,
   Location: LocationScreen,
-});
+  Profile: ProfileScreen,
+  WebView: WebViewScreen,
+  MealRadius: MealRadiusScreen,
+  PersonalInfo: PersonalInfoScreen,
+  PaymentInfo: PaymentInfoScreen,
+  AddNewCard: AddCardScreen,
+},{
+      navigationOptions: ({ navigation }) => ({
+        headerStyle: {
+          backgroundColor: '#2ECC71',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          textAlign: 'center',
+          alignSelf: 'center',
+          flex: 1,
+        },
+        headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
+        <Icon
+             name='md-menu'
+             type='ionicon'
+             color='white'
+             containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
+          /></TouchableOpacity>),
+    })
+  });
 
 HomeStack.navigationOptions = {
   tabBarLabel: <Text style={{fontFamily: 'Poor Story', textAlign: 'center', color: 'white'}}>Home</Text>,
@@ -44,7 +79,34 @@ const MealStack = createStackNavigator({
   Categories: CategoryScreen,
   Meal: MealScreen,
   Meals: MealsScreen,
-});
+  Purchase: PurchaseScreen,
+  AddPurchaseCard: AddCardScreen,
+  Profile: ProfileScreen,
+  WebView: WebViewScreen,
+  MealRadius: MealRadiusScreen,
+  PersonalInfo: PersonalInfoScreen,
+  PaymentInfo: PaymentInfoScreen,
+  AddNewCard: AddCardScreen,
+},{
+      navigationOptions: ({ navigation }) => ({
+        headerStyle: {
+          backgroundColor: '#2ECC71',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          textAlign: 'center',
+          alignSelf: 'center',
+          flex: 1,
+        },
+        headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
+          <Icon
+               name='md-menu'
+               type='ionicon'
+               color='white'
+               containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
+            /></TouchableOpacity>),
+    })
+  });
 
 MealStack.navigationOptions = {
   tabBarLabel: <Text style={{fontFamily: 'Poor Story', textAlign: 'center', color: 'white'}}>Meals</Text>,
@@ -61,19 +123,43 @@ MealStack.navigationOptions = {
   },
 };
 
-const ProfileStack = createStackNavigator({
+const OrderStack = createStackNavigator({
+  OrderMode: OrderModeScreen,
+  Order: OrderScreen,
+  Orders: OrdersScreen,
   Profile: ProfileScreen,
   WebView: WebViewScreen,
   MealRadius: MealRadiusScreen,
   PersonalInfo: PersonalInfoScreen,
-});
+  PaymentInfo: PaymentInfoScreen,
+  AddNewCard: AddCardScreen,
+},{
+      navigationOptions: ({ navigation }) => ({
+        headerStyle: {
+          backgroundColor: '#2ECC71',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          textAlign: 'center',
+          alignSelf: 'center',
+          flex: 1,
+        },
+        headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
+          <Icon
+               name='md-menu'
+               type='ionicon'
+               color='white'
+               containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
+            /></TouchableOpacity>),
+    })
+  });
 
-ProfileStack.navigationOptions = {
-  tabBarLabel: <Text style={{fontFamily: 'Poor Story', textAlign: 'center', color: 'white'}}>Profile</Text>,
+OrderStack.navigationOptions = {
+  tabBarLabel: <Text style={{fontFamily: 'Poor Story', textAlign: 'center', color: 'white'}}>Orders</Text>,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-person${focused ? '' : '-outline'}` : 'md-person'}
+      name={Platform.OS === 'ios' ? `ios-pricetag${focused ? '' : '-outline'}` : 'md-pricetag'}
     />
   ),
   tabBarOptions: {
@@ -83,8 +169,30 @@ ProfileStack.navigationOptions = {
   },
 };
 
-export default createBottomTabNavigator({
+const TabNavigator = createBottomTabNavigator({
   HomeStack,
   MealStack,
-  ProfileStack,
+  OrderStack,
+},{
+     headerMode: "none"
+ });
+
+const DrawerNavigator = createDrawerNavigator({
+  Home: {
+    screen: TabNavigator,
+  },
+  Login: {
+    screen: LoginScreen,
+  }}, {
+        contentComponent: DrawerScreen,
+        drawerWidth: Dimensions.get('window').width - 120,
+        drawerPosition: 'right',
+    });
+
+
+export default createStackNavigator({
+  DrawerNavigator,
+}, {
+    headerMode: "none"
 });
+
