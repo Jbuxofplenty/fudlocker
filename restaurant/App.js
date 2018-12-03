@@ -3,9 +3,6 @@ import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
 
 import LoginScreen from './screens/Login';
 import SignUpScreen from './screens/SignUp';
-import HomeScreen from './screens/HomeScreen';
-import ProfileScreen from './screens/profile/Profile';
-import MealScreen from './screens/Meal';
 
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import AppNavigator from './navigation/AppNavigator';
@@ -37,11 +34,8 @@ export default class App extends React.Component {
 
 const scenes = Actions.create(
   <Scene key="root">
-        <Scene key="login" component={LoginScreen} initial={true}/>
+        <Scene key="signup" component={SignUpScreen} initial={true}/>
         <Scene key="app" component={AppNavigator}/>
-        <Scene key="home" component={HomeScreen}/>
-        <Scene key="profile" component={ProfileScreen}/>
-        <Scene key="meal" component={MealScreen}/>
   </Scene>
 );
 

@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
-  Image,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { Font } from 'expo'
@@ -18,10 +17,10 @@ const dateformat = require('dateformat');
 import getDirections from 'react-native-google-maps-directions';
 import fudlkr_locations from '../assets/static_data/fudlkr_locations.json';
 
-class Order extends Component {
+class Meal extends Component {
     static navigationOptions = ({ navigation }) => {
        return {
-         title: navigation.getParam('strIdOrder'),
+         title: navigation.getParam('title'),
          headerStyle: {
              backgroundColor: '#2ECC71',
            },
@@ -120,9 +119,9 @@ class Order extends Component {
       </View>
     )
   }
-  randomDate(low, high) {
+  randomDate() {
       var date = new Date();
-      days_past = Math.random() * (high - low) + low;
+      days_past = Math.random() * (5 - 0) + 0;
       date.setDate(date.getDate()-days_past);
       var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
       return d.toString()
@@ -134,101 +133,30 @@ class Order extends Component {
     }
     return (
     <View>
-        <View>
-            <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
-                <Text style={styles.priceText}>{"Order Information"}</Text>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Fudlkr 4-digit Code:</Text>
-                    <Text style={styles.valueText}>{this.props.navigation.state.params.lockerCode}</Text>
-                </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Location:</Text>
-                    <Text style={styles.valueText}>{this.props.navigation.state.params.location}</Text>
-                </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Order Number:</Text>
-                    <Text style={styles.valueText}>{this.props.navigation.state.params.idOrder}</Text>
-                </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Cost:</Text>
-                    <Text style={styles.valueText}>${this.props.navigation.state.params.cost}</Text>
-                </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Date Purchased:</Text>
-                    <Text style={styles.valueText}>{this.randomDate(0,5)}</Text>
-                </View>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('PaymentInfo')}>
-                    <View style={styles.lineItemContainer} >
-                        <Text style={[styles.labelText, {width: '35%'}]}>Payment Info:</Text>
-                        {this.props.navigation.state.params.paymentMethod["brand"] == 'Visa' &&
-                            <Image
-                                style={{width: 50, height: 25, margin: 15, borderRadius: 3}}
-                                source={require("./../assets/images/visa.png")}
-                             />
-                        }
-                        {this.props.navigation.state.params.paymentMethod["brand"] == 'American Express' &&
-                           <Image
-                               style={{width: 50, height: 25, margin: 15, borderRadius: 3}}
-                               source={require("./../assets/images/amex.png")}
-                            />
-                        }
-                        <Text style={[styles.valueText, {width: '40%'}]}>{"Ending in " + this.props.navigation.state.params.paymentMethod["last4"]}</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-            <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
-                <Text style={styles.priceText}>{"Meal Information"}</Text>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Cuisine Category: </Text>
-                    <Text style={styles.valueText}>{this.props.navigation.state.params.strCategory}</Text>
-                </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Estimated Calories:</Text>
-                    <Text style={styles.valueText}>{this.props.navigation.state.params.calories}</Text>
-                </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Date Packages:</Text>
-                    <Text style={styles.valueText}>{this.randomDate(0,5)}</Text>
-                </View>
-            </View>
-            <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
-                <Text style={styles.priceText}>{"Location"}</Text>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.location}>{this.props.navigation.state.params.location}</Text>
-                </View>
-                    <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-evenly'
-                        }}
-                      >
-                        <TouchableOpacity style={[styles.navigatorButton, { flex: 2 }]}
-                            onPress={() => {this.handleGetDirections()
-                        }}>
-                          <Text style={styles.descriptionText}>DIRECTIONS</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.navigatorButton, { flex: 2 }]}
-                            onPress={() => {
-                                 var arrayLength = fudlkr_locations.data.length;
-                                 for (var i = 0; i < arrayLength; i++) {
-                                    if( fudlkr_locations.data[i].type == this.props.navigation.state.params.location) {
-                                        latitude = fudlkr_locations.data[i].latlng.latitude;
-                                        longitude = fudlkr_locations.data[i].latlng.longitude;
-                                    }
-                                 }
-
-                                 this.props.navigation.navigate('Home', {coords: {latitude: latitude, longitude: longitude}, searching: false});
-                                }}>
-                          <Text style={styles.descriptionText}>MAP</Text>
-                        </TouchableOpacity>
-                    </View>
-             </View>
+      <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
+          <Text style={styles.priceText}>${this.props.navigation.state.params.cost}</Text>
+          <Text style={styles.descriptionText}>{this.props.navigation.state.params.title}</Text>
+          <View style={styles.lineItemContainer} >
+              <Text style={styles.labelText}>Cuisine Category:</Text>
+              <Text style={styles.valueText}>{this.props.navigation.state.params.strCategory}</Text>
           </View>
+          <View style={styles.lineItemContainer} >
+              <Text style={styles.labelText}>Estimated Calories:</Text>
+              <Text style={styles.valueText}>{this.props.navigation.state.params.calories}</Text>
+          </View>
+          <View style={styles.lineItemContainer} >
+              <Text style={styles.labelText}>Date Packaged:</Text>
+              <Text style={styles.valueText}>{this.randomDate(0,5)}</Text>
+          </View>
+          <View style={styles.lineItemContainer} >
+            <Text style={styles.labelText}>Location:</Text>
+            <Text style={styles.valueText}>{this.props.navigation.state.params.location}</Text>
+        </View>
+      </View>
     </View>
 
     )
   }
-
   renderContactHeader = () => {
     const img  = this.props.navigation.state.params.img;
     return (
@@ -258,13 +186,26 @@ class Order extends Component {
         <View style={styles.mainviewStyle}>
         <ScrollView style={styles.scroll}>
           <View style={[styles.container, this.props.containerStyle]}>
-              <View style={styles.cardContainer}>
-                  {this.renderContactHeader()}
-              </View>
+          <View style={styles.cardContainer}>
+              {this.renderContactHeader()}
           </View>
-
+          </View>
           <View style={styles.productRow}>{this.renderDescription()}</View>
         </ScrollView>
+        <View style={styles.footer}>
+          <TouchableOpacity style={styles.buttonFooter} onPress={() => {
+                    title = params.title;
+                    img = params.img;
+                    location = params.location;
+                    strCategory = params.strCategory;
+                    cost = params.cost;
+                    calories = params.calories;
+                    desc = "Purchase " + params.title;
+                    this.props.navigation.navigate('Purchase', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location});
+               }}>
+            <Text style={styles.buttonText}>Purchase</Text>
+          </TouchableOpacity>
+         </View>
         </View>
         : null }
       </View>
@@ -272,7 +213,7 @@ class Order extends Component {
   }
 }
 
-export default Order;
+export default Meal;
 
 const styles = StyleSheet.create({
 cardContainer: {
@@ -283,11 +224,6 @@ cardContainer: {
     flexDirection: 'column',
     justifyContent: 'space-evenly'
   },
-  lineItemContainer : {
-      flex: 1,
-      flexDirection: 'row',
-      marginVertical: 5,
-  },
   coverContainer: {
     position: 'relative',
   },
@@ -295,6 +231,11 @@ cardContainer: {
     height: Dimensions.get('window').width * (3 / 4),
     width: Dimensions.get('window').width,
   },
+  lineItemContainer : {
+    flex: 1,
+    flexDirection: 'row',
+    marginVertical: 5,
+},
   headerContainer: {
     alignItems: 'center',
     backgroundColor: '#FFF',
@@ -302,6 +243,7 @@ cardContainer: {
   scroll: {
     backgroundColor: '#FFF',
     flex: 1,
+    marginBottom: 55,
   },
   productRow: {
     margin: 15,
@@ -329,32 +271,6 @@ cardContainer: {
     height: 65,
     alignItems: 'center',
   },
-  labelText: {
-    fontFamily: 'Poor Story',
-    fontSize: 18,
-    color: 'black',
-    width: '50%',
-    textAlignVertical: 'center',
-    textAlign: 'left',
-    paddingLeft: 5,
-  },
-  location: {
-      fontFamily: 'Poor Story',
-      fontSize: 24,
-      color: 'black',
-      width: '100%',
-      textAlignVertical: 'center',
-      textAlign: 'center',
-    },
-  valueText: {
-    fontFamily: 'Poor Story',
-    fontSize: 18,
-    width: '50%',
-    color: 'black',
-    textAlignVertical: 'center',
-    textAlign: 'right',
-    paddingRight: 5,
-  },
   buttonFooter: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -377,14 +293,40 @@ cardContainer: {
     fontSize: 18,
     fontFamily: 'Poor Story',
   },
+  labelText: {
+  fontFamily: 'Poor Story',
+  fontSize: 18,
+  color: 'black',
+  width: '50%',
+  textAlignVertical: 'center',
+  textAlign: 'left',
+  paddingLeft: 5,
+},
+location: {
+    fontFamily: 'Poor Story',
+    fontSize: 24,
+    color: 'black',
+    width: '100%',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+valueText: {
+  fontFamily: 'Poor Story',
+  fontSize: 18,
+  width: '50%',
+  color: 'black',
+  textAlignVertical: 'center',
+  textAlign: 'right',
+  paddingRight: 5,
+},
   priceText: {
-    marginVertical: 10,
+    marginBottom: 5,
     letterSpacing: 1,
     color: Colors.black,
-    fontSize: 28,
+    fontSize: 36,
     fontWeight: '400',
     fontFamily: 'Poor Story',
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   buttonText: {
       marginBottom: 5,
@@ -417,5 +359,6 @@ cardContainer: {
     fontWeight: '400',
     letterSpacing: 1,
     fontFamily: 'Poor Story',
+    alignSelf: 'center',
   },
 });
