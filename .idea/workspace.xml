@@ -7,12 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5524729b-1005-4067-b333-ee6dbcc61efb" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/.expo/packager-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/OrderMode.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/OrderMode.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/Orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Orders.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/Purchase.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Purchase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/screens/profile/PaymentInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/profile/PaymentInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/WebView.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/WebView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/profile/Profile.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,25 +32,16 @@
         <entry file="file://$PROJECT_DIR$/consumer/screens/OrderMode.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
-              <caret line="59" column="37" lean-forward="true" selection-start-line="59" selection-start-column="37" selection-end-line="59" selection-end-column="64" />
+              <caret line="59" column="37" selection-start-line="59" selection-start-column="37" selection-end-line="59" selection-end-column="64" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MealMode.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MealMode.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/consumer/screens/MealMode.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="414">
               <caret line="58" column="64" selection-start-line="58" selection-start-column="64" selection-end-line="58" selection-end-column="64" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PersonalInfo.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consumer/screens/profile/PersonalInfo.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="155" column="7" selection-start-line="155" selection-start-column="4" selection-end-line="155" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -68,10 +55,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WebView.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="WebView.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/consumer/screens/WebView.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state />
+            <state relative-caret-position="306">
+              <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Meal.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/consumer/screens/Meal.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="33" column="7" lean-forward="true" selection-start-line="20" selection-start-column="4" selection-end-line="33" selection-end-column="7" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -103,8 +101,8 @@
       <file leaf-file-name="Profile.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Profile.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="832">
-              <caret line="84" column="4" selection-start-line="84" selection-start-column="4" selection-end-line="84" selection-end-column="4" />
+            <state relative-caret-position="339">
+              <caret line="301" column="87" selection-start-line="301" selection-start-column="87" selection-end-line="301" selection-end-column="87" />
             </state>
           </provider>
         </entry>
@@ -113,7 +111,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>name</find>
       <find>verifyUserData</find>
       <find>updatePass</find>
       <find>_getLocationAsync</find>
@@ -143,6 +140,7 @@
       <find>date</find>
       <find>update(</find>
       <find>console</find>
+      <find>openURI</find>
     </findStrings>
     <replaceStrings>
       <replace>Profile</replace>
@@ -163,7 +161,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_current.json" />
         <option value="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_history.json" />
         <option value="$PROJECT_DIR$/consumer/screens/CurrentOrders.js" />
         <option value="$PROJECT_DIR$/consumer/screens/OrderHistory.js" />
@@ -198,7 +195,6 @@
         <option value="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_apps.json" />
         <option value="$PROJECT_DIR$/consumer/screens/Meal.js" />
         <option value="$PROJECT_DIR$/consumer/screens/SignUp.js" />
-        <option value="$PROJECT_DIR$/consumer/screens/profile/Profile.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Drawer.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Login.js" />
         <option value="$PROJECT_DIR$/consumer/assets/static_data/fudlkr_locations.json" />
@@ -214,6 +210,8 @@
         <option value="$PROJECT_DIR$/consumer/screens/Orders.js" />
         <option value="$PROJECT_DIR$/consumer/screens/OrderMode.js" />
         <option value="$PROJECT_DIR$/consumer/screens/MealMode.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/profile/Profile.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/WebView.js" />
       </list>
     </option>
   </component>
@@ -644,13 +642,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/screens/Meal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="832">
-          <caret line="203" column="131" selection-start-line="203" selection-start-column="131" selection-end-line="203" selection-end-column="131" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consumer/screens/Login.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -686,13 +677,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="832">
-          <caret line="84" column="4" selection-start-line="84" selection-start-column="4" selection-end-line="84" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consumer/screens/profile/PersonalInfo.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -705,11 +689,6 @@
         <state relative-caret-position="118">
           <caret line="94" selection-start-line="94" selection-end-line="94" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/screens/WebView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/consumer/screens/Search.js">
@@ -741,7 +720,7 @@
     <entry file="file://$PROJECT_DIR$/consumer/screens/OrderMode.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
-          <caret line="59" column="37" lean-forward="true" selection-start-line="59" selection-start-column="37" selection-end-line="59" selection-end-column="64" />
+          <caret line="59" column="37" selection-start-line="59" selection-start-column="37" selection-end-line="59" selection-end-column="64" />
         </state>
       </provider>
     </entry>
@@ -749,6 +728,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
           <caret line="58" column="64" selection-start-line="58" selection-start-column="64" selection-end-line="58" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/profile/Profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="301" column="87" selection-start-line="301" selection-start-column="87" selection-end-line="301" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/Meal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="7" lean-forward="true" selection-start-line="20" selection-start-column="4" selection-end-line="33" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consumer/screens/WebView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
         </state>
       </provider>
     </entry>

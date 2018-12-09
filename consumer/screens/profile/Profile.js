@@ -122,8 +122,8 @@ class SettingsScreen extends Component {
       pushNotifications: !state.pushNotifications,
     }))
   }
-  openURI(uri){
-    this.props.navigation.navigate('WebView', {uri:uri})
+  openURI(uri, title){
+    this.props.navigation.navigate('WebView', {uri:uri, title: title})
   }
 
   render() {
@@ -226,7 +226,7 @@ class SettingsScreen extends Component {
           <ListItem
             title="About Us"
             titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
-            onPress={() => this.openURI("http://fudlkr.com/index.html")}
+            onPress={() => this.openURI("http://fudlkr.com/index.html", "About Us")}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
@@ -242,7 +242,7 @@ class SettingsScreen extends Component {
           <ListItem
             title="Terms and Policies"
             titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
-            onPress={() => this.openURI("http://fudlkr.com/conditions.html")}
+            onPress={() => this.openURI("http://fudlkr.com/conditions.html", "Terms and Policies")}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
@@ -299,7 +299,7 @@ class SettingsScreen extends Component {
           <ListItem
             title="Send FeedBack"
             titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
-            onPress={() => this.openURI("http://fudlkr.com/signup.html")}
+            onPress={() => this.openURI("http://fudlkr.com/signup.html", "Send Feedback")}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
