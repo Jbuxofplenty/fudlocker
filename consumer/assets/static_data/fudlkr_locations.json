@@ -8,7 +8,7 @@
         "latitude": 40.004457,
         "longitude": -105.264953
       },
-      "type": "C4C",
+      "type": "c4c",
       "image": "http://fudlkr.com/mobile_assets/c4c.jpg"
     },
     {
@@ -19,7 +19,7 @@
         "latitude": 40.006041,
         "longitude": -105.265902
       },
-      "type": "Farrand",
+      "type": "farrand",
       "image": "http://fudlkr.com/mobile_assets/farrand.jpg"
     },
     {
@@ -30,7 +30,7 @@
         "latitude": 39.997734,
         "longitude": -105.251917
       },
-      "type": "Village",
+      "type": "village",
       "image": "http://fudlkr.com/mobile_assets/village.jpg"
     }
 

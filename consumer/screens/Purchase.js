@@ -19,6 +19,7 @@ const dateformat = require('dateformat');
 import getDirections from 'react-native-google-maps-directions';
 import fudlkr_locations from '../assets/static_data/fudlkr_locations.json';
 import { SelectPayment } from 'react-native-checkout'
+import * as firebase from 'firebase';
 
 class Purchase extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -40,6 +41,8 @@ class Purchase extends Component {
         paramsLoaded: false,
         modalVisible: false,
         paymentSource: '',
+        meal_data: null,
+        current_meal_data: null,
     };
    async componentDidMount() {
     await Font.loadAsync({
@@ -47,7 +50,16 @@ class Purchase extends Component {
     });
     var temp = this.props.navigation.state.params;
     this.setState({ fontLoaded: true, paramsLoaded: true });
-    }
+    this.populateInfo();
+   }
+   populateInfo() {
+     //Get the current userID
+     var userId = firebase.auth().currentUser.uid;
+     //Get the user data
+     return firebase.database().ref('/meals/all/').once('value').then(function(snapshot) {
+         this.setState({ meal_data: snapshot.val().meals });
+     }.bind(this));
+   }
     _getLocationAsync = async () => {
           let { status } = await Permissions.askAsync(Permissions.LOCATION);
           if (status !== 'granted') {
@@ -64,6 +76,38 @@ class Purchase extends Component {
           this.setState({your_lng: location.coords.longitude});
 
         };
+
+    readyPurchase = async () => {
+        let meal_data = this.state.meal_data[this.props.navigation.state.params.idMeal-1];
+        var date = new Date();
+        var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
+        meal_data.strDatePurchased = d.toString();
+        meal_data.datePurchased = date.valueOf();
+        meal_data.datePackaged = this.randomDate();
+        meal_data.lockerCode = Math.round(Math.random() * (9999 - 1000) + 1000);
+        meal_data.pickedUp = false;
+        meal_data.datePickedUp = "N/A";
+        await firebase.database().ref('/meals/mealCounter').once('value').then(function(snapshot) {
+            meal_data.idOrder = snapshot.val();
+        }.bind(this));
+        var userId = firebase.auth().currentUser.uid;
+        await firebase.database().ref('/meals').update({
+          mealCounter: meal_data.idOrder + 1
+        });
+        meal_data.strIdOrder = "Order #" + meal_data.idOrder.toString();
+        meal_data.paymentMethod = {};
+        meal_data.paymentMethod.brand = "Visa";
+        meal_data.paymentMethod.expiry = "02/22";
+        meal_data.paymentMethod.last4 = "0789";
+        this.setState({meal_data: meal_data});
+    }
+
+    purchaseMeal = async () => {
+        //Get the current userID
+        var userId = firebase.auth().currentUser.uid;
+        await firebase.database().ref('users/' + userId + '/orders/current/').push(this.state.meal_data);
+        await firebase.database().ref('users/' + userId + '/orders/history/').push(this.state.meal_data);
+    }
 
         regionFrom(lat, lon, distance) {
                 distance = distance/2
@@ -199,11 +243,10 @@ class Purchase extends Component {
 
   render() {
     let params = this.props.navigation.state.params;
-    if (this.props.navigation.state.params.cost==0){
+    if (this.props.navigation.state.params.cost==0 || this.state.meal_data == null){
             return null
           }
     return (
-
       <View style={styles.mainviewStyle}>
         { params && this.state.fontLoaded ?
         <View style={styles.mainviewStyle}>
@@ -225,7 +268,7 @@ class Purchase extends Component {
                     {last4: '2345', brand: 'Visa', more: 'stuff' },
                   ]} // mandatory, See: [Customer Object](https://stripe.com/docs/api/node#customer_object) -> sources -> data for Stripe format.
                   addCardHandler={() => {this.props.navigation.navigate("AddPurchaseCard");}}
-                  selectPaymentHandler={(paymentSource) => {this.setState({modalVisible: true});this.setState({paymentSource: paymentSource})}}
+                  selectPaymentHandler={(paymentSource) => {this.setState({modalVisible: true});this.setState({paymentSource: paymentSource});this.readyPurchase();}}
                   styles={{addButton: {marginTop: 0, marginBottom: 0},
                     addButtonText: {fontFamily: 'Poor Story', fontWeight: 'normal', fontSize: 22},
                     paymentMethodsInnerContainer: { borderTopWidth: 0, borderBottomWidth: 0},
@@ -249,7 +292,21 @@ class Purchase extends Component {
            </Text>
            <Button
              color="#ABEBC6"
-             onPress={() => {this.closeModal(); this.props.navigation.navigate('Orders', {meal_type: "Current", title: "Current Orders"});}}
+             onPress={() => {
+                this.closeModal();
+                this.purchaseMeal();
+                console.log(this.state.meal_data);
+                this.props.navigation.navigate('Order', {
+                    'title': this.state.meal_data.strMeal,
+                    'img': this.state.meal_data.strMealThumb,
+                    'cost': this.state.meal_data.strCost,
+                    'calories':this.state.meal_data.calories,
+                    'strCategory': this.state.meal_data.strCategory,
+                    'location': this.state.meal_data.location,
+                    'paymentMethod': {"brand": "Visa", "expiry": "02/22", "cvc": "300", "last4": "1234"},
+                    'lockerCode': this.state.meal_data.lockerCode,
+                    'strIdOrder': this.state.meal_data.strIdOrder,
+                    'idOrder': this.state.meal_data.idOrder});}}
              title={"  Pay $" + this.props.navigation.state.params.cost + "  "}
            />
          </View>

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Dimensions, Button, TouchableHighlight, Image } from 'react-native';
 import { LinearGradient, Font } from 'expo';
 import GridView from 'react-native-super-grid';
-import mealMode_data from '../assets/static_data/meal_modes.json';
 import { NavigationActions } from 'react-navigation';
+import * as firebase from 'firebase';
 
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
@@ -24,6 +24,7 @@ export default class MealMode extends Component {
      };
    state = {
     fontLoaded: false,
+    mealMode_data: null,
     };
    async componentDidMount() {
     await Font.loadAsync({
@@ -31,46 +32,56 @@ export default class MealMode extends Component {
     });
 
     this.setState({ fontLoaded: true });
-
-    }
-
+    this.populateInfo();
+   }
+   populateInfo() {
+     //Get the current userID
+     var userId = firebase.auth().currentUser.uid;
+     //Get the user data
+     return firebase.database().ref('/static/mealModes').once('value').then(function(snapshot) {
+         this.setState({ mealMode_data: snapshot.val().meal_categories });
+     }.bind(this));
+   }
   render() {
-
-    return (
-    <View style={styles.mealModeScreenContainer}>
-      <LinearGradient
-                          colors={['#ABEBC6', '#2ECC71']}
-                          style={styles.mealModeScreenGradient}
-                        />
-      <GridView
-        itemDimension={260}
-        style={styles.gridView}
-        items={mealMode_data.meal_categories}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={item => (
-              <TouchableHighlight onPress={() => {
-                        if (item.mealMode == "cuisines"){
-                            this.props.navigation.navigate('Categories');
-                        }
-                        else{
-                            meal_type = item.mealType;
-                            this.props.navigation.navigate('Meals', {'meal_type': meal_type});
-                        }
-                                                                    }}>
+    if(this.state.mealMode_data != null) {
+        return (
+        <View style={styles.mealModeScreenContainer}>
+          <LinearGradient
+              colors={['#ABEBC6', '#2ECC71']}
+              style={styles.mealModeScreenGradient}
+            />
+          <GridView
+            itemDimension={260}
+            style={styles.gridView}
+            items={this.state.mealMode_data}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={item => (
+                  <TouchableHighlight onPress={() => {
+                            if (item.mealMode == "cuisines"){
+                                this.props.navigation.navigate('Categories');
+                            }
+                            else{
+                                meal_type = item.mealType;
+                                strCategory = item.strCategory;
+                                this.props.navigation.navigate('Meals', {'meal_type': meal_type, 'title': strCategory});
+                            }
+                      }}>
                       <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
-                      {
+                        {
                           this.state.fontLoaded ? (
                              <Text style={{fontFamily: 'Poor Story', fontSize: 28, color: '#fff'}}>{item.strCategory}</Text>
                          ) : null
-                      }
-
-                  </View>
-              </TouchableHighlight>
-        )}
-      />
-      </View>
-
-    );
+                        }
+                      </View>
+                  </TouchableHighlight>
+            )}
+          />
+          </View>
+        );
+    }
+    else {
+        return null
+    }
   }
 }
 const styles = StyleSheet.create({

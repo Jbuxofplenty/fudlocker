@@ -14,19 +14,7 @@ import { Font } from 'expo'
 import { Colors } from '../constants'
 const dateformat = require('dateformat');
 import getDirections from 'react-native-google-maps-directions';
-
-import farrand_data from '../assets/dynamic_data/meals_farrand.json';
-import c4c_data from '../assets/dynamic_data/meals_c4c.json';
-import village_data from '../assets/dynamic_data/meals_village.json';
-import all_data from '../assets/dynamic_data/all_meals.json';
-
-
-const meal_data = {
-    'Farrand': farrand_data.meals,
-    'C4C': c4c_data.meals,
-    'Village': village_data.meals,
-    'All': all_data.meals,
-}
+import * as firebase from 'firebase';
 
 class Location extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -46,6 +34,9 @@ class Location extends Component {
     state = {
         fontLoaded: false,
         paramsLoaded: false,
+        location_data: null,
+        location: null,
+        title: null,
     };
    async componentDidMount() {
     await Font.loadAsync({
@@ -53,7 +44,25 @@ class Location extends Component {
     });
     var temp = this.props.navigation.state.params;
     this.setState({ fontLoaded: true, paramsLoaded: true });
-    }
+    this.populateInfo();
+   }
+
+   populateInfo() {
+     //Get the current userID
+     var userId = firebase.auth().currentUser.uid;
+     //Get the user data
+     return firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.meal_type + '/meals').once('value').then(function(snapshot) {
+         let tempArray = [];
+         snapshot.forEach(function(childSnapshot) {
+           var childData = childSnapshot.val();
+           tempArray.push(childData);
+         });
+         this.setState({ location_data: tempArray });
+         this.setState({ location: this.props.navigation.state.params.meal_type });
+         this.setState({ title: this.props.navigation.state.params.title })
+     }.bind(this));
+   }
+
   renderDetail = () => {
     return (
       <View>
@@ -64,7 +73,7 @@ class Location extends Component {
 
 
   renderDescription = () => {
-    if (this.props.navigation.state.params.cost==0 || !this.state.fontLoaded){
+    if (this.props.navigation.state.params.cost==0 || !this.state.fontLoaded || this.state.location_data == null){
         return null
     }
     return (
@@ -82,7 +91,7 @@ class Location extends Component {
                 </View>
             </View>
             <ScrollView>
-              {meal_data[this.props.navigation.state.params.meal_type].map(datum => {
+              {this.state.location_data.map(datum => {
                 return (
                   <TouchableOpacity key={datum.strMeal} onPress={() => {
                         title = datum.strMeal;
@@ -92,7 +101,8 @@ class Location extends Component {
                         cost = datum.strCost;
                         calories = datum.calories;
                         desc = datum.desc;
-                        this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location});
+                        idMeal = datum.idMeal;
+                        this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location, 'idMeal': idMeal});
                    }}>
                     <View style={styles.mealContainer}>
                       <Text style={styles.mealItem}>{datum.idMeal}</Text>
@@ -192,11 +202,10 @@ class Location extends Component {
 
   render() {
     let params = this.props.navigation.state.params;
-    if (this.props.navigation.state.params.cost==0){
+    if (this.props.navigation.state.params.cost==0 || this.state.location == null ){
             return null
           }
     return (
-
       <View style={styles.mainviewStyle}>
         { params && this.state.fontLoaded ?
         <View style={styles.mainviewStyle}>
@@ -214,7 +223,7 @@ class Location extends Component {
             <Text style={styles.buttonText}>Directions</Text>
           </TouchableOpacity>
           <View style={styles.borderCenter} />
-          <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Meals', {'meal_type': this.props.navigation.state.params.meal_type})}} style={styles.buttonFooter}>
+          <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Meals', {'meal_type': this.state.location, 'title': this.state.title})}} style={styles.buttonFooter}>
             <Text style={styles.buttonText}>Meals</Text>
           </TouchableOpacity>
         </View>

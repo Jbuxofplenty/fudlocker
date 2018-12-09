@@ -8,14 +8,8 @@ import getDirections from 'react-native-google-maps-directions';
 import { NavigationActions } from 'react-navigation';
 import { DrawerActions } from 'react-navigation-drawer';
 import { createFilter } from 'react-native-search-filter';
+import * as firebase from 'firebase';
 
-import LOCATION_DATA from '../assets/static_data/fudlkr_locations.json';
-import ALL_MEALS_DATA from '../assets/dynamic_data/all_meals.json';
-import CATEGORY_DATA from '../assets/static_data/meal_categories.json';
-
-const LOCATIONS = LOCATION_DATA.data;
-const ALL_MEALS = ALL_MEALS_DATA.meals;
-const CATEGORIES = CATEGORY_DATA.meal_categories;
 const locs = {
     "C4C": "Center for Community",
     "Farrand": "Farrand Hall",
@@ -44,7 +38,11 @@ static navigationOptions = ({ navigation }) => {
             location: null,
             errorMessage: null,
             fontLoaded: false,
-            markers: LOCATIONS
+            markers: null,
+            mealRadius: null,
+            meals_data: null,
+            meal_type: null,
+            category_data: null,
         }
       }
       searchUpdated(term) {
@@ -71,6 +69,8 @@ static navigationOptions = ({ navigation }) => {
     });
 
     this.setState({ fontLoaded: true });
+    this.populateInfo();
+
 }
 
   componentWillMount() {
@@ -79,8 +79,6 @@ static navigationOptions = ({ navigation }) => {
       this.setState({
         errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
       });
-    } else {
-      this._getLocationAsync();
     }
   }
 
@@ -90,15 +88,47 @@ static navigationOptions = ({ navigation }) => {
       this.setState({
         errorMessage: 'Permission to access location was denied',
       });
-
-
     }
     let location = await Location.getCurrentPositionAsync({});
-    var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, 20000);
+    var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, this.state.mealRadius*1609.34);
     if(!this.location_selected){
         this.setState({coords: coords});
     }
   };
+
+    populateInfo = async () => {
+        //Get the current userID
+        let location = await Location.getCurrentPositionAsync({});
+        var userId = firebase.auth().currentUser.uid;
+        //Get the user data
+        await firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+            this.setState({ mealRadius: snapshot.val().mealRadius });
+            var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, snapshot.val().mealRadius*1609.34);
+            if(!this.location_selected){
+                this.setState({coords: coords});
+            }
+        }.bind(this));
+        await firebase.database().ref('/lockers/data').once('value').then(function(snapshot) {
+            let tempArray = [];
+            snapshot.forEach(function(childSnapshot) {
+                var childData = childSnapshot.val();
+                tempArray.push(childData);
+            });
+            this.setState({ markers: tempArray });
+        }.bind(this));
+        await firebase.database().ref('/meals/all/meals').once('value').then(function(snapshot) {
+           let tempArray = [];
+           snapshot.forEach(function(childSnapshot) {
+             var childData = childSnapshot.val();
+             tempArray.push(childData);
+           });
+           this.setState({ meals_data: tempArray });
+           this.setState({ meal_type: "All" });
+       }.bind(this));
+       await firebase.database().ref('/static/mealCategories').once('value').then(function(snapshot) {
+           this.setState({ category_data: snapshot.val().meal_categories });
+       }.bind(this));
+      }
 
   regionFrom(lat, lon, distance) {
           distance = distance/2
@@ -199,13 +229,14 @@ static navigationOptions = ({ navigation }) => {
     }
 
   render() {
+    if(this.state.markers != null && this.state.meals_data != null && this.state.category_data != null) {
       let ps = this.props;
         if(this.props.navigation.state.params != null && !this.location_selected) {
             this.location_selected = true;
             var coords = this.regionFrom(this.props.navigation.state.params.coords.latitude, this.props.navigation.state.params.coords.longitude, 1000);
             this.state.coords=coords;
         }
-        const data = [LOCATIONS, ALL_MEALS, CATEGORIES];
+        const data = [this.state.markers, this.state.meals_data, this.state.category_data];
         const keys = [LOCATION_KEYS_TO_FILTERS, MEAL_KEYS_TO_FILTERS, CATEGORY_KEYS_TO_FILTERS];
         const scopes = ["Locations", "Meals", "Categories"];
         const filtered_data = [];
@@ -231,55 +262,58 @@ static navigationOptions = ({ navigation }) => {
 
             />
         </View>
-      return (
+          return (
+          <View style={{ flex: 1 }}>
+          {
+             ps && this.state.fontLoaded && this.state.mealRadius != null ? (
+             <View>
+               <SearchBar
+                  onChangeText={(term) => { this.searchUpdated(term) }}
+                  onCancel={() => {this.toggleSearching()}}
+                  onClear={() => {this.toggleSearching()}}
+                  round
+                  platform="android"
+                  clearIcon={{ type: 'font-awesome', name: 'chevron-left' }}
+                  placeholder="Find F&#xFC;d"
+                  lightTheme
+                  showLoading
+                  inputStyle={{fontFamily: 'Poor Story'}}
+                  value={this.state.searchTerm}
 
-      <View style={{ flex: 1 }}>
-      {
-         ps && this.state.fontLoaded ? (
-         <View>
-           <SearchBar
-              onChangeText={(term) => { this.searchUpdated(term) }}
-              onCancel={() => {this.toggleSearching()}}
-              onClear={() => {this.toggleSearching()}}
-              round
-              platform="android"
-              clearIcon={{ type: 'font-awesome', name: 'chevron-left' }}
-              placeholder="Find F&#xFC;d"
-              lightTheme
-              showLoading
-              inputStyle={{fontFamily: 'Poor Story'}}
-              value={this.state.searchTerm}
+                 />
+               <SearchResults show={this.state.searching}/>
+            </View>
 
-             />
-           <SearchResults show={this.state.searching}/>
-        </View>
-
-         ) : null
+             ) : null
+          }
+            <MapView
+                      style={{
+                        flex: 1
+                      }}
+                      region={this.state.coords}
+             >
+             {this.state.markers.map(marker => (
+                  <Marker
+                    coordinate={marker.latlng}
+                    title={marker.title}
+                    description={marker.description}
+                    key={marker.id}
+                    >
+                          <Callout tooltip={true} onPress={()=>{this.props.navigation.navigate('Location', {'title': marker.title, 'img': marker.image, 'detail': marker.description, 'meal_type': marker.type, 'title': marker.title, 'lat': marker.latlng.latitude, 'lng': marker.latlng.longitude })}}>
+                            <View style={styles.tooltip}>
+                                <Text style={styles.title}>{marker.title}</Text>
+                                <Text style={styles.description}>{marker.description}</Text>
+                            </View>
+                          </Callout>
+                  </Marker>
+                ))}
+            </MapView>
+            </View>
+          );
       }
-        <MapView
-                  style={{
-                    flex: 1
-                  }}
-                  region={this.state.coords}
-         >
-         {this.state.markers.map(marker => (
-              <Marker
-                coordinate={marker.latlng}
-                title={marker.title}
-                description={marker.description}
-                key={marker.id}
-                >
-                      <Callout tooltip={true} onPress={()=>{this.props.navigation.navigate('Location', {'title': marker.title, 'img': marker.image, 'detail': marker.description, 'meal_type': marker.type, 'lat': marker.latlng.latitude, 'lng': marker.latlng.longitude })}}>
-                        <View style={styles.tooltip}>
-                            <Text style={styles.title}>{marker.title}</Text>
-                            <Text style={styles.description}>{marker.description}</Text>
-                        </View>
-                      </Callout>
-              </Marker>
-            ))}
-        </MapView>
-        </View>
-      );
+      else {
+        return null
+      }
   }
 }
 

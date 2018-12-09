@@ -15,35 +15,7 @@ import {
 import GridView from 'react-native-super-grid';
 import { LinearGradient, Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
-
-// json data, will be converted to DB
-import asian_data from '../assets/dynamic_data/meals_asian.json';
-import mexican_data from '../assets/dynamic_data/meals_mexican.json';
-import american_data from '../assets/dynamic_data/meals_american.json';
-import salad_data from '../assets/dynamic_data/meals_salads.json';
-import apps_data from '../assets/dynamic_data/meals_apps.json';
-import italian_data from '../assets/dynamic_data/meals_italian.json';
-import meat_data from '../assets/dynamic_data/meals_meat.json';
-
-import farrand_data from '../assets/dynamic_data/meals_farrand.json';
-import c4c_data from '../assets/dynamic_data/meals_c4c.json';
-import village_data from '../assets/dynamic_data/meals_village.json';
-import all_data from '../assets/dynamic_data/all_meals.json';
-
-
-const meal_data = {
-    'Asian': asian_data.meals,
-    'Mexican': mexican_data.meals,
-    'American': american_data.meals,
-    'Salads': salad_data.meals,
-    'Appetizers': apps_data.meals,
-    'Italian': italian_data.meals,
-    'Meat': meat_data.meals,
-    'Farrand': farrand_data.meals,
-    'C4C': c4c_data.meals,
-    'Village': village_data.meals,
-    'All': all_data.meals,
-}
+import * as firebase from 'firebase';
 
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
@@ -51,7 +23,7 @@ var width = Dimensions.get('window').width;
 export default class Meals extends Component {
     static navigationOptions = ({ navigation }) => {
        return {
-         title: navigation.getParam('meal_type'),
+         title: navigation.getParam('title'),
          headerStyle: {
              backgroundColor: '#2ECC71',
            },
@@ -63,50 +35,94 @@ export default class Meals extends Component {
            },
        };
      };
+    state = {
+        fontLoaded: false,
+        meals_data: null,
+        meal_type: null,
+     };
+    async componentDidMount() {
+        await Font.loadAsync({
+            'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
+        });
+        this.setState({ fontLoaded: true });
+        this.populateInfo();
+    }
 
+   populateInfo() {
+     //Get the current userID
+     var userId = firebase.auth().currentUser.uid;
+     //Get the user data
+     if(this.props.navigation.state.params.meal_type == "All") {
+         return firebase.database().ref('/meals/all/meals').once('value').then(function(snapshot) {
+             let tempArray = [];
+             snapshot.forEach(function(childSnapshot) {
+               var childData = childSnapshot.val();
+               tempArray.push(childData);
+             });
+             this.setState({ meals_data: tempArray });
+             this.setState({ meal_type: this.props.navigation.state.params.meal_type });
+         }.bind(this));
+     }
+     else {
+         return firebase.database().ref('/meals/categories/' + this.props.navigation.state.params.meal_type + '/meals').once('value').then(function(snapshot) {
+             let tempArray = [];
+             snapshot.forEach(function(childSnapshot) {
+               var childData = childSnapshot.val();
+               tempArray.push(childData);
+             });
+             this.setState({ meals_data: tempArray });
+             this.setState({ meal_type: this.props.navigation.state.params.meal_type });
+         }.bind(this));
+     }
+   }
 render() {
-    return (
-    <View style={styles.mealsScreenContainer}>
-      <LinearGradient
-                          colors={['#ABEBC6', '#2ECC71']}
-                          style={styles.mealsScreenGradient}
-                        />
-      <GridView
-        itemDimension={280}
-        style={styles.gridView}
-        items={meal_data[this.props.navigation.state.params.meal_type]}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={item => (
+    if(this.state.meals_data != null) {
+        return (
+        <View style={styles.mealsScreenContainer}>
+          <LinearGradient
+                              colors={['#ABEBC6', '#2ECC71']}
+                              style={styles.mealsScreenGradient}
+                            />
+          <GridView
+            itemDimension={280}
+            style={styles.gridView}
+            items={this.state.meals_data}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={item => (
 
-            <TouchableHighlight style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}} onPress={() => {
-        			    title = item.strMeal;
-        			    img = item.strMealThumb;
-        			    location = item.location;
-        			    strCategory = item.strCategory;
-        			    cost = item.strCost;
-        			    calories = item.calories;
-        			    desc = item.desc;
-        			    this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location});
-                }}>
-            <ImageBackground
-              source={{ uri: item.strMealThumb }}
-              imageStyle={{resizeMode: 'cover',borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}
+                <TouchableHighlight style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}} onPress={() => {
+                            title = item.strMeal;
+                            img = item.strMealThumb;
+                            location = item.location;
+                            strCategory = item.strCategory;
+                            cost = item.strCost;
+                            calories = item.calories;
+                            desc = item.desc;
+                            idMeal = item.idMeal;
+                            this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location, 'idMeal': idMeal});
+                    }}>
+                <ImageBackground
+                  source={{ uri: item.strMealThumb }}
+                  imageStyle={{resizeMode: 'cover',borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}
 
-              style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}>
+                  style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}>
 
-              <View style={[styles.itemContainer]}>
-              {
+                  <View style={[styles.itemContainer]}>
+                  {
 
-                     <Text style={{fontFamily: 'Poor Story', textAlign: 'center', width: '100%', fontSize: 28, color: '#fff', backgroundColor: item.code, borderRadius:25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>{item.strMeal}</Text>
-              }
-              </View>
-              </ImageBackground>
-          </TouchableHighlight>
-        )}
-      />
-      </View>
-
-    );
+                         <Text style={{fontFamily: 'Poor Story', textAlign: 'center', width: '100%', fontSize: 28, color: '#fff', backgroundColor: item.code, borderRadius:25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>{item.strMeal}</Text>
+                  }
+                  </View>
+                  </ImageBackground>
+              </TouchableHighlight>
+            )}
+          />
+          </View>
+        );
+    }
+    else {
+        return null
+    }
   }
 }
 const styles = StyleSheet.create({

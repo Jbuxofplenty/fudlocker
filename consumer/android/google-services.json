@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1062228162576",
+    "firebase_url": "https://fudlkrconsumer.firebaseio.com",
+    "project_id": "fudlkrconsumer",
+    "storage_bucket": "fudlkrconsumer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062228162576:android:7c712aebb9538990",
+        "android_client_info": {
+          "package_name": "com.fudlkr.consumer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062228162576-fr2tvj8fc13bvd0d666pqmlgcr1jb8ud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRT_2B7PMwY58lvBSeDj2PECseNi_PYLQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

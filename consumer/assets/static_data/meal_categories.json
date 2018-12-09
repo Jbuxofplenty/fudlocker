@@ -2,7 +2,8 @@
   "meal_categories": [
     {
       "idCategory": "1",
-      "strCategory": "Asian",
+      "strCategory": "asian",
+      "title": "Asian",
       "strCategoryThumb": "http://fudlkr.com/mobile_assets/asian.jpg",
       "strTags": null,
       "strSource": "",
@@ -12,7 +13,8 @@
     },
     {
       "idCategory": "2",
-      "strCategory": "Mexican",
+      "strCategory": "mexican",
+      "title": "Mexican",
       "strCategoryThumb": "http://fudlkr.com/mobile_assets/mexican.jpg",
       "strTags": null,
       "code": "#9b59b6",
@@ -21,7 +23,8 @@
     },
     {
       "idCategory": "3",
-      "strCategory": "Appetizers",
+      "strCategory": "apps",
+      "title": "Apps",
       "strCategoryThumb": "http://fudlkr.com/mobile_assets/apps.jpg",
       "strTags": null,
       "strSource": "",
@@ -31,7 +34,8 @@
     },
     {
       "idCategory": "4",
-      "strCategory": "Meat",
+      "strCategory": "meat",
+      "title": "Meat",
       "strCategoryThumb": "http://fudlkr.com/mobile_assets/beef.jpg",
       "strTags": null,
       "strSource": "",
@@ -41,7 +45,8 @@
     },
     {
       "idCategory": "5",
-      "strCategory": "Italian",
+      "strCategory": "italian",
+      "title": "Italian",
       "strCategoryThumb": "http://fudlkr.com/mobile_assets/italian.jpg",
       "strTags": null,
       "strSource": "",
@@ -51,7 +56,8 @@
     },
     {
       "idCategory": "6",
-      "strCategory": "Salads",
+      "strCategory": "salads",
+      "title": "Salads",
       "strCategoryThumb": "http://fudlkr.com/mobile_assets/salad.jpg",
       "strTags": null,
       "strSource": "",
@@ -61,7 +67,8 @@
     },
     {
       "idCategory": "7",
-      "strCategory": "American",
+      "strCategory": "american",
+      "title": "American",
       "strCategoryThumb": "http://fudlkr.com/mobile_assets/american.jpg",
       "strTags": null,
       "strSource": "",

@@ -113,13 +113,7 @@ class Order extends Component {
 
                   getDirections(data)
           }
-  renderDetail = () => {
-    return (
-      <View>
-        <Text style={styles.subDetailText}>{this.props.navigation.state.params.detail}</Text>
-      </View>
-    )
-  }
+
   randomDate(low, high) {
       var date = new Date();
       days_past = Math.random() * (high - low) + low;
@@ -172,7 +166,7 @@ class Order extends Component {
                                source={require("./../assets/images/amex.png")}
                             />
                         }
-                        <Text style={[styles.valueText, {width: '40%'}]}>{"Ending in " + this.props.navigation.state.params.paymentMethod["last4"]}</Text>
+                        <Text style={[styles.valueText, {width: '40%'}]}>{"Ending in " + this.props.navigation.state.params.paymentMethod.last4}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -187,7 +181,7 @@ class Order extends Component {
                     <Text style={styles.valueText}>{this.props.navigation.state.params.calories}</Text>
                 </View>
                 <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Date Packages:</Text>
+                    <Text style={styles.labelText}>Date Packaged:</Text>
                     <Text style={styles.valueText}>{this.randomDate(0,5)}</Text>
                 </View>
             </View>
