@@ -57,7 +57,7 @@ export default class OrderMode extends Component {
             items={this.state.orderMode_data}
             keyExtractor={(item, index) => index.toString()}
             renderItem={item => (
-                  <TouchableHighlight onPress={() => {
+                  <TouchableHighlight style={{borderRadius: 15}} onPress={() => {
                     if (item.mode == "Current"){
                         this.props.navigation.navigate('Orders', {order_type: item.mode, title: item.strOrderMode});
                     }

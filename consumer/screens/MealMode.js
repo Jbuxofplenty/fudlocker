@@ -56,7 +56,7 @@ export default class MealMode extends Component {
             items={this.state.mealMode_data}
             keyExtractor={(item, index) => index.toString()}
             renderItem={item => (
-                  <TouchableHighlight onPress={() => {
+                  <TouchableHighlight style={{borderRadius: 15}} onPress={() => {
                             if (item.mealMode == "cuisines"){
                                 this.props.navigation.navigate('Categories');
                             }

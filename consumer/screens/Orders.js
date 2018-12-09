@@ -139,7 +139,7 @@ export default class CurrentOrders extends Component {
             items={this.state.order_data}
             keyExtractor={(item, index) => index.toString()}
             renderItem={item => (
-                <TouchableHighlight style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}} onPress={() => {
+                <TouchableHighlight style={{borderRadius: 25}} onPress={() => {
                         title = item.strMeal;
                         img = item.strMealThumb;
                         location = item.location;

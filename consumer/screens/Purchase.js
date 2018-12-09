@@ -295,7 +295,6 @@ class Purchase extends Component {
              onPress={() => {
                 this.closeModal();
                 this.purchaseMeal();
-                console.log(this.state.meal_data);
                 this.props.navigation.navigate('Order', {
                     'title': this.state.meal_data.strMeal,
                     'img': this.state.meal_data.strMealThumb,

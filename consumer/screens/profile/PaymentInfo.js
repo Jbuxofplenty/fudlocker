@@ -92,7 +92,6 @@ class PaymentInfo extends Component {
         var userId = firebase.auth().currentUser.uid;
         //Get the user data
         return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-            console.log(snapshot.val().paymentInfo[0].billingAddress["street1"]);
             this.setState({ name: snapshot.val().name });
             this.setState({ address1: snapshot.val().paymentInfo[0].billingAddress.street1 });
             this.setState({ address2: snapshot.val().paymentInfo[0].billingAddress.street2 });
