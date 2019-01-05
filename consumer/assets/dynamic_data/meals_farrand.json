@@ -1,7 +1,7 @@
 {
   "meals": [
     {
-      "idMeal": 1,
+      "idMeal": 11,
       "strMeal": "Tacos",
       "strMealThumb": "http://fudlkr.com/mobile_assets/tacos.jpg",
       "strCategory": "Mexican",
@@ -10,10 +10,12 @@
       "calories": 400,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Farrand"
+      "location": "Farrand",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
-      "idMeal": "2",
+      "idMeal": 7,
       "strMeal": "Pepperoni Pizza",
       "strMealThumb": "http://fudlkr.com/mobile_assets/pep_pizza.jpg",
       "strCategory": "Italian",
@@ -22,7 +24,9 @@
       "calories": 200,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Farrand"
+      "location": "Farrand",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 3,
@@ -34,10 +38,12 @@
       "calories": 200,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Farrand"
+      "location": "Farrand",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
-      "idMeal": "4",
+      "idMeal": 8,
       "strMeal": "Pasta Carbonara",
       "strMealThumb": "http://fudlkr.com/mobile_assets/pasta_carbonara.jpg",
       "strCategory": "Italian",
@@ -46,7 +52,9 @@
       "calories": 250,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Farrand"
+      "location": "Farrand",
+      "distributor": "cuboulder",
+      "forSale": true
     }
 
   ]

@@ -85,7 +85,7 @@ class Order extends Component {
           handleGetDirections () {
                 var arrayLength = fudlkr_locations.data.length;
                    for (var i = 0; i < arrayLength; i++) {
-                      if( fudlkr_locations.data[i].type == this.props.navigation.state.params.location) {
+                      if( fudlkr_locations.data[i].type.toLowerCase() == this.props.navigation.state.params.location.toLowerCase()) {
                           latitude = fudlkr_locations.data[i].latlng.latitude;
                           longitude = fudlkr_locations.data[i].latlng.longitude;
                       }
@@ -205,7 +205,7 @@ class Order extends Component {
                             onPress={() => {
                                  var arrayLength = fudlkr_locations.data.length;
                                  for (var i = 0; i < arrayLength; i++) {
-                                    if( fudlkr_locations.data[i].type == this.props.navigation.state.params.location) {
+                                    if( fudlkr_locations.data[i].type.toLowerCase() == this.props.navigation.state.params.location.toLowerCase()) {
                                         latitude = fudlkr_locations.data[i].latlng.latitude;
                                         longitude = fudlkr_locations.data[i].latlng.longitude;
                                     }

@@ -39,6 +39,7 @@ export default class Meals extends Component {
         fontLoaded: false,
         meals_data: null,
         meal_type: null,
+        meals_forSale: null,
      };
     async componentDidMount() {
         await Font.loadAsync({
@@ -48,27 +49,54 @@ export default class Meals extends Component {
         this.populateInfo();
     }
 
-   populateInfo() {
+   async populateInfo() {
      //Get the current userID
      var userId = firebase.auth().currentUser.uid;
+     await firebase.database().ref('/meals/forSale').once('value').then(function(snapshot) {
+              let tempArray = {};
+              snapshot.forEach(function(childSnapshot) {
+                var childData = childSnapshot.val();
+                tempArray[childSnapshot.key] = childData;
+              });
+              this.setState({ meals_forSale: tempArray });
+          }.bind(this));
+     var temp = this.state.meals_forSale;
      //Get the user data
      if(this.props.navigation.state.params.meal_type == "All") {
          return firebase.database().ref('/meals/all/meals').once('value').then(function(snapshot) {
              let tempArray = [];
              snapshot.forEach(function(childSnapshot) {
                var childData = childSnapshot.val();
-               tempArray.push(childData);
+               if(temp[childData.idMeal.toString()]){
+                 tempArray.push(childData);
+               }
              });
              this.setState({ meals_data: tempArray });
              this.setState({ meal_type: this.props.navigation.state.params.meal_type });
          }.bind(this));
      }
+     else if(this.props.navigation.state.params.meal_type.toLowerCase() == "farrand" || this.props.navigation.state.params.meal_type.toLowerCase() == "c4c" || this.props.navigation.state.params.meal_type.toLowerCase() == "village") {
+       return firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.meal_type.toLowerCase() + '/meals').once('value').then(function(snapshot) {
+            let tempArray = [];
+            snapshot.forEach(function(childSnapshot) {
+              var childData = childSnapshot.val();
+              if(temp[childData.idMeal.toString()]){
+                tempArray.push(childData);
+              }
+            });
+            this.setState({ meals_data: tempArray });
+            this.setState({ meal_type: this.props.navigation.state.params.meal_type });
+        }.bind(this));
+
+     }
      else {
-         return firebase.database().ref('/meals/categories/' + this.props.navigation.state.params.meal_type + '/meals').once('value').then(function(snapshot) {
+         return firebase.database().ref('/meals/categories/' + this.props.navigation.state.params.meal_type.toLowerCase() + '/meals').once('value').then(function(snapshot) {
              let tempArray = [];
              snapshot.forEach(function(childSnapshot) {
                var childData = childSnapshot.val();
-               tempArray.push(childData);
+               if(temp[childData.idMeal.toString()]){
+                  tempArray.push(childData);
+               }
              });
              this.setState({ meals_data: tempArray });
              this.setState({ meal_type: this.props.navigation.state.params.meal_type });
@@ -80,16 +108,15 @@ render() {
         return (
         <View style={styles.mealsScreenContainer}>
           <LinearGradient
-                              colors={['#ABEBC6', '#2ECC71']}
-                              style={styles.mealsScreenGradient}
-                            />
+              colors={['#ABEBC6', '#2ECC71']}
+              style={styles.mealsScreenGradient}
+            />
           <GridView
             itemDimension={280}
             style={styles.gridView}
             items={this.state.meals_data}
             keyExtractor={(item, index) => index.toString()}
             renderItem={item => (
-
                 <TouchableHighlight style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}} onPress={() => {
                             title = item.strMeal;
                             img = item.strMealThumb;
@@ -106,11 +133,9 @@ render() {
                   imageStyle={{resizeMode: 'cover',borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}
 
                   style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}>
-
                   <View style={[styles.itemContainer]}>
                   {
-
-                         <Text style={{fontFamily: 'Poor Story', textAlign: 'center', width: '100%', fontSize: 28, color: '#fff', backgroundColor: item.code, borderRadius:25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>{item.strMeal}</Text>
+                     <Text style={{fontFamily: 'Poor Story', textAlign: 'center', width: '100%', fontSize: 28, color: '#fff', backgroundColor: item.code, borderRadius:25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>{item.strMeal}</Text>
                   }
                   </View>
                   </ImageBackground>

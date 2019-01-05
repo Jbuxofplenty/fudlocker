@@ -126,15 +126,13 @@ class Location extends Component {
         this.setState({
           errorMessage: 'Permission to access location was denied',
         });
-
-
       }
 
       let location = await Location.getCurrentPositionAsync({});
 
       var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, 1000);
       this.setState({coords: coords});
-      this.setState({your_lat: location.coords.latitdude});
+      this.setState({your_lat: location.coords.latitude});
       this.setState({your_lng: location.coords.longitude});
     };
 

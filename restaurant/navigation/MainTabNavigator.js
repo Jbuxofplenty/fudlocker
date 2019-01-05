@@ -5,32 +5,35 @@ import { DrawerActions } from 'react-navigation-drawer';
 import { Icon } from 'react-native-elements';
 
 import TabBarIcon from '../components/TabBarIcon';
-import LoginScreen from '../screens/Login';
 import LocationsScreen from '../screens/Locations';
 import SettingsScreen from '../screens/settings/Settings';
-import InventoryScreen from '../screens/Inventory';
+import PersonalInfoScreen from '../screens/settings/PersonalInfo';
 import DrawerScreen from '../screens/Drawer';
+import ActiveMealsScreen from '../screens/ActiveMeals';
+import AddMealScreen from '../screens/AddMeal';
+import AddTemplateScreen from '../screens/AddTemplate';
 
 const LocationsStack = createStackNavigator({
   Locations: LocationsScreen,
+  ActiveMeals: ActiveMealsScreen,
 },{
-      navigationOptions: ({ navigation }) => ({
-        headerStyle: {
-          backgroundColor: '#2ECC71',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          textAlign: 'center',
-          alignSelf: 'center',
-          flex: 1,
-        },
-        headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
-        <Icon
-             name='md-menu'
-             type='ionicon'
-             color='white'
-             containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
-          /></TouchableOpacity>),
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: '#2ECC71',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        textAlign: 'center',
+        alignSelf: 'center',
+        flex: 1,
+      },
+      headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
+      <Icon
+           name='md-menu'
+           type='ionicon'
+           color='white'
+           containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
+        /></TouchableOpacity>),
     })
   });
 
@@ -52,10 +55,11 @@ LocationsStack.navigationOptions = {
   },
 };
 
-const InventoryStack = createStackNavigator({
-  Inventory: InventoryScreen,
+const AddMealStack = createStackNavigator({
+  AddMeal: AddMealScreen,
+  AddTemplate: AddTemplateScreen,
 },{
-      navigationOptions: ({ navigation }) => ({
+      defaultNavigationOptions: ({ navigation }) => ({
         headerStyle: {
           backgroundColor: '#2ECC71',
         },
@@ -66,17 +70,17 @@ const InventoryStack = createStackNavigator({
           flex: 1,
         },
         headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
-          <Icon
-               name='md-menu'
-               type='ionicon'
-               color='white'
-               containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
-            /></TouchableOpacity>),
-    })
+        <Icon
+             name='md-menu'
+             type='ionicon'
+             color='white'
+             containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
+          /></TouchableOpacity>),
+      })
   });
 
-InventoryStack.navigationOptions = {
-  tabBarLabel: <Text style={{fontFamily: 'Poor Story', textAlign: 'center', color: 'white'}}>Inventory</Text>,
+AddMealStack.navigationOptions = {
+  tabBarLabel: <Text style={{fontFamily: 'Poor Story', textAlign: 'center', color: 'white'}}>Add Meal</Text>,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -92,8 +96,9 @@ InventoryStack.navigationOptions = {
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
+  PersonalInfo: PersonalInfoScreen,
 },{
-      navigationOptions: ({ navigation }) => ({
+      defaultNavigationOptions: ({ navigation }) => ({
         headerStyle: {
           backgroundColor: '#2ECC71',
         },
@@ -104,13 +109,13 @@ const SettingsStack = createStackNavigator({
           flex: 1,
         },
         headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
-          <Icon
-               name='md-menu'
-               type='ionicon'
-               color='white'
-               containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
-            /></TouchableOpacity>),
-    })
+        <Icon
+             name='md-menu'
+             type='ionicon'
+             color='white'
+             containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
+          /></TouchableOpacity>),
+      })
   });
 
 SettingsStack.navigationOptions = {
@@ -130,7 +135,7 @@ SettingsStack.navigationOptions = {
 
 const TabNavigator = createBottomTabNavigator({
   LocationsStack,
-  InventoryStack,
+  AddMealStack,
   SettingsStack,
 },{
      headerMode: "none"
@@ -139,10 +144,7 @@ const TabNavigator = createBottomTabNavigator({
 const DrawerNavigator = createDrawerNavigator({
   Home: {
     screen: TabNavigator,
-  },
-  Login: {
-    screen: LoginScreen,
-  }}, {
+  }},{
         contentComponent: DrawerScreen,
         drawerWidth: Dimensions.get('window').width - 120,
         drawerPosition: 'right',

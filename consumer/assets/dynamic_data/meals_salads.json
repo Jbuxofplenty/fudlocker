@@ -10,7 +10,9 @@
       "calories": 300,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": "14",
@@ -23,7 +25,9 @@
       "calories": 200,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     }
 
   ]

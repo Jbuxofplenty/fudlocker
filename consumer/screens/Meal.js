@@ -15,7 +15,6 @@ import { Colors } from '../constants'
 const dateformat = require('dateformat');
 
 import getDirections from 'react-native-google-maps-directions';
-import fudlkr_locations from '../assets/static_data/fudlkr_locations.json';
 
 class Meal extends Component {
     static navigationOptions = ({ navigation }) => {

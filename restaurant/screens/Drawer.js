@@ -42,7 +42,9 @@ class DrawerScreen extends Component {
     this.props.navigation.navigate(route);
     this.props.navigation.dispatch(DrawerActions.closeDrawer());
   }
-
+  logOutUser() {
+    this.props.screenProps.isLoggedIn();
+  }
   render () {
      const avatar="http://fudlkr.com/images/josiah_buxton.jpg";
      const name="Josiah Buxton";
@@ -153,7 +155,7 @@ class DrawerScreen extends Component {
                           rightIcon={<Chevron />}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.navigateToScreen('Login')}>
+                    <TouchableOpacity onPress={() => this.logOutUser()}>
                         <ListItem
                           title="Log Out"
                           titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}

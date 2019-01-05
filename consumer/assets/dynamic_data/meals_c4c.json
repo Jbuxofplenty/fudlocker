@@ -1,7 +1,7 @@
 {
   "meals": [
     {
-      "idMeal": 1,
+      "idMeal": 6,
       "strMeal": "Chicken Fried Rice",
       "strMealThumb": "http://fudlkr.com/mobile_assets/fried_rice.jpg",
       "strCategory": "Asian",
@@ -10,10 +10,12 @@
       "calories": 300,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
-      "idMeal": 2,
+      "idMeal": 1,
       "strMeal": "Macaroni and Cheese",
       "strMealThumb": "http://fudlkr.com/mobile_assets/mac_n_cheese.jpeg",
       "strCategory": "American",
@@ -22,10 +24,12 @@
       "calories": 300,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
-      "idMeal": 3,
+      "idMeal": 5,
       "strMeal": "Beef Lo Mein",
       "strMealThumb": "http://fudlkr.com/mobile_assets/lo_mein.jpg",
       "strCategory": "Asian",
@@ -34,11 +38,13 @@
       "calories": 450,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
 
     {
-      "idMeal": 4,
+      "idMeal": 7,
       "strMeal": "Pepperoni Pizza",
       "strMealThumb": "http://fudlkr.com/mobile_assets/pep_pizza.jpg",
       "strCategory": "Italian",
@@ -47,10 +53,12 @@
       "calories": 200,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
-      "idMeal": 5,
+      "idMeal": 8,
       "strMeal": "Pasta Carbonara",
       "strMealThumb": "http://fudlkr.com/mobile_assets/pasta_carbonara.jpg",
       "strCategory": "Italian",
@@ -59,10 +67,12 @@
       "calories": 250,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
-      "idMeal": 6,
+      "idMeal": 13,
       "strMeal": "Grilled Chicken Salad",
       "strMealThumb": "http://fudlkr.com/mobile_assets/grilled_chicken_salad.jpg",
       "strCategory": "Salads",
@@ -71,10 +81,12 @@
       "calories": 300,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
-      "idMeal": 7,
+      "idMeal": 14,
       "strMeal": "Caesar Salad",
       "strArea": "Chinese",
       "strMealThumb": "http://fudlkr.com/mobile_assets/caesar_salad.jpg",
@@ -84,10 +96,12 @@
       "calories": 200,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
-      "idMeal": 8,
+      "idMeal": 11,
       "strMeal": "Tacos",
       "strMealThumb": "http://fudlkr.com/mobile_assets/tacos.jpg",
       "strCategory": "Mexican",
@@ -96,10 +110,11 @@
       "calories": 400,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder"
     },
     {
-      "idMeal": 9,
+      "idMeal": 12,
       "strMeal": "Chicken Quesadilla",
       "strMealThumb": "http://fudlkr.com/mobile_assets/chicken_dilla.jpg",
       "strCategory": "Mexican",
@@ -108,7 +123,9 @@
       "calories": 350,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     }
 
   ]

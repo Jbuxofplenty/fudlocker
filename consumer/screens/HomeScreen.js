@@ -185,8 +185,9 @@ static navigationOptions = ({ navigation }) => {
                     cost = item.strCost;
                     calories = item.calories;
                     desc = item.desc;
+                    idMeal = item.idMeal;
                     this.toggleSearching();
-                    this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'data_location': data_location, 'location': location});
+                    this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'data_location': data_location, 'location': location, idMeal: idMeal});
             }}>
                  <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
                  <View style={{flex: 1, flexDirection: 'column'}}>

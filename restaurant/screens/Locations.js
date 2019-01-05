@@ -21,9 +21,7 @@ import { NavigationActions } from 'react-navigation';
 const dateformat = require('dateformat');
 import { SelectPayment } from 'react-native-checkout'
 import { DrawerActions } from 'react-navigation-drawer';
-
-// json data, will be converted to DB
-import location_data from '../assets/static_data/fudlkr_locations.json';
+import * as firebase from 'firebase';
 
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
@@ -58,38 +56,86 @@ export default class Locations extends Component {
           var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
           return d.toString()
       }
+      state = {
+          fontLoaded: false,
+          paramsLoaded: false,
+          location_data: null,
+          name: null,
+          email: null,
+          phone: null,
+          org: null,
+      };
+      async componentDidMount() {
+          await Font.loadAsync({
+              'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
+          });
+          var temp = this.props.navigation.state.params;
+          this.setState({ fontLoaded: true, paramsLoaded: true });
+          this.populateInfo();
+      }
+
+      async populateInfo() {
+        //Get the current userID
+        var userId = firebase.auth().currentUser.uid;
+        //Get the user data
+        await firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+              this.setState({ name: snapshot.val().name });
+              this.setState({ email: snapshot.val().email });
+              this.setState({ phone: snapshot.val().phone });
+              this.setState({ org: snapshot.val().org });
+              if(snapshot.val().org){
+                this.populateLocations(snapshot.val().org);
+              }
+              else {
+                this.setState({ location_data: []});
+              }
+          }.bind(this));
+     }
+     async populateLocations(org) {
+        var userId = firebase.auth().currentUser.uid;
+        return firebase.database().ref('/restaurants/' + org + '/lockers/data/').once('value').then(function(snapshot) {
+           let tempArray = [];
+           snapshot.forEach(function(childSnapshot) {
+             var childData = childSnapshot.val();
+             tempArray.push(childData);
+           });
+           this.setState({ location_data: tempArray });
+        }.bind(this));
+     }
 render() {
-    return (
-    <View style={styles.mealsScreenContainer}>
-      <LinearGradient
-          colors={['#ABEBC6', '#2ECC71']}
-          style={styles.mealsScreenGradient}
-        />
-      <GridView
-        itemDimension={140}
-        style={styles.gridView}
-        items={location_data.data}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={item => (
-            <TouchableHighlight style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}} onPress={() => {
-                console.log('hi');
-                }}>
-              <ImageBackground
-                source={{ uri: item.image }}
-                imageStyle={{resizeMode: 'cover',borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}
-
-                style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}>
-
-                <View style={[styles.itemContainer]}>
-                   <Text style={{fontFamily: 'Poor Story', textAlign: 'center', width: '100%', fontSize: 28, color: '#fff', backgroundColor: item.code, borderRadius:25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>{item.title}</Text>
-                </View>
-              </ImageBackground>
-          </TouchableHighlight>
-        )}
-      />
-      </View>
-
-    );
+    if(this.state.location_data != null ) {
+        return (
+        <View style={styles.mealsScreenContainer}>
+          <LinearGradient
+              colors={['#ABEBC6', '#2ECC71']}
+              style={styles.mealsScreenGradient}
+            />
+          <GridView
+            itemDimension={140}
+            style={styles.gridView}
+            items={this.state.location_data}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={item => (
+                <TouchableHighlight style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}} onPress={() => {
+                    this.props.navigation.navigate('ActiveMeals', {location_data: item, title: item.title});
+                    }}>
+                  <ImageBackground
+                    source={{ uri: item.image }}
+                    imageStyle={{resizeMode: 'cover',borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}
+                    style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}>
+                    <View style={[styles.itemContainer]}>
+                       <Text style={{fontFamily: 'Poor Story', textAlign: 'center', width: '100%', fontSize: 28, color: '#fff', backgroundColor: item.code, borderRadius:25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>{item.title}</Text>
+                    </View>
+                  </ImageBackground>
+              </TouchableHighlight>
+            )}
+          />
+          </View>
+        );
+    }
+    else {
+        return null;
+    }
   }
 }
 const styles = StyleSheet.create({

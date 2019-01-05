@@ -11,6 +11,7 @@
       "datePackaged": "11/12/2018 4:02:02 pm",
       "netWeight": 4.21,
       "location": "Village",
+      "distributor": "cuboulder",
       "datePurchased": "11/12/2018 6:00:33 pm",
       "lockerCode": 4002,
       "pickedUp": false,
@@ -21,7 +22,8 @@
         "last4": "1234",
         "brand": "American Express",
         "more": "stuff"
-      }
+      },
+      "forSale": false
     }
   ]
 }

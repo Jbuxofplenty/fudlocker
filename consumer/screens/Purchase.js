@@ -74,11 +74,11 @@ class Purchase extends Component {
           this.setState({coords: coords});
           this.setState({your_lat: location.coords.latitude});
           this.setState({your_lng: location.coords.longitude});
-
         };
 
     readyPurchase = async () => {
         let meal_data = this.state.meal_data[this.props.navigation.state.params.idMeal-1];
+        meal_data.userEmail = firebase.auth().currentUser.email;
         var date = new Date();
         var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
         meal_data.strDatePurchased = d.toString();
@@ -87,12 +87,12 @@ class Purchase extends Component {
         meal_data.lockerCode = Math.round(Math.random() * (9999 - 1000) + 1000);
         meal_data.pickedUp = false;
         meal_data.datePickedUp = "N/A";
-        await firebase.database().ref('/meals/mealCounter').once('value').then(function(snapshot) {
+        await firebase.database().ref('/meals/orderCounter').once('value').then(function(snapshot) {
             meal_data.idOrder = snapshot.val();
         }.bind(this));
         var userId = firebase.auth().currentUser.uid;
         await firebase.database().ref('/meals').update({
-          mealCounter: meal_data.idOrder + 1
+          orderCounter: meal_data.idOrder + 1
         });
         meal_data.strIdOrder = "Order #" + meal_data.idOrder.toString();
         meal_data.paymentMethod = {};
@@ -107,6 +107,10 @@ class Purchase extends Component {
         var userId = firebase.auth().currentUser.uid;
         await firebase.database().ref('users/' + userId + '/orders/current/').push(this.state.meal_data);
         await firebase.database().ref('users/' + userId + '/orders/history/').push(this.state.meal_data);
+        await firebase.database().ref('restaurants/' + this.state.meal_data.distributor.toLowerCase() + '/inventory/claimed/').push(this.state.meal_data);
+        var temp = {};
+        temp[this.state.meal_data.idMeal] = false;
+        await firebase.database().ref('meals/forSale/').update(temp);
     }
 
         regionFrom(lat, lon, distance) {
@@ -211,7 +215,6 @@ class Purchase extends Component {
                         longitude = fudlkr_locations.data[i].latlng.longitude;
                     }
                  }
-
                  this.props.navigation.navigate('Home', {coords: {latitude: latitude, longitude: longitude}, searching: false});
                 }}>
           <Text style={styles.descriptionText}>MAP</Text>
@@ -295,6 +298,7 @@ class Purchase extends Component {
              onPress={() => {
                 this.closeModal();
                 this.purchaseMeal();
+                this.props.navigation.replace('MealMode');
                 this.props.navigation.navigate('Order', {
                     'title': this.state.meal_data.strMeal,
                     'img': this.state.meal_data.strMealThumb,

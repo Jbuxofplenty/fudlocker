@@ -10,7 +10,6 @@ import * as firebase from 'firebase';
 import BaseIcon from './Icon'
 import Chevron from './Chevron'
 import InfoText from './InfoText'
-import FontText from '../FontText'
 
 class PersonalInfo extends Component {
   static navigationOptions = {

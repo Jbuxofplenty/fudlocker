@@ -1,12 +1,19 @@
 import React from 'react';
 import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
 
-import LoginScreen from './screens/Login';
-import SignUpScreen from './screens/SignUp';
-
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import AppNavigator from './navigation/AppNavigator';
+import LoginNavigator from './navigation/LoginNavigator';
+import { YellowBox } from 'react-native';
+import _ from 'lodash';
 
+YellowBox.ignoreWarnings(['Setting a timer']);
+const _console = _.clone(console);
+console.warn = message => {
+  if (message.indexOf('Setting a timer') <= -1) {
+    _console.warn(message);
+  }
+};
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,20 +28,19 @@ export default class App extends React.Component {
     });
   }
 
-
   render() {
         if (this.state.loggedInStatus === 'loggedIn') {
-          return <AppNavigator/>
+          return <AppNavigator screenProps={{ isLoggedIn: () => this.setState({ loggedInStatus: 'loggedOut' }) }}/>
         }
         else {
-          return <SignUpScreen screenProps={{ isLoggedIn: () => this.setState({ loggedInStatus: 'loggedIn' }) }}/>
+          return <LoginNavigator screenProps={{ isLoggedIn: () => this.setState({ loggedInStatus: 'loggedIn' }) }}/>
         }
   }
 }
 
 const scenes = Actions.create(
   <Scene key="root">
-        <Scene key="signup" component={SignUpScreen} initial={true}/>
+        <Scene key="login" component={LoginNavigator} initial={true}/>
         <Scene key="app" component={AppNavigator}/>
   </Scene>
 );

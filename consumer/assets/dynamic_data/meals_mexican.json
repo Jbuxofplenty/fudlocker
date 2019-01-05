@@ -10,7 +10,9 @@
       "calories": 400,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Farrand"
+      "location": "Farrand",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": "12",
@@ -23,7 +25,9 @@
       "calories": 350,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     }
 
   ]

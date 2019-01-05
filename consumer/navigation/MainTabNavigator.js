@@ -35,23 +35,23 @@ const HomeStack = createStackNavigator({
   PaymentInfo: PaymentInfoScreen,
   AddNewCard: AddCardScreen,
 },{
-      navigationOptions: ({ navigation }) => ({
-        headerStyle: {
-          backgroundColor: '#2ECC71',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          textAlign: 'center',
-          alignSelf: 'center',
-          flex: 1,
-        },
-        headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
-        <Icon
-             name='md-menu'
-             type='ionicon'
-             color='white'
-             containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
-          /></TouchableOpacity>),
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: '#2ECC71',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        textAlign: 'center',
+        alignSelf: 'center',
+        flex: 1,
+      },
+      headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
+      <Icon
+           name='md-menu'
+           type='ionicon'
+           color='white'
+           containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
+        /></TouchableOpacity>),
     })
   });
 
@@ -87,23 +87,23 @@ const MealStack = createStackNavigator({
   PaymentInfo: PaymentInfoScreen,
   AddNewCard: AddCardScreen,
 },{
-      navigationOptions: ({ navigation }) => ({
-        headerStyle: {
-          backgroundColor: '#2ECC71',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          textAlign: 'center',
-          alignSelf: 'center',
-          flex: 1,
-        },
-        headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
-          <Icon
-               name='md-menu'
-               type='ionicon'
-               color='white'
-               containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
-            /></TouchableOpacity>),
+      defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: '#2ECC71',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        textAlign: 'center',
+        alignSelf: 'center',
+        flex: 1,
+      },
+      headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
+      <Icon
+           name='md-menu'
+           type='ionicon'
+           color='white'
+           containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
+        /></TouchableOpacity>),
     })
   });
 
@@ -133,23 +133,23 @@ const OrderStack = createStackNavigator({
   PaymentInfo: PaymentInfoScreen,
   AddNewCard: AddCardScreen,
 },{
-      navigationOptions: ({ navigation }) => ({
-        headerStyle: {
-          backgroundColor: '#2ECC71',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          textAlign: 'center',
-          alignSelf: 'center',
-          flex: 1,
-        },
-        headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
-          <Icon
-               name='md-menu'
-               type='ionicon'
-               color='white'
-               containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
-            /></TouchableOpacity>),
+      defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: '#2ECC71',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        textAlign: 'center',
+        alignSelf: 'center',
+        flex: 1,
+      },
+      headerRight: (<TouchableOpacity onPress={() => {navigation.dispatch(DrawerActions.openDrawer())}}>
+      <Icon
+           name='md-menu'
+           type='ionicon'
+           color='white'
+           containerStyle={{backgroundColor: 'transparent', marginRight: 10}}
+        /></TouchableOpacity>),
     })
   });
 

@@ -5,11 +5,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Font } from 'expo'
 import Rate, { AndroidMarket } from 'react-native-rate'
 import ToggleSwitch from 'toggle-switch-react-native'
+import * as firebase from 'firebase';
 
 import BaseIcon from './Icon'
 import Chevron from './Chevron'
 import InfoText from './InfoText'
-import FontText from '../FontText'
 
 class PersonalInfo extends Component {
   static navigationOptions = {
@@ -29,22 +29,36 @@ class PersonalInfo extends Component {
     fontLoaded: false,
     mealRadius: 1.5,
     showNameEdit: true,
-    name: 'Josiah Buxton',
-    tempName: 'Josiah Buxton',
+    name: null,
+    tempName: null,
     showEmailEdit: true,
-    email: 'josiah.buxton@colorado.edu',
-    tempEmail: 'josiah.buxton@colorado.edu',
+    email: null,
+    tempEmail: null,
     showPhoneEdit: true,
-    phone: '(720) 663-8573',
+    phone: null,
     tempPhone: '',
     showPassEdit: true,
-    oldPass: 'password',
     newPass: '',
+    oldPass: 'password',
     tempPass: '',
     temp1Pass: '',
     showPassVerify: true,
     modalVisible: false,
     modal1Visible: false,
+  }
+
+  populateInfo() {
+    //Get the current userID
+    var userId = firebase.auth().currentUser.uid;
+    //Get the user data
+    return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+        this.setState({ name: snapshot.val().name });
+        this.setState({ tempName: snapshot.val().name });
+        this.setState({ email: snapshot.val().email });
+        this.setState({ tempEmail: snapshot.val().email });
+        this.setState({ phone: snapshot.val().phone });
+        this.setState({ tempPhone: snapshot.val().phone });
+    }.bind(this));
   }
 
   toggleNameEdit() {
@@ -91,7 +105,9 @@ class PersonalInfo extends Component {
     });
 
     this.setState({ fontLoaded: true });
-    }
+
+    this.populateInfo();
+  }
 
    closeModal = () => {
        this.setState({ modalVisible: false });
@@ -102,11 +118,42 @@ class PersonalInfo extends Component {
        this.setState({ tempPass: "" });
        this.setState({ temp1Pass: "" });
    };
+
+   updateData = () => {
+      //Get the current userID
+      var userId = firebase.auth().currentUser.uid;
+      firebase.database().ref('users/' + userId).update({
+        name: this.state.name,
+        email: this.state.email,
+        phone : this.state.phone
+      });
+   }
+   async verifyOldPass() {
+        var user = firebase.auth().currentUser;
+        var credential = await firebase.auth.EmailAuthProvider.credential(
+                                   this.state.email,
+                                   this.state.tempPass
+                               );
+        user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
+          this.togglePassVerify();
+          this.togglePassEdit();
+        }.bind(this)).catch(function(error) {
+          this.setState({modalVisible: true});
+        }.bind(this));
+   }
+
+   updatePass = () => {
+        var user = firebase.auth().currentUser;
+        user.updatePassword(this.state.tempPass).then(function() {
+          // Update successful.
+        }).catch(function(error) {
+          // An error happened.
+        });
+   }
+
   render() {
     const avatar="http://fudlkr.com/images/josiah_buxton.jpg";
-    const emails={firstEmail: "josiah.buxton@colorado.edu"};
-    const firstEmail={email: "josiah.buxton@colorado.edu"};
-    if (this.state.fontLoaded){
+    if (this.state.fontLoaded && this.state.name != null ){
         if (this.state.showNameEdit && this.state.showPhoneEdit && this.state.showEmailEdit && this.state.showPassEdit && this.state.showPassVerify) {
             return (
               <View style={styles.container}>
@@ -227,7 +274,7 @@ class PersonalInfo extends Component {
                                <View style={styles.separatorContainer}>
                                       <Text style={styles.edit}>|</Text>
                                   </View>
-                               <TouchableOpacity style={styles.editContainer} onPress={() => {this.toggleNameEdit()}}>
+                               <TouchableOpacity style={styles.editContainer} onPress={() => {this.toggleNameEdit();this.updateData();}}>
                                    <Text style={styles.edit}>save</Text>
                                </TouchableOpacity>
                            </View>
@@ -346,7 +393,7 @@ class PersonalInfo extends Component {
                            <View style={styles.separatorContainer}>
                                   <Text style={styles.edit}>|</Text>
                               </View>
-                           <TouchableOpacity style={styles.editContainer} onPress={() => {this.toggleEmailEdit()}}>
+                           <TouchableOpacity style={styles.editContainer} onPress={() => {this.toggleEmailEdit();this.updateData();}}>
                                <Text style={styles.edit}>save</Text>
                            </TouchableOpacity>
                        </View>
@@ -465,7 +512,7 @@ class PersonalInfo extends Component {
                        <View style={styles.separatorContainer}>
                               <Text style={styles.edit}>|</Text>
                           </View>
-                       <TouchableOpacity style={styles.editContainer} onPress={() => {this.togglePhoneEdit()}}>
+                       <TouchableOpacity style={styles.editContainer} onPress={() => {this.togglePhoneEdit();this.updateData();}}>
                            <Text style={styles.edit}>save</Text>
                        </TouchableOpacity>
                    </View>
@@ -587,13 +634,8 @@ class PersonalInfo extends Component {
                               <Text style={styles.edit}>|</Text>
                           </View>
                        <TouchableOpacity style={styles.editContainer} onPress={() => {
-                        if(this.state.tempPass==this.state.oldPass){
-                            this.togglePassVerify();
-                            this.togglePassEdit();
-                        }
-                        else {
-                            this.setState({modalVisible: true});
-                        }}}>
+                          this.verifyOldPass();
+                        }}>
                            <Text style={styles.edit}>verify</Text>
                        </TouchableOpacity>
                    </View>
@@ -733,8 +775,8 @@ class PersonalInfo extends Component {
                           </View>
                        <TouchableOpacity style={styles.editContainer} onPress={() => {
                         if(this.state.tempPass==this.state.temp1Pass) {
-                            this.setState({oldPass: this.state.tempPass});
                             this.togglePassVerify();
+                            this.updatePass();
                         }
                         else {
                             this.setState({modal1Visible: true});

@@ -10,7 +10,9 @@
       "calories": 200,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 2,
@@ -22,7 +24,9 @@
       "calories": 500,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
 
     },
     {
@@ -35,8 +39,9 @@
       "calories": 450,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
-
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 4,
@@ -48,7 +53,9 @@
       "calories": 450,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 5,
@@ -61,7 +68,9 @@
       "calories": 350,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     }
   ]
 }

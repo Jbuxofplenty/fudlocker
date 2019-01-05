@@ -10,12 +10,13 @@
       "calories": 300,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Farrand"
+      "location": "Farrand",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 2,
       "strMeal": "Quarter Pound Burger",
-      "strArea": "Chinese",
       "strCategory": "American",
       "strMealThumb": "http://fudlkr.com/mobile_assets/burger.jpg",
       "strCost": 3.99,
@@ -23,7 +24,9 @@
       "calories": 500,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 3,
@@ -35,12 +38,13 @@
       "calories": 400,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 4,
       "strMeal": "Steak Fries",
-      "strArea": "Chinese",
       "strMealThumb": "http://fudlkr.com/mobile_assets/steak_fries.jpg",
       "strCategory": "Appetizers",
       "strCost": 1.99,
@@ -48,7 +52,9 @@
       "calories": 200,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 5,
@@ -60,7 +66,9 @@
       "calories": 450,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 6,
@@ -73,7 +81,9 @@
       "calories": 300,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 7,
@@ -85,7 +95,9 @@
       "calories": 200,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 8,
@@ -98,7 +110,9 @@
       "calories": 250,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 9,
@@ -110,7 +124,9 @@
       "calories": 500,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 10,
@@ -123,7 +139,9 @@
       "calories": 450,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 11,
@@ -135,7 +153,9 @@
       "calories": 400,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Farrand"
+      "location": "Farrand",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 12,
@@ -148,7 +168,9 @@
       "calories": 350,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 13,
@@ -160,7 +182,9 @@
       "calories": 300,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": 14,
@@ -173,7 +197,9 @@
       "calories": 200,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "C4C"
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
     }
   ]
 }

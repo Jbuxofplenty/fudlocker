@@ -10,7 +10,9 @@
       "calories": 500,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     },
     {
       "idMeal": "10",
@@ -23,7 +25,9 @@
       "calories": 450,
       "datePackaged": "11/12/2018",
       "netWeight": 4.21,
-      "location": "Village"
+      "location": "Village",
+      "distributor": "cuboulder",
+      "forSale": true
     }
 
   ]
