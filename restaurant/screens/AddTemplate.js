@@ -8,7 +8,7 @@ import {
   View,
   Dimensions,
 } from 'react-native'
-import { Font } from 'expo'
+import { Font, Camera, Permissions  } from 'expo';
 import ParallaxScrollView from 'react-native-parallax-scrollview';
 import { RNCamera } from 'react-native-camera';
 
