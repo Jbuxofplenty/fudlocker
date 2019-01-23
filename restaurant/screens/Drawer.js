@@ -3,9 +3,10 @@ import { Platform, Text, View, StyleSheet, Image, Button, TouchableOpacity, Touc
 import { NavigationActions } from 'react-navigation';
 import { DrawerActions } from 'react-navigation-drawer';
 import { Font, LinearGradient } from 'expo';
-import { Avatar, ListItem, Icon } from 'react-native-elements'
-import BaseIcon from './settings/Icon'
-import InfoText from './settings/InfoText'
+import { Avatar, ListItem, Icon } from 'react-native-elements';
+import BaseIcon from './settings/Icon';
+import InfoText from './settings/InfoText';
+import * as firebase from 'firebase';
 
 const Chevron = () => (
   <Icon
@@ -17,39 +18,52 @@ const Chevron = () => (
 )
 
 class DrawerScreen extends Component {
-   state = {
-       fontLoaded: false,
-       name: 'Josiah Buxton',
-     }
+    state = {
+        fontLoaded: false,
+        name: null,
+        email: null,
+        headshot: null,
+    }
 
- async componentDidMount() {
-   await Font.loadAsync({
-     'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
-   });
-   await Font.loadAsync({
-     'Ionicons': require('@expo/vector-icons/fonts/Ionicons.ttf')
-   });
-   await Font.loadAsync({
-     'Entypo': require('@expo/vector-icons/fonts/Entypo.ttf')
-   });
-   await Font.loadAsync({
-     'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')
-   });
+    populateInfo() {
+        //Get the current userID
+        var userId = firebase.auth().currentUser.uid;
+        //Get the user data
+        return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+           this.setState({ name: snapshot.val().name });
+           this.setState({ email: snapshot.val().email });
+           this.setState({ headshot: snapshot.val().headshot });
+        }.bind(this));
+    }
 
-   this.setState({ fontLoaded: true });
+   async componentDidMount() {
+     await Font.loadAsync({
+       'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
+     });
+     await Font.loadAsync({
+       'Ionicons': require('@expo/vector-icons/fonts/Ionicons.ttf')
+     });
+     await Font.loadAsync({
+       'Entypo': require('@expo/vector-icons/fonts/Entypo.ttf')
+     });
+     await Font.loadAsync({
+       'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')
+     });
+
+     this.setState({ fontLoaded: true });
+     this.populateInfo();
+
    }
-  navigateToScreen = (route) => {
-    this.props.navigation.navigate(route);
-    this.props.navigation.dispatch(DrawerActions.closeDrawer());
-  }
-  logOutUser() {
-    this.props.screenProps.isLoggedIn();
-  }
+
+    navigateToScreen = (route) => {
+      this.props.navigation.navigate(route);
+      this.props.navigation.dispatch(DrawerActions.closeDrawer());
+    }
+
+    logOutUser() {
+      this.props.screenProps.isLoggedIn();
+    }
   render () {
-     const avatar="http://fudlkr.com/images/josiah_buxton.jpg";
-     const name="Josiah Buxton";
-     const emails={firstEmail: "josiah.buxton@colorado.edu"};
-     const firstEmail={email: "josiah.buxton@colorado.edu"};
     return (
       <View style={{paddingVertical: 40}}>
       <LinearGradient
@@ -65,13 +79,13 @@ class DrawerScreen extends Component {
                       rounded
                       xlarge
                       source={{
-                        uri: avatar,
+                        uri: this.state.headshot,
                       }}
                     />
                   </View>
                 <View style={styles.userRow}>
                   <View>
-                    <Text style={{ fontFamily: 'Poor Story', fontSize: 16, color: 'white', alignSelf: 'center' }}>{name}</Text>
+                    <Text style={{ fontFamily: 'Poor Story', fontSize: 16, color: 'white', alignSelf: 'center' }}>{this.state.name}</Text>
                     <Text
                       style={{
                         color: 'white',
@@ -80,7 +94,7 @@ class DrawerScreen extends Component {
                         alignSelf: 'center'
                       }}
                     >
-                      {firstEmail.email}
+                      {this.state.email}
                     </Text>
                    </View>
                 </View>
@@ -116,7 +130,7 @@ class DrawerScreen extends Component {
                   <TouchableOpacity onPress={() => {this.navigateToScreen('Inventory')}}>
                       <ListItem
                         // chevron
-                        title="Inventory"
+                        title="Add Meal"
                         titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
                         rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
                         containerStyle={styles.listItemContainer}
@@ -132,6 +146,36 @@ class DrawerScreen extends Component {
                         rightIcon={<Chevron/>}
                       />
                   </TouchableOpacity>
+                  <TouchableOpacity onPress={() => {this.props.navigation.navigate('AddTemplate', {
+                                                'title': "Add New Template",
+                                                'img': "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png",
+                                                'detail': "",
+                                                'cost': "",
+                                                'calories': "",
+                                                'strCategory': "",
+                                                'location': "",
+                                                'idMeal': "",
+                                                'shelfLife': "",
+                                                'templateData': {"strMealThumb": "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png"}});
+                                                this.props.navigation.dispatch(DrawerActions.closeDrawer());}}>
+                    <ListItem
+                      // chevron
+                      title="Add Template"
+                      titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                      rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                      containerStyle={styles.listItemContainer}
+                      leftIcon={
+                        <BaseIcon
+                          containerStyle={{ backgroundColor: 'transparent' }}
+                          icon={{
+                            type: 'ionicon',
+                            name: 'md-add',
+                          }}
+                        />
+                      }
+                      rightIcon={<Chevron/>}
+                    />
+                </TouchableOpacity>
                   </View>
                 <View style={styles.categoryContainer}>
                     <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Account</Text>

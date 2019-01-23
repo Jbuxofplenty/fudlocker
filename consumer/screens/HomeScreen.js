@@ -20,7 +20,7 @@ const GOOGLE_MAPS_APIKEY = 'AIzaSyAXOX7B2DGxHN9SK3FwMaqkP8Q_LE0MAvo';
 
 const LOCATION_KEYS_TO_FILTERS = ['title', 'description'];
 const MEAL_KEYS_TO_FILTERS = ['strMeal', 'datePackaged', 'calories'];
-const CATEGORY_KEYS_TO_FILTERS = ['strCategory'];
+const CATEGORY_KEYS_TO_FILTERS = ['title'];
 
 export default class Home extends Component {
 static navigationOptions = ({ navigation }) => {
@@ -116,11 +116,24 @@ static navigationOptions = ({ navigation }) => {
             });
             this.setState({ markers: tempArray });
         }.bind(this));
+        await firebase.database().ref('/meals/forSale').once('value').then(function(snapshot) {
+               let tempArray = {};
+               snapshot.forEach(function(childSnapshot) {
+                 var childData = childSnapshot.val();
+                 tempArray[childSnapshot.key] = childData;
+               });
+               this.setState({ meals_forSale: tempArray });
+           }.bind(this));
+        var temp = this.state.meals_forSale;
         await firebase.database().ref('/meals/all/meals').once('value').then(function(snapshot) {
            let tempArray = [];
            snapshot.forEach(function(childSnapshot) {
-             var childData = childSnapshot.val();
-             tempArray.push(childData);
+             childSnapshot.forEach(function(childChildSnapshot) {
+                  var childData = childChildSnapshot.val();
+                  if(temp[childData.idMeal.toString()]){
+                    tempArray.push(childData);
+                  }
+             });
            });
            this.setState({ meals_data: tempArray });
            this.setState({ meal_type: "All" });
@@ -213,7 +226,7 @@ static navigationOptions = ({ navigation }) => {
                   }}>
                <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
                <View style={{flex: 1, flexDirection: 'column'}}>
-                      <Text style={{fontFamily: 'Poor Story', fontSize: 20, marginLeft: 10}}>{`${item.strCategory}`}</Text>
+                      <Text style={{fontFamily: 'Poor Story', fontSize: 20, marginLeft: 10}}>{`${item.title}`}</Text>
                     </View>
                     <Image source={{ uri: item.strCategoryThumb }} style={{width: 48, height: 48, marginRight: 20}}></Image>
                </View>

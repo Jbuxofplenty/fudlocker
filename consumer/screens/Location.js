@@ -37,6 +37,7 @@ class Location extends Component {
         location_data: null,
         location: null,
         title: null,
+        meals_forSale: null,
     };
    async componentDidMount() {
     await Font.loadAsync({
@@ -47,15 +48,28 @@ class Location extends Component {
     this.populateInfo();
    }
 
-   populateInfo() {
+   async populateInfo() {
      //Get the current userID
      var userId = firebase.auth().currentUser.uid;
+     await firebase.database().ref('/meals/forSale').once('value').then(function(snapshot) {
+           let tempArray = {};
+           snapshot.forEach(function(childSnapshot) {
+             var childData = childSnapshot.val();
+             tempArray[childSnapshot.key] = childData;
+           });
+           this.setState({ meals_forSale: tempArray });
+       }.bind(this));
+     var temp = this.state.meals_forSale;
      //Get the user data
      return firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.meal_type + '/meals').once('value').then(function(snapshot) {
          let tempArray = [];
          snapshot.forEach(function(childSnapshot) {
-           var childData = childSnapshot.val();
-           tempArray.push(childData);
+           childSnapshot.forEach(function(childChildSnapshot) {
+               var childData = childChildSnapshot.val();
+               if(temp[childData.idMeal.toString()]){
+                  tempArray.push(childData);
+               }
+          });
          });
          this.setState({ location_data: tempArray });
          this.setState({ location: this.props.navigation.state.params.meal_type });
@@ -91,9 +105,9 @@ class Location extends Component {
                 </View>
             </View>
             <ScrollView>
-              {this.state.location_data.map(datum => {
+              {this.state.location_data.map((datum, index) => {
                 return (
-                  <TouchableOpacity key={datum.strMeal} onPress={() => {
+                  <TouchableOpacity key={index} onPress={() => {
                         title = datum.strMeal;
                         img = datum.strMealThumb;
                         location = datum.location;

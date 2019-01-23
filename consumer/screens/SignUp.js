@@ -69,7 +69,9 @@ export default class SignUpScreen extends Component {
                   email: this.state.email,
                   name: "",
                   phone: "",
-                  mealRadius: 20
+                  mealRadius: 20,
+                  cameraPermission: null,
+                  headshot: null,
                 });
                  this.logInUser();
        }).catch(function(error) {

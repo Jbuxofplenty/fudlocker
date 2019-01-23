@@ -6,6 +6,7 @@ import AppNavigator from './navigation/AppNavigator';
 import LoginNavigator from './navigation/LoginNavigator';
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
+import * as firebase from 'firebase';
 
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
@@ -14,6 +15,17 @@ console.warn = message => {
     _console.warn(message);
   }
 };
+
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyC6wZSSUcyYDpsuS6bTxfrnOjrY1KIi1qU",
+    authDomain: "fudlkr-7fc5b.firebaseapp.com",
+    databaseURL: "https://fudlkr-7fc5b.firebaseio.com",
+    projectId: "fudlkr-7fc5b",
+    storageBucket: "fudlkr-7fc5b.appspot.com",
+    messagingSenderId: "471202846868"
+  };
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export default class App extends React.Component {
   constructor(props) {

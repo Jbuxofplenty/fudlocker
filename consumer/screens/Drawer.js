@@ -23,6 +23,7 @@ class DrawerScreen extends Component {
        fontLoaded: false,
        name: null,
        email: null,
+       headshot: null,
      }
 
        populateInfo() {
@@ -32,6 +33,7 @@ class DrawerScreen extends Component {
          return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
              this.setState({ name: snapshot.val().name });
              this.setState({ email: snapshot.val().email });
+             this.setState({ headshot: snapshot.val().headshot });
          }.bind(this));
        }
 
@@ -62,207 +64,211 @@ class DrawerScreen extends Component {
   }
 
   render () {
-     const avatar="http://fudlkr.com/images/josiah_buxton.jpg";
-    return (
-      <View style={{paddingVertical: 40}}>
-      <LinearGradient
-          colors={['#2ECC71', '#2ECC71']}
-          style={styles.loginScreenGradient}
-        />
-        <ScrollView style={styles.scroll}>
-                <TouchableOpacity
-                    onPress={() => this.navigateToScreen('PersonalInfo')}
-                >
-                <View style={styles.userImage}>
-                    <Avatar
-                      rounded
-                      xlarge
-                      source={{
-                        uri: avatar,
-                      }}
-                    />
-                  </View>
-                <View style={styles.userRow}>
-                  <View>
-                    <Text style={{ fontFamily: 'Poor Story', fontSize: 16, color: 'white', alignSelf: 'center' }}>{this.state.name}</Text>
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontSize: 16,
-                        fontFamily: 'Poor Story',
-                        alignSelf: 'center'
-                      }}
+    if(this.state.email != null) {
+        return (
+          <View style={{paddingVertical: 40}}>
+          <LinearGradient
+              colors={['#2ECC71', '#2ECC71']}
+              style={styles.loginScreenGradient}
+            />
+            <ScrollView style={styles.scroll}>
+                    <TouchableOpacity
+                        onPress={() => this.navigateToScreen('PersonalInfo')}
                     >
-                      {this.state.email}
-                    </Text>
-                   </View>
-                </View>
-                </TouchableOpacity>
-                <View style={styles.categoryContainer}>
-                    <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Browse</Text>
-                </View>
-                <View>
-                  <TouchableOpacity onPress={() => {this.navigateToScreen('Home')}}>
-                      <ListItem
-                        // chevron
-                        title="Home"
-                        titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                        rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                        containerStyle={styles.listItemContainer}
-                        leftIcon={
-                          <BaseIcon
-                            containerStyle={{ backgroundColor: 'transparent' }}
-                            icon={{
-                              type: 'ionicon',
-                              name: 'md-home',
-                            }}
-                          />
-                        }
-                        rightIcon={<Chevron/>}
-                      />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => {this.navigateToScreen('Categories')}}>
-                      <ListItem
-                        title="Cuisine Categories"
-                        titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                        rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                        containerStyle={styles.listItemContainer}
-                        leftIcon={
-                          <BaseIcon
-                            containerStyle={{ backgroundColor: 'transparent' }}
-                            icon={{
-                              type: 'ionicon',
-                              name: 'md-pizza',
-                            }}
-                          />
-                        }
-                        rightIcon={<Chevron />}
-                      />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.categoryContainer}>
-                    <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Orders</Text>
-                </View>
-                <View>
-                  <TouchableOpacity onPress={() => {this.props.navigation.navigate('Orders', {order_type: "Current", title: "Current Orders"})}}>
-                      <ListItem
-                        // chevron
-                        title="Current Orders"
-                        titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                        rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                        containerStyle={styles.listItemContainer}
-                        leftIcon={
-                          <BaseIcon
-                            containerStyle={{ backgroundColor: 'transparent' }}
-                            icon={{
-                              type: 'ionicon',
-                              name: 'md-pricetag',
-                            }}
-                          />
-                        }
-                        rightIcon={<Chevron/>}
-                      />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Orders', {order_type: "History", title: "Order History"})}>
-                      <ListItem
-                        title="Order History"
-                        titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                        rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                        containerStyle={styles.listItemContainer}
-                        leftIcon={
-                          <BaseIcon
-                            containerStyle={{ backgroundColor: 'transparent' }}
-                            icon={{
-                              type: 'ionicon',
-                              name: 'md-list',
-                            }}
-                          />
-                        }
-                        rightIcon={<Chevron />}
-                      />
-                  </TouchableOpacity>
-                  </View>
-                <View style={styles.categoryContainer}>
-                    <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Account</Text>
-                </View>
-                <View>
-                <TouchableOpacity onPress={() => {this.props.navigation.navigate('MealRadius', {radius: 1.5});this.props.navigation.dispatch(DrawerActions.closeDrawer());}}>
-                      <ListItem
-                        // chevron
-                        title="Meal Radius"
-                        titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                        rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                        containerStyle={styles.listItemContainer}
-                        leftIcon={
-                          <BaseIcon
-                            containerStyle={{ backgroundColor: 'transparent' }}
-                            icon={{
-                              type: 'ionicon',
-                              name: 'md-locate',
-                            }}
-                          />
-                        }
-                        rightIcon={<Chevron/>}
-                      />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.navigateToScreen('PaymentInfo')}>
-                      <ListItem
-                        title="Payment Information"
-                        titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                        rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                        containerStyle={styles.listItemContainer}
-                        leftIcon={
-                          <BaseIcon
-                            containerStyle={{ backgroundColor: 'transparent' }}
-                            icon={{
-                              type: 'font-awesome',
-                              name: 'money',
-                            }}
-                          />
-                        }
-                        rightIcon={<Chevron />}
-                      />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.navigateToScreen('Profile')}>
-                      <ListItem
-                          title="Settings"
-                          titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                          rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                          containerStyle={styles.listItemContainer}
-                          leftIcon={
-                            <BaseIcon
-                              containerStyle={{ backgroundColor: 'transparent' }}
-                              icon={{
-                                type: 'ionicon',
-                                name: 'md-cog',
-                              }}
-                            />
-                          }
-                          rightIcon={<Chevron />}
+                    <View style={styles.userImage}>
+                        <Avatar
+                          rounded
+                          xlarge
+                          source={{
+                            uri: this.state.headshot,
+                          }}
                         />
+                      </View>
+                    <View style={styles.userRow}>
+                      <View>
+                        <Text style={{ fontFamily: 'Poor Story', fontSize: 16, color: 'white', alignSelf: 'center' }}>{this.state.name}</Text>
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontSize: 16,
+                            fontFamily: 'Poor Story',
+                            alignSelf: 'center'
+                          }}
+                        >
+                          {this.state.email}
+                        </Text>
+                       </View>
+                    </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.logOutUser()}>
-                        <ListItem
-                          title="Log Out"
-                          titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                          rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                          containerStyle={styles.listItemContainer}
-                          leftIcon={
-                            <BaseIcon
-                              containerStyle={{ backgroundColor: 'transparent' }}
-                              icon={{
-                                type: 'ionicon',
-                                name: 'md-log-out',
-                              }}
+                    <View style={styles.categoryContainer}>
+                        <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Browse</Text>
+                    </View>
+                    <View>
+                      <TouchableOpacity onPress={() => {this.navigateToScreen('Home')}}>
+                          <ListItem
+                            // chevron
+                            title="Home"
+                            titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                            containerStyle={styles.listItemContainer}
+                            leftIcon={
+                              <BaseIcon
+                                containerStyle={{ backgroundColor: 'transparent' }}
+                                icon={{
+                                  type: 'ionicon',
+                                  name: 'md-home',
+                                }}
+                              />
+                            }
+                            rightIcon={<Chevron/>}
+                          />
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={() => {this.navigateToScreen('Categories')}}>
+                          <ListItem
+                            title="Cuisine Categories"
+                            titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                            containerStyle={styles.listItemContainer}
+                            leftIcon={
+                              <BaseIcon
+                                containerStyle={{ backgroundColor: 'transparent' }}
+                                icon={{
+                                  type: 'ionicon',
+                                  name: 'md-pizza',
+                                }}
+                              />
+                            }
+                            rightIcon={<Chevron />}
+                          />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.categoryContainer}>
+                        <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Orders</Text>
+                    </View>
+                    <View>
+                      <TouchableOpacity onPress={() => {this.props.navigation.navigate('Orders', {order_type: "Current", title: "Current Orders"})}}>
+                          <ListItem
+                            // chevron
+                            title="Current Orders"
+                            titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                            containerStyle={styles.listItemContainer}
+                            leftIcon={
+                              <BaseIcon
+                                containerStyle={{ backgroundColor: 'transparent' }}
+                                icon={{
+                                  type: 'ionicon',
+                                  name: 'md-pricetag',
+                                }}
+                              />
+                            }
+                            rightIcon={<Chevron/>}
+                          />
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={() => this.props.navigation.navigate('Orders', {order_type: "History", title: "Order History"})}>
+                          <ListItem
+                            title="Order History"
+                            titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                            containerStyle={styles.listItemContainer}
+                            leftIcon={
+                              <BaseIcon
+                                containerStyle={{ backgroundColor: 'transparent' }}
+                                icon={{
+                                  type: 'ionicon',
+                                  name: 'md-list',
+                                }}
+                              />
+                            }
+                            rightIcon={<Chevron />}
+                          />
+                      </TouchableOpacity>
+                      </View>
+                    <View style={styles.categoryContainer}>
+                        <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Account</Text>
+                    </View>
+                    <View>
+                    <TouchableOpacity onPress={() => {this.props.navigation.navigate('MealRadius', {radius: 1.5});this.props.navigation.dispatch(DrawerActions.closeDrawer());}}>
+                          <ListItem
+                            // chevron
+                            title="Meal Radius"
+                            titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                            containerStyle={styles.listItemContainer}
+                            leftIcon={
+                              <BaseIcon
+                                containerStyle={{ backgroundColor: 'transparent' }}
+                                icon={{
+                                  type: 'ionicon',
+                                  name: 'md-locate',
+                                }}
+                              />
+                            }
+                            rightIcon={<Chevron/>}
+                          />
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={() => this.navigateToScreen('PaymentInfo')}>
+                          <ListItem
+                            title="Payment Information"
+                            titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                            containerStyle={styles.listItemContainer}
+                            leftIcon={
+                              <BaseIcon
+                                containerStyle={{ backgroundColor: 'transparent' }}
+                                icon={{
+                                  type: 'font-awesome',
+                                  name: 'money',
+                                }}
+                              />
+                            }
+                            rightIcon={<Chevron />}
+                          />
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={() => this.navigateToScreen('Profile')}>
+                          <ListItem
+                              title="Settings"
+                              titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                              rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                              containerStyle={styles.listItemContainer}
+                              leftIcon={
+                                <BaseIcon
+                                  containerStyle={{ backgroundColor: 'transparent' }}
+                                  icon={{
+                                    type: 'ionicon',
+                                    name: 'md-cog',
+                                  }}
+                                />
+                              }
+                              rightIcon={<Chevron />}
                             />
-                          }
-                          rightIcon={<Chevron />}
-                        />
-                    </TouchableOpacity>
-                </View>
-              </ScrollView>
-      </View>
-    );
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.logOutUser()}>
+                            <ListItem
+                              title="Log Out"
+                              titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                              rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                              containerStyle={styles.listItemContainer}
+                              leftIcon={
+                                <BaseIcon
+                                  containerStyle={{ backgroundColor: 'transparent' }}
+                                  icon={{
+                                    type: 'ionicon',
+                                    name: 'md-log-out',
+                                  }}
+                                />
+                              }
+                              rightIcon={<Chevron />}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                  </ScrollView>
+          </View>
+        );
+    }
+    else {
+        return null
+    }
   }
 }
 

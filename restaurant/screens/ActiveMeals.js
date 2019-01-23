@@ -17,6 +17,8 @@ const dateformat = require('dateformat');
 import * as firebase from 'firebase';
 import ParallaxScrollView from 'react-native-parallax-scrollview';
 import Carousel, {ParallaxImage, Pagination} from 'react-native-snap-carousel';
+import Chevron from './settings/Chevron';
+import ChevronLeft from './settings/ChevronLeft';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -51,10 +53,12 @@ class ActiveMeals extends Component {
     state = {
         fontLoaded: false,
         paramsLoaded: false,
-        location_data: null,
+        activeInventory: null,
         location: null,
         title: null,
+        claimedInventory: null,
         activeSlide: 0,
+        pickedUpMeals: null,
     };
    async componentDidMount() {
     await Font.loadAsync({
@@ -65,42 +69,113 @@ class ActiveMeals extends Component {
     this.populateInfo();
    }
 
-   populateInfo() {
+   async populateInfo() {
      //Get the current userID
      var userId = firebase.auth().currentUser.uid;
+     await firebase.database().ref('/meals/forSale').once('value', function(snapshot) {
+           let tempArray = {};
+           snapshot.forEach(function(childSnapshot) {
+             var childData = childSnapshot.val();
+             tempArray[childSnapshot.key] = childData;
+           });
+           this.setState({ mealsForSale: tempArray });
+     }.bind(this));
+     var temp = this.state.mealsForSale;
+     await firebase.database().ref('/meals/forSale').on('value', function(snapshot) {
+        let tempArray = {};
+        snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val();
+          tempArray[childSnapshot.key] = childData;
+        });
+        this.setState({ mealsForSale: tempArray });
+     }.bind(this));
      //Get the user data
-     return firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.location_data.type + '/meals').once('value').then(function(snapshot) {
+     await firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.locationData.type + '/meals').once('value', function(snapshot) {
          let tempArray = [];
          snapshot.forEach(function(childSnapshot) {
-           var childData = childSnapshot.val();
-           tempArray.push(childData);
+           childSnapshot.forEach(function(childChildSnapshot) {
+                  var childData = childChildSnapshot.val();
+                  if(temp[childData.idMeal.toString()]){
+                     tempArray.push(childData);
+                  }
+           });
          });
-         this.setState({ location_data: tempArray });
-         this.setState({ location: this.props.navigation.state.params.location_data.type });
-         this.setState({ title: this.props.navigation.state.params.location_data.title });
+         this.setState({ activeInventory: tempArray });
+     }.bind(this));
+     await firebase.database().ref('/restaurants/' + this.props.navigation.state.params.locationData.owner + '/inventory/recent/' + this.props.navigation.state.params.locationData.type + '/').once('value', function(snapshot) {
+        let tempArray = [];
+        snapshot.forEach(function(childSnapshot) {
+           childData = childSnapshot.val();
+           tempArray.push(childData);
+        });
+        this.setState({ pickedUp: tempArray });
+     }.bind(this));
+     return  firebase.database().ref('/restaurants/' + this.props.navigation.state.params.locationData.owner + '/inventory/claimed/' + this.props.navigation.state.params.locationData.type + '/').once('value', function(snapshot) {
+                     let tempArray = [];
+                     snapshot.forEach(function(childSnapshot) {
+                        childData = childSnapshot.val();
+                        tempArray.push(childData);
+                 });
+         this.setState({ claimedInventory: tempArray });
      }.bind(this));
    }
-   renderItem ({item, index}, parallaxProps) {
+   renderItemTemp ({item, index}, parallaxProps) {
         return (
-            <View style={styles.currentOrdersContainer}>
-                <ParallaxImage
-                    source={{ uri: item.strMealThumb }}
-                    containerStyle={styles.orderImageContainer}
-                    style={styles.orderImage}
-                    parallaxFactor={0.4}
-                    {...parallaxProps}
-                />
-                <Text style={styles.orderTitle} numberOfLines={2}>
-                    { item.strMeal }
-                </Text>
-            </View>
+            <TouchableOpacity key={index} onPress={() => {
+                    this.props.navigation.navigate('Meal', {'title': item.strMeal,
+                                                            'img': item.strMealThumb,
+                                                            'cost': item.strCost,
+                                                            'calories': item.calories,
+                                                            'strCategory': item.strCategory,
+                                                            'location': item.location,
+                                                            'idMeal': item.idMeal,
+                                                            'strIdMeal': "Meal ID #"+item.idMeal,
+                                                            'shelfLife': item.shelfLife,
+                                                            'datePackaged': item.strDatePackaged,
+                                                            'pickedUp': item.pickedUp,
+                                                            'datePurchased': item.strDatePurchased,
+                                                            'forSale': item.forSale,
+                                                            'name': item.name,
+                                                            'headshot': item.headshot});
+               }}>
+                <View style={styles.currentOrdersContainer}>
+                    <ChevronLeft/>
+                    <View style={styles.imageContainers}>
+                        <ParallaxImage
+                            source={{ uri: item.strMealThumb }}
+                            containerStyle={styles.orderImageContainer}
+                            style={styles.orderImage}
+                            parallaxFactor={0.4}
+                            {...parallaxProps}
+                        />
+                        <Text style={styles.orderTitle} numberOfLines={2}>
+                            { item.strMeal }
+                        </Text>
+                    </View>
+                    <View style={styles.imageContainers}>
+                        <ParallaxImage
+                            source={{ uri: item.headshot }}
+                            containerStyle={styles.orderImageContainer}
+                            style={styles.orderImage}
+                            parallaxFactor={0.4}
+                            {...parallaxProps}
+                        />
+                        <Text style={styles.orderTitle} numberOfLines={2}>
+                            { item.name }
+                        </Text>
+                    </View>
+                    {index == this.state.claimedInventory-1 ? null:<Chevron/>}
+                </View>
+            </TouchableOpacity>
+
         );
    }
+
    get pagination () {
-        const { location_data, activeSlide } = this.state;
+        const { claimedInventory, activeSlide } = this.state;
         return (
             <Pagination
-              dotsLength={location_data.length}
+              dotsLength={claimedInventory.length}
               activeDotIndex={activeSlide}
               containerStyle={{ backgroundColor: 'transparent', paddingBottom: 10, paddingTop: 10 }}
               dotStyle={{
@@ -119,19 +194,26 @@ class ActiveMeals extends Component {
         );
    }
   renderClaimedCards = () => {
-    if (!this.state.fontLoaded || this.state.location_data == null){
+    if (!this.state.fontLoaded || this.state.claimedInventory == null){
         return null
     }
+
+    let renderItem = this.renderItemTemp.bind(this);
     return (
-        <View>
-            <Carousel
-              data={this.state.location_data}
-              renderItem={this.renderItem}
-              sliderWidth={sliderWidth}
-              itemWidth={itemWidth}
-              hasParallaxImages={true}
-              onSnapToItem={(index) => this.setState({ activeSlide: index }) }
-            />
+        <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5, width: '95%', alignItems: 'center', alignSelf: 'center'}}>
+           <Text style={styles.priceText}>{"Claimed Inventory"}</Text>
+            { this.state.claimedInventory.length == 0 ? <View>
+                                <Text style={styles.noItems}>No Meals to Display!</Text>
+                            </View>:
+
+                            <Carousel
+                              data={this.state.claimedInventory}
+                              renderItem={renderItem}
+                              sliderWidth={sliderWidth}
+                              itemWidth={itemWidth}
+                              hasParallaxImages={true}
+                              onSnapToItem={(index) => this.setState({ activeSlide: index }) }
+                            />}
             { this.pagination }
         </View>
     )
@@ -174,49 +256,96 @@ class ActiveMeals extends Component {
 
   render() {
     let params = this.props.navigation.state.params;
-    if (!this.state.fontLoaded || this.state.location_data == null){
+    if (!this.state.fontLoaded || this.state.activeInventory == null){
        return null
     }
     return (
-      <View style={styles.mainviewStyle}>
-        <Text style={styles.title}>Claimed Inventory</Text>
-        {this.renderClaimedCards()}
-        <View style={styles.infoContainer}>
-            <View style={styles.mealsContainer}>
-                <Text style={[styles.title, {marginTop: 0}]}>Active Inventory</Text>
-                <View style={styles.columnsContainer}>
-                    <Text style={styles.columnLabel}>ID</Text>
-                    <Text style={styles.columnLabel}>Meal Name</Text>
-                    <Text style={styles.columnLabel}>Cuisine Category</Text>
-                    <Text style={styles.columnLabel}>Cost</Text>
-                </View>
-            </View>
+        <View style={styles.mainviewStyle}>
             <ScrollView>
-              {this.state.location_data.map(datum => {
-                return (
-                  <TouchableOpacity key={datum.strMeal} onPress={() => {
-                        title = datum.strMeal;
-                        img = datum.strMealThumb;
-                        location = datum.location;
-                        strCategory = datum.strCategory;
-                        cost = datum.strCost;
-                        calories = datum.calories;
-                        desc = datum.desc;
-                        idMeal = datum.idMeal;
-                        this.props.navigation.navigate('Meal', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location, 'idMeal': idMeal});
-                   }}>
-                    <View style={styles.mealContainer}>
-                      <Text style={styles.mealItem}>{datum.idMeal}</Text>
-                      <Text style={styles.mealItem}>{datum.strMeal}</Text>
-                      <Text style={styles.mealItem}>{datum.strCategory}</Text>
-                      <Text style={styles.mealItem}>${datum.strCost}</Text>
+                {this.renderClaimedCards()}
+                <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5, width: '95%',alignItems: 'center', alignSelf: 'center'}}>
+                    <Text style={styles.priceText}>{"Active Inventory"}</Text>
+                    <View style={styles.columnsContainer}>
+                        <Text style={styles.columnLabel}>ID</Text>
+                        <Text style={styles.columnLabel}>Meal Name</Text>
+                        <Text style={styles.columnLabel}>Cuisine Category</Text>
+                        <Text style={styles.columnLabel}>Cost</Text>
                     </View>
-                  </TouchableOpacity>
-                )
-              })}
+                    <ScrollView>
+                      { this.state.activeInventory.length == 0 ? <View>
+                                                      <Text style={styles.noItems}>No Meals to Display!</Text>
+                                                  </View>:
+                        this.state.activeInventory.map((datum, index) => {
+                        return (
+                          <TouchableOpacity key={index} onPress={() => {
+                                this.props.navigation.navigate('Meal', {'title': datum.strMeal,
+                                                                        'img': datum.strMealThumb,
+                                                                        'cost': datum.strCost,
+                                                                        'calories': datum.calories,
+                                                                        'strCategory': datum.strCategory,
+                                                                        'location': datum.location,
+                                                                        'idMeal': datum.idMeal,
+                                                                        'strIdMeal': "Meal ID #"+datum.idMeal,
+                                                                        'shelfLife': datum.shelfLife,
+                                                                        'datePackaged': datum.strDatePackaged,
+                                                                        'pickedUp': datum.pickedUp,
+                                                                        'datePurchased': datum.strDatePurchased,
+                                                                        'forSale': datum.forSale});
+                           }}>
+                            <View style={styles.mealContainer}>
+                              <Text style={styles.mealItem}>{datum.idMeal}</Text>
+                              <Text style={styles.mealItem}>{datum.strMeal}</Text>
+                              <Text style={styles.mealItem}>{datum.strCategory}</Text>
+                              <Text style={styles.mealItem}>${datum.strCost}</Text>
+                            </View>
+                          </TouchableOpacity>
+                        )
+                      })}
+                    </ScrollView>
+                </View>
+                { this.state.pickedUpMeals == null ? null:
+                    <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5, width: '95%',alignItems: 'center', alignSelf: 'center'}}>
+                        <Text style={styles.priceText}>{"Recently Picked Up"}</Text>
+                        <View style={styles.columnsContainer}>
+                            <Text style={styles.columnLabel}>ID</Text>
+                            <Text style={styles.columnLabel}>Meal Name</Text>
+                            <Text style={styles.columnLabel}>Cuisine Category</Text>
+                            <Text style={styles.columnLabel}>Cost</Text>
+                        </View>
+                        <ScrollView>
+                          {this.state.pickedUpMeals.map((datum, index) => {
+                            return (
+                              <TouchableOpacity key={index} onPress={() => {
+                                    this.props.navigation.navigate('Meal', {'title': datum.strMeal,
+                                                                            'img': datum.strMealThumb,
+                                                                            'cost': datum.strCost,
+                                                                            'calories': datum.calories,
+                                                                            'strCategory': datum.strCategory,
+                                                                            'location': datum.location,
+                                                                            'idMeal': datum.idMeal,
+                                                                            'strIdMeal': "Meal ID #"+datum.idMeal,
+                                                                            'shelfLife': datum.shelfLife,
+                                                                            'datePackaged': datum.strDatePackaged,
+                                                                            'pickedUp': datum.pickedUp,
+                                                                            'datePurchased': datum.strDatePurchased,
+                                                                            'forSale': datum.forSale,
+                                                                            'headshot': datum.headshot,
+                                                                            'name': datum.name});
+                               }}>
+                                <View style={styles.mealContainer}>
+                                  <Text style={styles.mealItem}>{datum.idMeal}</Text>
+                                  <Text style={styles.mealItem}>{datum.strMeal}</Text>
+                                  <Text style={styles.mealItem}>{datum.strCategory}</Text>
+                                  <Text style={styles.mealItem}>${datum.strCost}</Text>
+                                </View>
+                              </TouchableOpacity>
+                            )
+                          })}
+                    </ScrollView>
+                 </View>
+             }
             </ScrollView>
         </View>
-      </View>
     )
   }
 }
@@ -237,6 +366,11 @@ cardContainer: {
   coverImage: {
     height: Dimensions.get('window').width * (3 / 4),
     width: Dimensions.get('window').width,
+  },
+  lineItemContainer : {
+    flex: 1,
+    flexDirection: 'row',
+    marginVertical: 5,
   },
   headerContainer: {
     alignItems: 'center',
@@ -263,6 +397,13 @@ cardContainer: {
     color: 'black',
     fontFamily: 'Poor Story',
     marginVertical: 10,
+  },
+  noItems: {
+    alignSelf: 'center',
+    color: 'black',
+    fontFamily: 'Poor Story',
+    fontSize: 22,
+    marginVertical: 30,
   },
   orderTitle: {
     paddingHorizontal: 30,
@@ -316,13 +457,21 @@ cardContainer: {
     borderColor: 'rgba(0,0,0,0.3)',
     padding: 10,
   },
+  priceText: {
+      marginVertical: 20,
+      letterSpacing: 1,
+      color: Colors.black,
+      fontSize: 28,
+      fontFamily: 'Poor Story',
+      alignSelf: 'center',
+    },
   mealItem:{
     fontFamily: 'Poor Story',
     textAlign: 'center',
     fontSize: 12,
     width: '25%',
     alignSelf: 'center',
-    color: 'darkgray',
+    color: 'black',
   },
   mealsContainer:{
     borderColor: 'rgba(0,0,0,0.3)',
@@ -334,12 +483,18 @@ cardContainer: {
     justifyContent: 'space-between'
   },
   currentOrdersContainer:{
-    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
     width: '100%',
     alignSelf: 'center',
     justifyContent: 'space-between',
     height: SCREEN_HEIGHT*0.2,
-    backgroundColor: '#2ECC71'
+    backgroundColor: '#fff'
+  },
+  imageContainers: {
+    flex: 2,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   orderImageContainer:{
     width: '50%',
@@ -358,14 +513,18 @@ cardContainer: {
     padding: 10,
   },
   columnsContainer: {
-    flex: 1,
+    flex: .1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginVertical: 10,
+    width: '90%',
+    alignSelf: 'flex-start',
+    paddingBottom: 5,
   },
   columnLabel:{
       fontFamily: 'Poor Story',
       textAlign: 'center',
-      fontSize: 12,
+      fontSize: 14,
       width: '27%',
       alignSelf: 'center',
     },
@@ -391,7 +550,6 @@ cardContainer: {
     letterSpacing: 1,
     color: Colors.black,
     fontSize: 36,
-    fontWeight: '400',
     fontFamily: 'Poor Story',
   },
   buttonText: {

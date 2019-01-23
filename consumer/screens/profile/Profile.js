@@ -54,6 +54,7 @@ class SettingsScreen extends Component {
     mealRadius: null,
     name: null,
     email: null,
+    headshot: null,
   }
   async componentDidMount() {
     await Font.loadAsync({
@@ -81,6 +82,7 @@ class SettingsScreen extends Component {
          this.setState({ name: snapshot.val().name });
          this.setState({ email: snapshot.val().email });
          this.setState({ mealRadius: snapshot.val().mealRadius });
+         this.setState({ headshot: snapshot.val().headshot});
      }.bind(this));
    }
 
@@ -127,7 +129,6 @@ class SettingsScreen extends Component {
   }
 
   render() {
-    const avatar="http://fudlkr.com/images/josiah_buxton.jpg";
     if (this.state.fontLoaded && this.state.name != null ){
     return (
       <ScrollView style={styles.scroll}>
@@ -140,7 +141,7 @@ class SettingsScreen extends Component {
               rounded
               size="large"
               source={{
-                uri: avatar,
+                uri: this.state.headshot,
               }}
             />
           </View>

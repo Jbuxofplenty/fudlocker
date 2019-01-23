@@ -8,17 +8,6 @@ import {Image} from 'react-native' ;
 import * as firebase from 'firebase';
 import * as EmailValidator from 'email-validator';
 
-// Initialize Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyC6wZSSUcyYDpsuS6bTxfrnOjrY1KIi1qU",
-    authDomain: "fudlkr-7fc5b.firebaseapp.com",
-    databaseURL: "https://fudlkr-7fc5b.firebaseio.com",
-    projectId: "fudlkr-7fc5b",
-    storageBucket: "fudlkr-7fc5b.appspot.com",
-    messagingSenderId: "471202846868"
-  };
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -96,7 +85,9 @@ export default class SignUpScreen extends Component {
                   email: this.state.email,
                   name: "",
                   phone: "",
-                  org: this.state.org
+                  org: this.state.org,
+                  cameraPermission: null,
+                  headshot: "",
                 });
                  this.logInUser();
        }).catch(function(error) {
@@ -109,6 +100,7 @@ export default class SignUpScreen extends Component {
           }
     }.bind(this));
   }
+
   componentWillUnmount() {
       this.state._isMounted  = false;
     }
@@ -181,7 +173,6 @@ export default class SignUpScreen extends Component {
       if (this.state.fontLoaded && this.state.orgData != null){
         return (
           <KeyboardAvoidingView style={styles.containerView} behavior="padding">
-
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.loginScreenContainer}>
               <View style={styles.loginFormView}>

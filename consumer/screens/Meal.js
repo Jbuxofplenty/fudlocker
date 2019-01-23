@@ -15,6 +15,10 @@ import { Colors } from '../constants'
 const dateformat = require('dateformat');
 
 import getDirections from 'react-native-google-maps-directions';
+import ParallaxScrollView from 'react-native-parallax-scrollview';
+
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Meal extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -48,8 +52,6 @@ class Meal extends Component {
             this.setState({
               errorMessage: 'Permission to access location was denied',
             });
-
-
           }
 
           let location = await Location.getCurrentPositionAsync({});
@@ -175,39 +177,43 @@ class Meal extends Component {
 
   render() {
     let params = this.props.navigation.state.params;
-    if (this.props.navigation.state.params.cost==0){
+    if (this.props.navigation.state.params.cost==0 || !params || !this.state.fontLoaded){
             return null
           }
     return (
-
-      <View style={styles.mainviewStyle}>
-        { params && this.state.fontLoaded ?
         <View style={styles.mainviewStyle}>
-        <ScrollView style={styles.scroll}>
-          <View style={[styles.container, this.props.containerStyle]}>
-          <View style={styles.cardContainer}>
-              {this.renderContactHeader()}
-          </View>
-          </View>
-          <View style={styles.productRow}>{this.renderDescription()}</View>
-        </ScrollView>
-        <View style={styles.footer}>
-          <TouchableOpacity style={styles.buttonFooter} onPress={() => {
-                    title = params.title;
-                    img = params.img;
-                    location = params.location;
-                    strCategory = params.strCategory;
-                    cost = params.cost;
-                    calories = params.calories;
-                    desc = "Purchase " + params.title;
-                    this.props.navigation.navigate('Purchase', {'title': title, 'idMeal': this.props.navigation.state.params.idMeal, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location});
-               }}>
-            <Text style={styles.buttonText}>Purchase</Text>
-          </TouchableOpacity>
-         </View>
+            <ParallaxScrollView
+              windowHeight={SCREEN_HEIGHT * 0.4}
+              backgroundSource={{uri: this.props.navigation.state.params.img}}
+              navBarView={<View></View>}
+              navBarHeight={1}
+              navBarColor='transparent'
+              headerView={(<View/>)}
+            >
+            <View style={styles.productRow}>{this.renderDescription()}</View>
+            </ParallaxScrollView>
+            <View style={styles.footer}>
+              <TouchableOpacity style={styles.buttonFooter} onPress={() => {
+                        title = params.title;
+                        img = params.img;
+                        location = params.location;
+                        strCategory = params.strCategory;
+                        cost = params.cost;
+                        calories = params.calories;
+                        desc = "Purchase " + params.title;
+                        this.props.navigation.navigate('Purchase', {'title': title,
+                                                                    'idMeal': this.props.navigation.state.params.idMeal,
+                                                                    'img': img,
+                                                                    'detail': desc,
+                                                                    'cost': cost,
+                                                                    'calories':calories,
+                                                                    'strCategory': strCategory,
+                                                                    'location': location});
+                   }}>
+                <Text style={styles.buttonText}>Purchase</Text>
+              </TouchableOpacity>
+             </View>
         </View>
-        : null }
-      </View>
     )
   }
 }

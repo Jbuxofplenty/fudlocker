@@ -117,7 +117,7 @@ render() {
             keyExtractor={(item, index) => index.toString()}
             renderItem={item => (
                 <TouchableHighlight style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}} onPress={() => {
-                    this.props.navigation.navigate('ActiveMeals', {location_data: item, title: item.title});
+                    this.props.navigation.navigate('ActiveMeals', {locationData: item, title: item.title});
                     }}>
                   <ImageBackground
                     source={{ uri: item.image }}

@@ -11,12 +11,16 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { Font } from 'expo'
+import ParallaxScrollView from 'react-native-parallax-scrollview';
 
 import { Colors } from '../constants'
 const dateformat = require('dateformat');
+const qrcode = require('yaqrcode');
+
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 import getDirections from 'react-native-google-maps-directions';
-import fudlkr_locations from '../assets/static_data/fudlkr_locations.json';
 
 class Order extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -36,155 +40,142 @@ class Order extends Component {
     state = {
         fontLoaded: false,
         paramsLoaded: false,
+        idMeal: null,
     };
    async componentDidMount() {
-    await Font.loadAsync({
+     await Font.loadAsync({
         'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
-    });
-    var temp = this.props.navigation.state.params;
-    this.setState({ fontLoaded: true, paramsLoaded: true });
-    }
+     });
+     await this.setState({ fontLoaded: true, paramsLoaded: true, idMeal: this.props.navigation.state.params.idMeal });
+   }
     _getLocationAsync = async () => {
-          let { status } = await Permissions.askAsync(Permissions.LOCATION);
-          if (status !== 'granted') {
-            this.setState({
-              errorMessage: 'Permission to access location was denied',
-            });
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== 'granted') {
+        this.setState({
+          errorMessage: 'Permission to access location was denied',
+        });
 
 
-          }
+      }
 
-          let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getCurrentPositionAsync({});
 
-          var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, 1000);
-          this.setState({coords: coords});
-          this.setState({your_lat: location.coords.latitude});
-          this.setState({your_lng: location.coords.longitude});
+      var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, 1000);
+      this.setState({coords: coords});
+      this.setState({your_lat: location.coords.latitude});
+      this.setState({your_lng: location.coords.longitude});
 
+    };
+
+    regionFrom(lat, lon, distance) {
+            distance = distance/2
+            const circumference = 40075
+            const oneDegreeOfLatitudeInMeters = 111.32 * 1000
+            const angularDistance = distance/circumference
+
+            const latitudeDelta = distance / oneDegreeOfLatitudeInMeters
+            const longitudeDelta = Math.abs(Math.atan2(
+                    Math.sin(angularDistance)*Math.cos(lat),
+                    Math.cos(angularDistance) - Math.sin(lat) * Math.sin(lat)))
+
+            return result = {
+                latitude: lat,
+                longitude: lon,
+                latitudeDelta,
+                longitudeDelta,
+            }
         };
 
-        regionFrom(lat, lon, distance) {
-                distance = distance/2
-                const circumference = 40075
-                const oneDegreeOfLatitudeInMeters = 111.32 * 1000
-                const angularDistance = distance/circumference
-
-                const latitudeDelta = distance / oneDegreeOfLatitudeInMeters
-                const longitudeDelta = Math.abs(Math.atan2(
-                        Math.sin(angularDistance)*Math.cos(lat),
-                        Math.cos(angularDistance) - Math.sin(lat) * Math.sin(lat)))
-
-                return result = {
-                    latitude: lat,
-                    longitude: lon,
-                    latitudeDelta,
-                    longitudeDelta,
-                }
-            };
-
-          handleGetDirections () {
-                var arrayLength = fudlkr_locations.data.length;
-                   for (var i = 0; i < arrayLength; i++) {
-                      if( fudlkr_locations.data[i].type.toLowerCase() == this.props.navigation.state.params.location.toLowerCase()) {
-                          latitude = fudlkr_locations.data[i].latlng.latitude;
-                          longitude = fudlkr_locations.data[i].latlng.longitude;
-                      }
-                   }
-                  const data = {
-                source: {
-                    latitude: this.state.your_lat,
-                    longitude: this.state.your_lng
-               },
-                   destination: {
-                    latitude: latitude,
-                    longitude: longitude
-               },
-                   params: [
-                     {
-                       key: "travelmode",
-                       value: "walking"        // may be "walking", "bicycling" or "transit" as well
-                 },
+      handleGetDirections () {
+            var arrayLength = fudlkr_locations.data.length;
+               for (var i = 0; i < arrayLength; i++) {
+                  if( fudlkr_locations.data[i].type.toLowerCase() == this.props.navigation.state.params.location.toLowerCase()) {
+                      latitude = fudlkr_locations.data[i].latlng.latitude;
+                      longitude = fudlkr_locations.data[i].latlng.longitude;
+                  }
+               }
+              const data = {
+            source: {
+                latitude: this.state.your_lat,
+                longitude: this.state.your_lng
+           },
+               destination: {
+                latitude: latitude,
+                longitude: longitude
+           },
+               params: [
                  {
-                       key: "dir_action",
-                       value: "travelmode"       // this instantly initializes navigation using the given travel mode
-                 }
-               ]
-              }
-
-                  getDirections(data)
+                   key: "travelmode",
+                   value: "walking"        // may be "walking", "bicycling" or "transit" as well
+             },
+             {
+                   key: "dir_action",
+                   value: "travelmode"       // this instantly initializes navigation using the given travel mode
+             }
+           ]
           }
+              getDirections(data)
+      }
 
-  randomDate(low, high) {
-      var date = new Date();
-      days_past = Math.random() * (high - low) + low;
-      date.setDate(date.getDate()-days_past);
-      var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
-      return d.toString()
-  }
 
-  renderDescription = () => {
-    if (this.props.navigation.state.params.cost==0){
-        return null
-    }
-    return (
-    <View>
+    renderDescription = () => {
+        let base64 = qrcode(this.state.idMeal);
+        let orderInfo = <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
+                            <Text style={styles.priceText}>{"Order Information"}</Text>
+                            <View style={styles.lineItemContainer} >
+                                <Text style={styles.labelText}>Location:</Text>
+                                <Text style={styles.valueText}>{this.props.navigation.state.params.location}</Text>
+                            </View>
+                            <View style={styles.lineItemContainer} >
+                                <Text style={styles.labelText}>Meal ID Number:</Text>
+                                <Text style={styles.valueText}>{this.props.navigation.state.params.idMeal}</Text>
+                            </View>
+                            <View style={styles.lineItemContainer} >
+                                <Text style={styles.labelText}>Date Purchased:</Text>
+                                <Text style={styles.valueText}>{this.props.navigation.state.params.datePurchased}</Text>
+                            </View>
+                            <View style={styles.lineItemContainer} >
+                                <Text style={styles.labelText}>Picked Up:</Text>
+                                <Text style={styles.valueText}>{this.props.navigation.state.params.pickedUp ? "true":"false"}</Text>
+                            </View>
+                        </View>;
+        return (
         <View>
-            <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
-                <Text style={styles.priceText}>{"Order Information"}</Text>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Fudlkr 4-digit Code:</Text>
-                    <Text style={styles.valueText}>{this.props.navigation.state.params.lockerCode}</Text>
-                </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Location:</Text>
-                    <Text style={styles.valueText}>{this.props.navigation.state.params.location}</Text>
-                </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Order Number:</Text>
-                    <Text style={styles.valueText}>{this.props.navigation.state.params.idOrder}</Text>
-                </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Cost:</Text>
-                    <Text style={styles.valueText}>${this.props.navigation.state.params.cost}</Text>
-                </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Date Purchased:</Text>
-                    <Text style={styles.valueText}>{this.randomDate(0,5)}</Text>
-                </View>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('PaymentInfo')}>
+            <View>
+                <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
+                    <Text style={styles.priceText}>{"Meal Information"}</Text>
                     <View style={styles.lineItemContainer} >
-                        <Text style={[styles.labelText, {width: '35%'}]}>Payment Info:</Text>
-                        {this.props.navigation.state.params.paymentMethod["brand"] == 'Visa' &&
-                            <Image
-                                style={{width: 50, height: 25, margin: 15, borderRadius: 3}}
-                                source={require("./../assets/images/visa.png")}
-                             />
-                        }
-                        {this.props.navigation.state.params.paymentMethod["brand"] == 'American Express' &&
-                           <Image
-                               style={{width: 50, height: 25, margin: 15, borderRadius: 3}}
-                               source={require("./../assets/images/amex.png")}
-                            />
-                        }
-                        <Text style={[styles.valueText, {width: '40%'}]}>{"Ending in " + this.props.navigation.state.params.paymentMethod.last4}</Text>
+                        <Text style={styles.labelText}>Meal Title: </Text>
+                        <Text style={styles.valueText}>{this.props.navigation.state.params.title}</Text>
                     </View>
-                </TouchableOpacity>
-            </View>
-            <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
-                <Text style={styles.priceText}>{"Meal Information"}</Text>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Cuisine Category: </Text>
-                    <Text style={styles.valueText}>{this.props.navigation.state.params.strCategory}</Text>
+                    <View style={styles.lineItemContainer} >
+                        <Text style={styles.labelText}>Cost: </Text>
+                        <Text style={styles.valueText}>${this.props.navigation.state.params.cost}</Text>
+                    </View>
+                    <View style={styles.lineItemContainer} >
+                        <Text style={styles.labelText}>Cuisine Category: </Text>
+                        <Text style={styles.valueText}>{this.props.navigation.state.params.strCategory}</Text>
+                    </View>
+                    <View style={styles.lineItemContainer} >
+                        <Text style={styles.labelText}>Estimated Calories:</Text>
+                        <Text style={styles.valueText}>{this.props.navigation.state.params.calories}</Text>
+                    </View>
+                    <View style={styles.lineItemContainer} >
+                        <Text style={styles.labelText}>Date Packaged:</Text>
+                        <Text style={styles.valueText}>{this.props.navigation.state.params.datePackaged}</Text>
+                    </View>
+                    <View style={styles.lineItemContainer} >
+                        <Text style={styles.labelText}>For Sale:</Text>
+                        <Text style={styles.valueText}>{this.props.navigation.state.params.forSale ? "true":"false"}</Text>
+                    </View>
                 </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Estimated Calories:</Text>
-                    <Text style={styles.valueText}>{this.props.navigation.state.params.calories}</Text>
+                {!this.props.navigation.state.params.forSale ? orderInfo:null}
+                <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5, flex: 2}}>
+                      <Text style={styles.priceText}>{this.props.navigation.state.params.forSale ? "QR Code of Meal ID":"QR Code of Meal/Order ID"}</Text>
+                      <View style={{alignSelf: 'center'}}>
+                        <Image style={{width: 200, height: 200}} source={{uri: base64}}/>
+                      </View>
                 </View>
-                <View style={styles.lineItemContainer} >
-                    <Text style={styles.labelText}>Date Packaged:</Text>
-                    <Text style={styles.valueText}>{this.randomDate(0,5)}</Text>
-                </View>
-            </View>
             <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
                 <Text style={styles.priceText}>{"Location"}</Text>
                 <View style={styles.lineItemContainer} >
@@ -223,44 +214,23 @@ class Order extends Component {
     )
   }
 
-  renderContactHeader = () => {
-    const img  = this.props.navigation.state.params.img;
-    return (
-      <View style={styles.headerContainer}>
-        <View style={styles.coverContainer}>
-          <ImageBackground
-            source={{
-              uri: img,
-            }}
-            style={styles.coverImage}
-          >
-          </ImageBackground>
-        </View>
-      </View>
-    )
-  }
-
   render() {
     let params = this.props.navigation.state.params;
-    if (this.props.navigation.state.params.cost==0){
+    if (this.props.navigation.state.params.cost==0 || !params || !this.state.fontLoaded || this.state.idMeal == null){
             return null
           }
     return (
-
       <View style={styles.mainviewStyle}>
-        { params && this.state.fontLoaded ?
-        <View style={styles.mainviewStyle}>
-        <ScrollView style={styles.scroll}>
-          <View style={[styles.container, this.props.containerStyle]}>
-              <View style={styles.cardContainer}>
-                  {this.renderContactHeader()}
-              </View>
-          </View>
-
+          <ParallaxScrollView
+            windowHeight={SCREEN_HEIGHT * 0.4}
+            backgroundSource={{uri: this.props.navigation.state.params.img}}
+            navBarView={<View></View>}
+            navBarHeight={1}
+            navBarColor='transparent'
+            headerView={(<View/>)}
+          >
           <View style={styles.productRow}>{this.renderDescription()}</View>
-        </ScrollView>
-        </View>
-        : null }
+          </ParallaxScrollView>
       </View>
     )
   }

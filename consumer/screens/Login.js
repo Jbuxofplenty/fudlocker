@@ -75,7 +75,7 @@ export default class LoginScreen extends Component {
     passColor: "gray",
     modalVisible: false,
     email: "jbuxofplenty@gmail.com",
-    pass: "josiah",
+    pass: "jbuxofplenty",
   }
   async componentDidMount() {
     await Font.loadAsync({

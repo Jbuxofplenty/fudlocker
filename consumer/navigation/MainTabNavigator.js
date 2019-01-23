@@ -23,6 +23,7 @@ import MealRadiusScreen from '../screens/profile/MealRadius';
 import PaymentInfoScreen from '../screens/profile/PaymentInfo';
 import AddCardScreen from '../screens/profile/AddNewCard';
 import DrawerScreen from '../screens/Drawer';
+import AddPictureScreen from '../screens/AddPicture';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -34,6 +35,7 @@ const HomeStack = createStackNavigator({
   PersonalInfo: PersonalInfoScreen,
   PaymentInfo: PaymentInfoScreen,
   AddNewCard: AddCardScreen,
+  AddPicture: AddPictureScreen,
 },{
     defaultNavigationOptions: ({ navigation }) => ({
       headerStyle: {
@@ -86,6 +88,7 @@ const MealStack = createStackNavigator({
   PersonalInfo: PersonalInfoScreen,
   PaymentInfo: PaymentInfoScreen,
   AddNewCard: AddCardScreen,
+  AddPicture: AddPictureScreen,
 },{
       defaultNavigationOptions: ({ navigation }) => ({
       headerStyle: {
@@ -132,6 +135,7 @@ const OrderStack = createStackNavigator({
   PersonalInfo: PersonalInfoScreen,
   PaymentInfo: PaymentInfoScreen,
   AddNewCard: AddCardScreen,
+  AddPicture: AddPictureScreen,
 },{
       defaultNavigationOptions: ({ navigation }) => ({
       headerStyle: {

@@ -41,128 +41,136 @@ class Purchase extends Component {
         paramsLoaded: false,
         modalVisible: false,
         paymentSource: '',
-        meal_data: null,
-        current_meal_data: null,
+        mealData: null,
+        current_mealData: null,
+        name: null,
+        headshot: null,
     };
-   async componentDidMount() {
+    async componentDidMount() {
     await Font.loadAsync({
         'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
     });
     var temp = this.props.navigation.state.params;
     this.setState({ fontLoaded: true, paramsLoaded: true });
     this.populateInfo();
-   }
-   populateInfo() {
+    }
+    async populateInfo() {
      //Get the current userID
      var userId = firebase.auth().currentUser.uid;
      //Get the user data
-     return firebase.database().ref('/meals/all/').once('value').then(function(snapshot) {
-         this.setState({ meal_data: snapshot.val().meals });
+     await firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+        console.log( snapshot.val());
+         this.setState({ name: snapshot.val().name, headshot: snapshot.val().headshot });
      }.bind(this));
-   }
+     return firebase.database().ref('/meals/all/meals').once('value').then(function(snapshot) {
+        let temp = {};
+        snapshot.forEach(function(childSnapshot) {
+          childSnapshot.forEach(function(childChildSnapshot) {
+               var childData = childChildSnapshot.val();
+               temp[childSnapshot.key] = childData;
+          });
+        });
+        this.setState({ mealData: temp });
+     }.bind(this));
+    }
     _getLocationAsync = async () => {
-          let { status } = await Permissions.askAsync(Permissions.LOCATION);
-          if (status !== 'granted') {
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== 'granted') {
             this.setState({
               errorMessage: 'Permission to access location was denied',
             });
-          }
+        }
 
-          let location = await Location.getCurrentPositionAsync({});
+        let location = await Location.getCurrentPositionAsync({});
 
-          var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, 1000);
-          this.setState({coords: coords});
-          this.setState({your_lat: location.coords.latitude});
-          this.setState({your_lng: location.coords.longitude});
-        };
+        var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, 1000);
+        this.setState({coords: coords});
+        this.setState({your_lat: location.coords.latitude});
+        this.setState({your_lng: location.coords.longitude});
+    };
 
     readyPurchase = async () => {
-        let meal_data = this.state.meal_data[this.props.navigation.state.params.idMeal-1];
-        meal_data.userEmail = firebase.auth().currentUser.email;
+        var userId = firebase.auth().currentUser.uid;
+        let mealData = this.state.mealData[this.props.navigation.state.params.idMeal];
+        mealData["userEmail"] = firebase.auth().currentUser.email;
         var date = new Date();
         var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
-        meal_data.strDatePurchased = d.toString();
-        meal_data.datePurchased = date.valueOf();
-        meal_data.datePackaged = this.randomDate();
-        meal_data.lockerCode = Math.round(Math.random() * (9999 - 1000) + 1000);
-        meal_data.pickedUp = false;
-        meal_data.datePickedUp = "N/A";
-        await firebase.database().ref('/meals/orderCounter').once('value').then(function(snapshot) {
-            meal_data.idOrder = snapshot.val();
-        }.bind(this));
-        var userId = firebase.auth().currentUser.uid;
-        await firebase.database().ref('/meals').update({
-          orderCounter: meal_data.idOrder + 1
-        });
-        meal_data.strIdOrder = "Order #" + meal_data.idOrder.toString();
-        meal_data.paymentMethod = {};
-        meal_data.paymentMethod.brand = "Visa";
-        meal_data.paymentMethod.expiry = "02/22";
-        meal_data.paymentMethod.last4 = "0789";
-        this.setState({meal_data: meal_data});
+        mealData["strDatePurchased"] = d.toString();
+        mealData["datePurchased"] = date.valueOf();
+        mealData["pickedUp"] = false;
+        mealData["forSale"] = false;
+        mealData["datePickedUp"] = "N/A";
+        mealData["paymentMethod"] = {};
+        mealData.paymentMethod["brand"] = "Visa";
+        mealData.paymentMethod["expiry"] = "02/22";
+        mealData.paymentMethod["last4"] = "0789";
+        mealData["name"] = this.state.name;
+        mealData["headshot"] = this.state.headshot;
+        console.log(this.state.name, this.state.headshot);
+        this.setState({mealData: mealData});
     }
 
     purchaseMeal = async () => {
         //Get the current userID
         var userId = firebase.auth().currentUser.uid;
-        await firebase.database().ref('users/' + userId + '/orders/current/').push(this.state.meal_data);
-        await firebase.database().ref('users/' + userId + '/orders/history/').push(this.state.meal_data);
-        await firebase.database().ref('restaurants/' + this.state.meal_data.distributor.toLowerCase() + '/inventory/claimed/').push(this.state.meal_data);
+        await firebase.database().ref('users/' + userId + '/orders/current/').push(this.state.mealData);
+        await firebase.database().ref('users/' + userId + '/orders/history/').push(this.state.mealData);
+        await firebase.database().ref('restaurants/' + this.state.mealData.distributor + '/inventory/claimed/' + this.state.mealData.location.toLowerCase() + '/').push(this.state.mealData);
         var temp = {};
-        temp[this.state.meal_data.idMeal] = false;
+        temp[this.state.mealData.idMeal] = false;
         await firebase.database().ref('meals/forSale/').update(temp);
     }
 
-        regionFrom(lat, lon, distance) {
-                distance = distance/2
-                const circumference = 40075
-                const oneDegreeOfLatitudeInMeters = 111.32 * 1000
-                const angularDistance = distance/circumference
+    regionFrom(lat, lon, distance) {
+        distance = distance/2
+        const circumference = 40075
+        const oneDegreeOfLatitudeInMeters = 111.32 * 1000
+        const angularDistance = distance/circumference
 
-                const latitudeDelta = distance / oneDegreeOfLatitudeInMeters
-                const longitudeDelta = Math.abs(Math.atan2(
-                        Math.sin(angularDistance)*Math.cos(lat),
-                        Math.cos(angularDistance) - Math.sin(lat) * Math.sin(lat)))
+        const latitudeDelta = distance / oneDegreeOfLatitudeInMeters
+        const longitudeDelta = Math.abs(Math.atan2(
+                Math.sin(angularDistance)*Math.cos(lat),
+                Math.cos(angularDistance) - Math.sin(lat) * Math.sin(lat)))
 
-                return result = {
-                    latitude: lat,
-                    longitude: lon,
-                    latitudeDelta,
-                    longitudeDelta,
-                }
-            };
+        return result = {
+            latitude: lat,
+            longitude: lon,
+            latitudeDelta,
+            longitudeDelta,
+        }
+    };
 
-          handleGetDirections () {
-                var arrayLength = fudlkr_locations.data.length;
-                   for (var i = 0; i < arrayLength; i++) {
-                      if( fudlkr_locations.data[i].strArea == this.props.navigation.state.params.location) {
-                          latitude = fudlkr_locations.data[i].latlng.latitude;
-                          longitude = fudlkr_locations.data[i].latlng.longitude;
-                      }
-                   }
-                  const data = {
-                    source: {
-                     latitude: this.state.your_lat,
-                     longitude: this.state.your_lng
-               },
-                   destination: {
-                     latitude: latitude,
-                     longitude: longitude
-               },
-                   params: [
-                     {
-                       key: "travelmode",
-                       value: "walking"        // may be "walking", "bicycling" or "transit" as well
-                 },
-                 {
-                       key: "dir_action",
-                       value: "travelmode"       // this instantly initializes navigation using the given travel mode
-                 }
-               ]
+    handleGetDirections () {
+        var arrayLength = fudlkr_locations.data.length;
+           for (var i = 0; i < arrayLength; i++) {
+              if( fudlkr_locations.data[i].strArea == this.props.navigation.state.params.location) {
+                  latitude = fudlkr_locations.data[i].latlng.latitude;
+                  longitude = fudlkr_locations.data[i].latlng.longitude;
               }
+           }
+          const data = {
+            source: {
+             latitude: this.state.your_lat,
+             longitude: this.state.your_lng
+        },
+           destination: {
+             latitude: latitude,
+             longitude: longitude
+        },
+           params: [
+             {
+               key: "travelmode",
+               value: "walking"        // may be "walking", "bicycling" or "transit" as well
+         },
+         {
+               key: "dir_action",
+               value: "travelmode"       // this instantly initializes navigation using the given travel mode
+         }
+        ]
+        }
 
-                  getDirections(data)
-          }
+          getDirections(data)
+    }
   renderDetail = () => {
     return (
       <View>
@@ -170,14 +178,6 @@ class Purchase extends Component {
       </View>
     )
   }
-  randomDate() {
-      var date = new Date();
-      days_past = Math.random() * (5 - 0) + 0;
-      date.setDate(date.getDate()-days_past);
-      var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
-      return d.toString()
-  }
-
   renderDescription = () => {
     if (this.props.navigation.state.params.cost==0){
         return null
@@ -246,7 +246,7 @@ class Purchase extends Component {
 
   render() {
     let params = this.props.navigation.state.params;
-    if (this.props.navigation.state.params.cost==0 || this.state.meal_data == null){
+    if (this.props.navigation.state.params.cost==0 || this.state.mealData == null){
             return null
           }
     return (
@@ -298,18 +298,21 @@ class Purchase extends Component {
              onPress={() => {
                 this.closeModal();
                 this.purchaseMeal();
-                this.props.navigation.replace('MealMode');
                 this.props.navigation.navigate('Order', {
-                    'title': this.state.meal_data.strMeal,
-                    'img': this.state.meal_data.strMealThumb,
-                    'cost': this.state.meal_data.strCost,
-                    'calories':this.state.meal_data.calories,
-                    'strCategory': this.state.meal_data.strCategory,
-                    'location': this.state.meal_data.location,
+                    'title': this.state.mealData.strMeal,
+                    'img': this.state.mealData.strMealThumb,
+                    'cost': this.state.mealData.strCost,
+                    'calories':this.state.mealData.calories,
+                    'strCategory': this.state.mealData.strCategory,
+                    'location': this.state.mealData.location,
                     'paymentMethod': {"brand": "Visa", "expiry": "02/22", "cvc": "300", "last4": "1234"},
-                    'lockerCode': this.state.meal_data.lockerCode,
-                    'strIdOrder': this.state.meal_data.strIdOrder,
-                    'idOrder': this.state.meal_data.idOrder});}}
+                    'lockerCode': this.state.mealData.lockerCode,
+                    'strIdMeal': this.state.mealData.strIdMeal,
+                    'strIdOrder': "Order ID #" + this.state.mealData.idMeal,
+                    'datePackaged': this.state.mealData.strDatePackaged,
+                    'datePurchased': this.state.mealData.strDatePurchased,
+                    'pickedUp': this.state.mealData.pickedUp,
+                    'idMeal': this.state.mealData.idMeal});}}
              title={"  Pay $" + this.props.navigation.state.params.cost + "  "}
            />
          </View>

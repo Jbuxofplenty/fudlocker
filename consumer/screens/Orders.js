@@ -140,26 +140,27 @@ export default class CurrentOrders extends Component {
             keyExtractor={(item, index) => index.toString()}
             renderItem={item => (
                 <TouchableHighlight style={{borderRadius: 25}} onPress={() => {
-                        title = item.strMeal;
-                        img = item.strMealThumb;
-                        location = item.location;
-                        strCategory = item.strCategory;
-                        cost = item.strCost;
-                        calories = item.calories;
-                        desc = item.desc;
-                        paymentMethod = item.paymentMethod;
-                        lockerCode = item.lockerCode;
-                        idOrder = item.idOrder;
-                        strIdOrder = item.strIdOrder;
-                        this.props.navigation.navigate('Order', {'title': title, 'img': img, 'detail': desc, 'cost': cost, 'calories':calories, 'strCategory': strCategory, 'location': location, 'paymentMethod': paymentMethod, 'lockerCode': lockerCode, 'strIdOrder': strIdOrder, 'idOrder': idOrder});
+                        this.props.navigation.navigate('Order', {'title': item.title,
+                                                                 'img': item.strMealThumb,
+                                                                 'cost': item.strCost,
+                                                                 'calories': item.calories,
+                                                                 'strCategory': item.strCategory,
+                                                                 'location': item.location,
+                                                                 'paymentMethod': item.paymentMethod,
+                                                                 'strIdMeal': item.strIdMeal,
+                                                                 'strIdOrder': "Order #" + item.idMeal,
+                                                                 'datePackaged': item.strDatePackaged,
+                                                                 'datePurchased': item.strDatePurchased,
+                                                                 'pickedUp': item.pickedUp,
+                                                                 'idMeal': item.idMeal});
                     }}>
                   <View style={[styles.itemContainer]}>
-                    <Text style={{fontFamily: 'Poor Story', textAlign: 'center', width: '100%', fontSize: 28, color: '#fff', backgroundColor: item.code, borderRadius:25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>{item.strIdOrder}</Text>
+                    <Text style={{fontFamily: 'Poor Story', textAlign: 'center', width: '100%', fontSize: 28, color: '#fff', backgroundColor: item.code, borderRadius:25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>{item.idMeal}</Text>
                         <View style={{height: 175}}>
                             <Text style={styles.infoText}>{item.strMeal}</Text>
                             <View style={styles.lineItemContainer} >
-                                <Text style={styles.labelText}>4 Digit Code:</Text>
-                                <Text style={styles.valueText}>{item.lockerCode}</Text>
+                                <Text style={styles.labelText}>Meal ID #:</Text>
+                                <Text style={styles.valueText}>{item.idMeal}</Text>
                             </View>
                             <View style={styles.lineItemContainer} >
                                 <Text style={styles.labelText}>Date Purchased:</Text>

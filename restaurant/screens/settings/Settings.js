@@ -5,6 +5,7 @@ import { Font } from 'expo'
 import Rate, { AndroidMarket } from 'react-native-rate'
 import ToggleSwitch from 'toggle-switch-react-native'
 import { DrawerActions } from 'react-navigation-drawer';
+import * as firebase from 'firebase';
 
 import BaseIcon from './Icon'
 import Chevron from './Chevron'
@@ -59,7 +60,10 @@ class SettingsScreen extends Component {
   state = {
     pushNotifications: true,
     fontLoaded: false,
-    mealRadius: 1.5,
+    org: null,
+    name: null,
+    email: null,
+    headshot: null,
   }
   async componentDidMount() {
     await Font.loadAsync({
@@ -76,6 +80,18 @@ class SettingsScreen extends Component {
     });
 
     this.setState({ fontLoaded: true });
+    this.populateInfo();
+  }
+  populateInfo() {
+      //Get the current userID
+      var userId = firebase.auth().currentUser.uid;
+      //Get the user data
+      return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+        this.setState({ org: snapshot.val().org });
+        this.setState({ name: snapshot.val().name });
+        this.setState({ email: snapshot.val().email });
+        this.setState({ headshot: snapshot.val().headshot});
+      }.bind(this));
     }
 
 
@@ -122,10 +138,6 @@ class SettingsScreen extends Component {
   }
 
   render() {
-    const avatar="http://fudlkr.com/images/josiah_buxton.jpg";
-    const name="Josiah Buxton";
-    const emails={firstEmail: "josiah.buxton@colorado.edu"};
-    const firstEmail={email: "josiah.buxton@colorado.edu"};
     if (this.state.fontLoaded){
     return (
       <ScrollView style={styles.scroll}>
@@ -138,12 +150,12 @@ class SettingsScreen extends Component {
               rounded
               size="large"
               source={{
-                uri: avatar,
+                uri: this.state.headshot,
               }}
             />
           </View>
           <View>
-            <Text style={{ fontFamily: 'Poor Story', fontSize: 16 }}>{name}</Text>
+            <Text style={{ fontFamily: 'Poor Story', fontSize: 16 }}>{this.state.name}</Text>
             <Text
               style={{
                 color: 'gray',
@@ -151,7 +163,7 @@ class SettingsScreen extends Component {
                 fontFamily: 'Poor Story',
               }}
             >
-              {firstEmail.email}
+              {this.state.email}
             </Text>
            </View>
         </View>
@@ -184,11 +196,11 @@ class SettingsScreen extends Component {
           />
           <ListItem
             // chevron
-            title="Meal Radius"
-            rightTitle={this.state.mealRadius + " miles"}
+            title="Organization"
+            rightTitle={this.state.org}
             titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
-            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15 }}
-            onPress={() => this.props.navigation.navigate('MealRadius', {radius: this.state.mealRadius})}
+            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 16, marginRight: 15 }}
+            onPress={() => {}}
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
@@ -199,25 +211,9 @@ class SettingsScreen extends Component {
                 }}
               />
             }
-            rightIcon={<Chevron />}
+            rightIcon={<View/>}
           />
-          <ListItem
-            title="Payment Information"
-            titleStyle={{fontFamily: 'Poor Story', fontSize: 16}}
-            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15 }}
-            onPress={() => this.props.navigation.navigate('PaymentInfo')}
-            containerStyle={styles.listItemContainer}
-            leftIcon={
-              <BaseIcon
-                containerStyle={{ backgroundColor: '#57DCE7' }}
-                icon={{
-                  type: 'font-awesome',
-                  name: 'money',
-                }}
-              />
-            }
-            rightIcon={<Chevron />}
-          />
+
         </View>
         <InfoText text="More" />
         <View>

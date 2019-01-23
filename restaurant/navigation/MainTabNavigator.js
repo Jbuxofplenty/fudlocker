@@ -12,10 +12,13 @@ import DrawerScreen from '../screens/Drawer';
 import ActiveMealsScreen from '../screens/ActiveMeals';
 import AddMealScreen from '../screens/AddMeal';
 import AddTemplateScreen from '../screens/AddTemplate';
+import AddPictureScreen from '../screens/AddPicture';
+import MealScreen from '../screens/Meal';
 
 const LocationsStack = createStackNavigator({
   Locations: LocationsScreen,
   ActiveMeals: ActiveMealsScreen,
+  Meal: MealScreen,
 },{
     defaultNavigationOptions: ({ navigation }) => ({
       headerStyle: {
@@ -58,6 +61,8 @@ LocationsStack.navigationOptions = {
 const AddMealStack = createStackNavigator({
   AddMeal: AddMealScreen,
   AddTemplate: AddTemplateScreen,
+  AddPicture: AddPictureScreen,
+  Meal: MealScreen,
 },{
       defaultNavigationOptions: ({ navigation }) => ({
         headerStyle: {
@@ -97,6 +102,7 @@ AddMealStack.navigationOptions = {
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
   PersonalInfo: PersonalInfoScreen,
+  AddPicture: AddPictureScreen,
 },{
       defaultNavigationOptions: ({ navigation }) => ({
         headerStyle: {

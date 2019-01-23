@@ -38,7 +38,17 @@ export default class AddMeal extends Component {
             alignSelf: 'center',
             flex: 1,
           },
-          headerLeft: (<TouchableOpacity onPress={() => {navigation.navigate('AddTemplate', {'title': "Add New Template", 'img': "", 'detail': "", 'cost': "", 'calories': "", 'strCategory': "", 'location': "", 'idMeal': ""})}}>
+          headerLeft: (<TouchableOpacity onPress={() => {navigation.navigate('AddTemplate', {
+                                                  'title': "Add New Template",
+                                                  'img': "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png",
+                                                  'detail': "",
+                                                  'cost': "",
+                                                  'calories': "",
+                                                  'strCategory': "",
+                                                  'location': "",
+                                                  'idMeal': "",
+                                                  'shelfLife': "",
+                                                  'templateData': {"strMealThumb": "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png"}})}}>
                       <Icon
                            name='md-add'
                            type='ionicon'
@@ -64,7 +74,7 @@ export default class AddMeal extends Component {
       state = {
           fontLoaded: false,
           paramsLoaded: false,
-          template_data: null,
+          templateData: null,
           name: null,
           email: null,
           phone: null,
@@ -92,7 +102,7 @@ export default class AddMeal extends Component {
                 this.populateAddMeal(snapshot.val().org);
               }
               else {
-                this.setState({ template_data: []});
+                this.setState({ templateData: []});
               }
           }.bind(this));
      }
@@ -104,11 +114,11 @@ export default class AddMeal extends Component {
              var childData = childSnapshot.val();
              tempArray.push(childData);
            });
-           this.setState({ template_data: tempArray });
+           this.setState({ templateData: tempArray });
         }.bind(this));
      }
 render() {
-    if(this.state.template_data != null ) {
+    if(this.state.templateData != null ) {
         return (
         <View style={styles.mealsScreenContainer}>
           <LinearGradient
@@ -118,11 +128,20 @@ render() {
           <GridView
             itemDimension={140}
             style={styles.gridView}
-            items={this.state.template_data}
+            items={this.state.templateData}
             keyExtractor={(item, index) => index.toString()}
             renderItem={item => (
                 <TouchableHighlight style={{borderRadius: 25, borderBottomLeftRadius: 0, borderBottomRightRadius: 0}} onPress={() => {
-                    this.props.navigation.navigate('AddTemplate', {'title': item.strTemplate, 'img': item.strTemplateThumb, 'detail': "", 'cost': item.strCost, 'calories': item.calories, 'strCategory': item.strCategory, 'location': item.location, 'idMeal': ""});
+                    this.props.navigation.navigate('AddTemplate', {
+                        'title': item.strTemplate,
+                        'img': item.strTemplateThumb,
+                        'cost': item.strCost,
+                        'calories': item.calories,
+                        'strCategory': item.strCategory,
+                        'location': item.location,
+                        'shelfLife': item.shelfLife,
+                        'templateData': item,
+                        });
                     }}>
                   <ImageBackground
                     source={{ uri: item.strTemplateThumb }}

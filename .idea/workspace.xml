@@ -7,9 +7,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5524729b-1005-4067-b333-ee6dbcc61efb" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/consumer/screens/AddPicture.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant/screens/AddPicture.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant/screens/Meal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant/screens/settings/ChevronLeft.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/.expo/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/.expo/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/consumer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/Drawer.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Drawer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/HomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/Location.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Location.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/Meal.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Meal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/Meals.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Meals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/Orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Orders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/Purchase.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/Purchase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/SignUp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/profile/PersonalInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/profile/PersonalInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/screens/profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/screens/profile/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locker/BOM_fudlkr.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/locker/BOM_fudlkr.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/navigation/MainTabNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/navigation/MainTabNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/screens/ActiveMeals.js" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/screens/ActiveMeals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/screens/AddMeal.js" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/screens/AddMeal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/restaurant/screens/AddTemplate.js" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/screens/AddTemplate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/screens/Drawer.js" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/screens/Drawer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/screens/Locations.js" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/screens/Locations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/screens/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/screens/SignUp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/screens/settings/PersonalInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/screens/settings/PersonalInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant/screens/settings/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/screens/settings/Settings.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,11 +52,92 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AddTemplate.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/restaurant/screens/AddTemplate.js">
+      <file leaf-file-name="PersonalInfo.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/restaurant/screens/settings/PersonalInfo.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="50" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
+            <state relative-caret-position="3366">
+              <caret line="198" column="30" selection-start-line="198" selection-start-column="30" selection-end-line="198" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ActiveMeals.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/restaurant/screens/ActiveMeals.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2822">
+              <caret line="166" column="59" selection-start-line="166" selection-start-column="59" selection-end-line="166" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Login.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/restaurant/screens/Login.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1836">
+              <caret line="108" column="37" selection-start-line="108" selection-start-column="31" selection-end-line="108" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/restaurant/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="20" column="32" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Locations.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/restaurant/screens/Locations.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-374">
+              <caret line="89" column="45" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Chevron.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/restaurant/screens/settings/Chevron.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret selection-end-line="13" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChevronLeft.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/restaurant/screens/settings/ChevronLeft.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddPicture.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/restaurant/screens/AddPicture.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="595">
+              <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Drawer.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/restaurant/screens/Drawer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Settings.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/restaurant/screens/settings/Settings.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2788">
+              <caret line="164" column="13" selection-start-line="164" selection-start-column="13" selection-end-line="164" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -33,36 +146,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>latitu</find>
-      <find>navigate</find>
-      <find>slider</find>
-      <find>item</find>
-      <find>productRow</find>
-      <find>scroll</find>
+      <find>img</find>
+      <find>claimed</find>
+      <find>buttonTitle</find>
       <find>mainviewStyle</find>
-      <find>Pagination</find>
-      <find>Poor story</find>
-      <find>title</find>
-      <find>0.3</find>
+      <find>activeInventory</find>
+      <find>recentlyClaimed</find>
+      <find>pickedUP</find>
+      <find>pickedUp</find>
+      <find>meals_forSale</find>
       <find>orderImageContainer</find>
-      <find>poor story</find>
-      <find>columnsContainer</find>
-      <find>mealContainer</find>
-      <find>90%</find>
-      <find>infoContainer</find>
-      <find>columnlabel</find>
-      <find>12</find>
-      <find>backgroundColor</find>
-      <find>Locations</find>
-      <find>Inventory</find>
-      <find>AddM</find>
-      <find>maps</find>
+      <find>currentOrdersContainer</find>
+      <find>renderClaimedCards</find>
+      <find>renderItem</find>
+      <find>TouchableOpacity</find>
+      <find>touchable</find>
+      <find>renderDescription</find>
       <find>meal'</find>
-      <find>location_data</find>
-      <find>direc</find>
-      <find>renderDetail</find>
-      <find>prop</find>
-      <find>screen</find>
+      <find>purchaser</find>
+      <find>valueText</find>
+      <find>AddTemplate</find>
+      <find>navigateToScreen</find>
+      <find>org</find>
+      <find>nameedit</find>
+      <find>email</find>
+      <find>avatar</find>
+      <find>this.props.navigation</find>
+      <find>returnData</find>
+      <find>backgroundImage</find>
+      <find>renderItemTemp</find>
+      <find>#</find>
     </findStrings>
     <replaceStrings>
       <replace>Profile</replace>
@@ -77,6 +190,17 @@
       <replace>handle</replace>
       <replace>AddMeal</replace>
       <replace>template_data</replace>
+      <replace>modalButton</replace>
+      <replace>orderData</replace>
+      <replace>mealData</replace>
+      <replace>.on</replace>
+      <replace>templateData</replace>
+      <replace>activeInventory</replace>
+      <replace>.on('value', function(snapshot) {</replace>
+      <replace>pickedUp</replace>
+      <replace>pickedUpMeals</replace>
+      <replace>mealsForSale</replace>
+      <replace>allTemplateData</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -85,13 +209,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/restaurant/navigation/AppNavigator.js" />
-        <option value="$PROJECT_DIR$/restaurant/assets/static_data/fudlkr_locations.json" />
-        <option value="$PROJECT_DIR$/restaurant/screens/Inventory.js" />
-        <option value="$PROJECT_DIR$/restaurant/screens/settings/Settings.js" />
-        <option value="$PROJECT_DIR$/consumer/android/build.gradle" />
-        <option value="$PROJECT_DIR$/consumer/android/app/build.gradle" />
-        <option value="$PROJECT_DIR$/consumer/screens/Style.js" />
         <option value="$PROJECT_DIR$/consumer/App.js" />
         <option value="$PROJECT_DIR$/consumer/screens/profile/MealRadius.js" />
         <option value="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_asian.json" />
@@ -101,7 +218,6 @@
         <option value="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_meat.json" />
         <option value="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_american.json" />
         <option value="$PROJECT_DIR$/consumer/assets/dynamic_data/meals_apps.json" />
-        <option value="$PROJECT_DIR$/consumer/screens/SignUp.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Drawer.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Login.js" />
         <option value="$PROJECT_DIR$/consumer/assets/static_data/fudlkr_locations.json" />
@@ -121,28 +237,37 @@
         <option value="$PROJECT_DIR$/consumer/navigation/LoginNavigator.js" />
         <option value="$PROJECT_DIR$/restaurant/package.json" />
         <option value="$PROJECT_DIR$/restaurant/navigation/LoginNavigator.js" />
-        <option value="$PROJECT_DIR$/restaurant/App.js" />
         <option value="$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Purchase.js" />
         <option value="$PROJECT_DIR$/consumer/screens/profile/PersonalInfo.js" />
-        <option value="$PROJECT_DIR$/restaurant/screens/settings/PersonalInfo.js" />
-        <option value="$PROJECT_DIR$/restaurant/screens/SignUp.js" />
         <option value="$PROJECT_DIR$/restaurant/screens/Login.js" />
-        <option value="$PROJECT_DIR$/restaurant/screens/Drawer.js" />
-        <option value="$PROJECT_DIR$/restaurant/screens/Locations.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Location.js" />
-        <option value="$PROJECT_DIR$/restaurant/screens/ActiveMeals.js" />
-        <option value="$PROJECT_DIR$/restaurant/navigation/MainTabNavigator.js" />
-        <option value="$PROJECT_DIR$/restaurant/screens/AddMeal.js" />
         <option value="$PROJECT_DIR$/consumer/screens/Meal.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/Camera.js" />
+        <option value="$PROJECT_DIR$/consumer/screens/SignUp.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/Order.js" />
+        <option value="$PROJECT_DIR$/restaurant/App.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/Locations.js" />
         <option value="$PROJECT_DIR$/restaurant/screens/AddTemplate.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/SignUp.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/AddMeal.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/Meal.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/Drawer.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/settings/Settings.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/AddPicture.js" />
+        <option value="$PROJECT_DIR$/restaurant/navigation/MainTabNavigator.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/settings/PersonalInfo.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/settings/Chevron.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/settings/ChevronLeft.js" />
+        <option value="$PROJECT_DIR$/restaurant/screens/ActiveMeals.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-15" />
-    <option name="width" value="1630" />
-    <option name="height" value="1715" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-6" />
+    <option name="y" value="-6" />
+    <option name="width" value="1293" />
+    <option name="height" value="693" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -152,7 +277,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -171,12 +297,18 @@
               <item name="restaurant" type="462c0819:PsiDirectoryNode" />
               <item name="screens" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="fudlocker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fudlocker" type="462c0819:PsiDirectoryNode" />
+              <item name="restaurant" type="462c0819:PsiDirectoryNode" />
+              <item name="screens" type="462c0819:PsiDirectoryNode" />
+              <item name="settings" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -192,11 +324,11 @@
       <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens\home" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\restaurant\screens\settings" />
       <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\restaurant\screens" />
       <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\restaurant\navigation" />
       <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens" />
       <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\assets\dynamic_data" />
-      <recent name="C:\Users\jbuxofplenty\GitHub\fudlocker\consumer\screens\profile" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -272,7 +404,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1293" height="693" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -285,7 +417,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32897604" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1581876" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.10432034" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Theme Preview" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
@@ -298,12 +430,12 @@
       <window_info id="Captures" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32897604" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="right" id="Theme Preview" order="4" />
       <window_info id="Captures" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14383562" />
@@ -311,7 +443,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Image Layers" order="6" />
       <window_info id="Designer" order="2" />
       <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32897604" />
@@ -334,47 +466,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/consumer/assets/dynamic_data/orders_current.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="12" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/assets/static_data/order_modes.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="1" selection-start-column="1" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/assets/dynamic_data/all_meals.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2805">
-          <caret line="165" column="13" selection-start-line="165" selection-start-column="7" selection-end-line="165" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/node_modules/eslint/lib/util/module-resolver.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/firebase.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/database.rules.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/.firebaserc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/payment/functions/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -411,13 +502,6 @@
     <entry file="file://$PROJECT_DIR$/consumer/screens/Search.js">
       <provider selected="true" editor-type-id="text-editor">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/consumer/screens/SignUp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1207">
-          <caret line="71" column="32" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/consumer/screens/Orders.js">
@@ -463,13 +547,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/restaurant/package-lock.json" />
-    <entry file="file://$PROJECT_DIR$/restaurant/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="17" column="85" selection-start-line="17" selection-start-column="85" selection-end-line="17" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consumer/screens/HomeScreen.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3050">
@@ -488,13 +565,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/restaurant/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
@@ -526,11 +596,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/restaurant/screens/settings/Settings.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1173" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consumer/assets/static_data/fudlkr_locations.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
@@ -559,13 +624,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/restaurant/screens/Drawer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="41" column="4" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consumer/navigation/MainTabNavigator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1588">
@@ -588,13 +646,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/restaurant/screens/Inventory.js" />
-    <entry file="file://$PROJECT_DIR$/restaurant/screens/settings/PersonalInfo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="81" selection-start-line="81" selection-end-line="81" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consumer/screens/Meals.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="169">
@@ -609,20 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/restaurant/screens/AddMeal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="46" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/restaurant/screens/ActiveMeals.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="20" selection-start-line="20" selection-end-line="33" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consumer/screens/Location.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="500">
@@ -630,38 +667,135 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/restaurant/navigation/MainTabNavigator.js">
+    <entry file="file://$PROJECT_DIR$/consumer/screens/SignUp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="119">
+          <caret line="7" selection-start-line="7" selection-end-line="19" selection-end-column="59" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/restaurant/screens/Locations.js">
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/Order.js" />
+    <entry file="file://$PROJECT_DIR$/restaurant/assets/dynamic_data/meals_mexican.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="138" column="3" selection-start-line="138" selection-start-column="3" selection-end-line="138" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/restaurant/screens/Login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="108" column="45" selection-start-line="108" selection-start-column="45" selection-end-line="108" selection-end-column="45" />
+        <state relative-caret-position="85">
+          <caret line="5" column="23" lean-forward="true" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="63" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/restaurant/screens/SignUp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="110" column="3" selection-start-line="110" selection-start-column="3" selection-end-line="110" selection-end-column="3" />
+        <state relative-caret-position="1513">
+          <caret line="89" column="31" selection-start-line="89" selection-start-column="31" selection-end-line="89" selection-end-column="31" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/app.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/restaurant/screens/AddTemplate.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="50" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
+        <state relative-caret-position="8432">
+          <caret line="496" column="43" selection-start-line="496" selection-start-column="32" selection-end-line="496" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="24" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/Meal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4080">
+          <caret line="240" column="26" selection-start-line="240" selection-start-column="26" selection-end-line="240" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/AddMeal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="50" column="155" selection-start-line="40" selection-start-column="92" selection-end-line="50" selection-end-column="155" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/Drawer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/settings/Settings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2788">
+          <caret line="164" column="13" selection-start-line="164" selection-start-column="13" selection-end-line="164" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/navigation/MainTabNavigator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1037">
+          <caret line="103" column="35" selection-start-line="103" selection-start-column="35" selection-end-line="103" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/AddPicture.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/settings/PersonalInfo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3366">
+          <caret line="198" column="30" selection-start-line="198" selection-start-column="30" selection-end-line="198" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/settings/Chevron.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="13" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/settings/ChevronLeft.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/ActiveMeals.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2822">
+          <caret line="166" column="59" selection-start-line="166" selection-start-column="59" selection-end-line="166" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/Locations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-374">
+          <caret line="89" column="45" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/screens/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1836">
+          <caret line="108" column="37" selection-start-line="108" selection-start-column="31" selection-end-line="108" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restaurant/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="32" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="52" />
         </state>
       </provider>
     </entry>
