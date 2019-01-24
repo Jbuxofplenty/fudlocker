@@ -108,7 +108,6 @@ body {
 /* Main Body */
 .fudlkr-welcome {
 	width: 97%;
-  height: 100vh;
 }
 
 .fudlkr-head {
@@ -156,8 +155,8 @@ body {
 
 /* Icons */
 .imgIcons {
-    height: 100%;
     width: 100%;
+    padding-top: 30vh;
 }
 
     .imgIcons img {

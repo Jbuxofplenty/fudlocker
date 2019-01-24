@@ -35,7 +35,10 @@ namespace locker_app
         List<ItemContainer> itemPanels = new List<ItemContainer>();
         List<PictureBox> itemPictures = new List<PictureBox>();
         List<ItemInfoLabel> itemCosts = new List<ItemInfoLabel>();
-
+        List<ItemInfoLabel> itemNames = new List<ItemInfoLabel>();
+        List<ItemInfoLabel> itemDatePackaged = new List<ItemInfoLabel>();
+        List<ItemInfoLabel> itemCategories = new List<ItemInfoLabel>();
+        List<Button> itemButtons = new List<Button>();
 
         // used for maximizing screen
         public FormWindowState WindowState { get; set; }
@@ -46,6 +49,7 @@ namespace locker_app
             this.GoFullscreen(true);
             this.ReformatControls();
             this.render();
+            AppTimer timer = new AppTimer(120);
         }
 
         async private void render()
@@ -133,7 +137,7 @@ namespace locker_app
             foreach (var meal in this.meals)
             {
                 // add panel for specific item
-                this.itemPanels.Add(new ItemContainer(TableLayoutPanelGrowStyle.AddColumns, new System.Drawing.Size(415, 415), System.Drawing.Color.FromArgb(46, 204, 113), new System.Windows.Forms.Padding(25)));
+                this.itemPanels.Add(new ItemContainer(TableLayoutPanelGrowStyle.AddColumns, new System.Drawing.Size(415, 615), System.Drawing.Color.FromArgb(46, 204, 113), new System.Windows.Forms.Padding(25)));
 
                 // add meal picture to the panel
                 this.itemPictures.Add(new PictureBox());
@@ -145,17 +149,35 @@ namespace locker_app
                 this.itemPictures[this.curMeal].Anchor = (AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Left);
 
                 // add meal name
-                this.itemCosts.Add(new ItemInfoLabel(meal.Value["strCost"].ToString(), this.PoorStory32));
-                
+                this.itemNames.Add(new ItemInfoLabel(meal.Value["strMeal"].ToString(), this.PoorStory32));
+                this.itemCosts.Add(new ItemInfoLabel("$" + meal.Value["strCost"].ToString(), this.PoorStory32));
+                this.itemCategories.Add(new ItemInfoLabel(meal.Value["strCategory"].ToString(), this.PoorStory32));
+                this.itemDatePackaged.Add(new ItemInfoLabel("Date Packaged: " + meal.Value["strDatePackaged"].ToString(), this.PoorStory32));
+
+                // add controls to panels
+                this.itemPanels[this.curMeal].Controls.Add(this.itemNames[this.curMeal]);
                 this.itemPanels[this.curMeal].Controls.Add(this.itemCosts[this.curMeal]);
+                this.itemPanels[this.curMeal].Controls.Add(this.itemCategories[this.curMeal]);
+                this.itemPanels[this.curMeal].Controls.Add(this.itemDatePackaged[this.curMeal]);
+
+                // add mouse click handlers
+                this.itemPictures[this.curMeal].MouseClick += new MouseEventHandler((sender, e) => this.Item_Click(sender, e, meal.Value));
+                this.itemNames[this.curMeal].MouseClick += new MouseEventHandler((sender, e) => this.Item_Click(sender, e, meal.Value));
+                this.itemCosts[this.curMeal].MouseClick += new MouseEventHandler((sender, e) => this.Item_Click(sender, e, meal.Value));
+                this.itemCategories[this.curMeal].MouseClick += new MouseEventHandler((sender, e) => this.Item_Click(sender, e, meal.Value));
+                this.itemPanels[this.curMeal].MouseClick += new MouseEventHandler((sender, e) => this.Item_Click(sender, e, meal.Value));
+                this.itemDatePackaged[this.curMeal].MouseClick += new MouseEventHandler((sender, e) => this.Item_Click(sender, e, meal.Value));
+
                 this.mainPanel.Controls.Add(this.itemPanels[this.curMeal]);
                 this.curMeal++;
             }
         }
 
-        private void plotItem()
+        private void Item_Click(Object sender, EventArgs e, JToken meal)
         {
-
+            this.Hide();
+            Meal mealForm = new Meal(meal.ToObject<JObject>());
+            mealForm.ShowDialog();
         }
 
         private void Meals_Load(object sender, EventArgs e)

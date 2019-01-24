@@ -70,7 +70,6 @@ namespace locker_app
             this.MinimizeBox = false;
             this.Name = "Welcome";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Welcome";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.WelcomeLoad);
             ((System.ComponentModel.ISupportInitialize)(this.fudlkr_logo)).EndInit();

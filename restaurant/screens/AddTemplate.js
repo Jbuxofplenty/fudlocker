@@ -286,16 +286,16 @@ class AddTemplate extends Component {
         mealData = this.state.mealData;
     }
     var date = new Date();
-    var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
+    var d = dateformat(date, 'dddd, mmmm d, yyyy, h:MM:ss TT');
     mealData["strDatePackaged"] = d.toString();
-    mealData["datePackaged"] = date.valueOf();
+    mealData["datePackaged"] = date.now().toString();
     await firebase.database().ref('/restaurants/' + this.state.org + '/mealCounter').once('value').then(function(snapshot) {
         mealData["idMeal"] = snapshot.val();
     }.bind(this));
     await firebase.database().ref('/restaurants/' + this.state.org + '/').update({
       mealCounter: mealData.idMeal + 1
     });
-    mealData["idMeal"] = "0"+this.state.idOrg + "" + mealData["idMeal"];
+    mealData["idMeal"] = "0" + this.state.idOrg + "" + mealData["idMeal"];
     mealData["strIdMeal"] = "Meal ID #" + mealData["idMeal"];
     mealData["strMeal"] = this.state.mealTitle;
     mealData["forSale"] = true;
@@ -527,7 +527,7 @@ class AddTemplate extends Component {
         button = <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'stretch'}}>
                     <Button
                       color="#B91717"
-                      onPress={this.closeModal}
+                      onPress={() => {this.addNewMeal}}
                       title={"Cancel"}
                     />
                     <View style={{width: 10}}/>
@@ -545,7 +545,7 @@ class AddTemplate extends Component {
     else {
         button = <Button
                       color="#ABEBC6"
-                      onPress={() => {this.addNewMeal()}}
+                      onPress={() => {this.addNewMeal}}
                       title={this.state.modalButton}
                     />
     }

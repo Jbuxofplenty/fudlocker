@@ -18,7 +18,6 @@ import GridView from 'react-native-super-grid';
 import { Icon } from 'react-native-elements';
 import { LinearGradient, Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
-const dateformat = require('dateformat');
 import { DrawerActions } from 'react-navigation-drawer';
 import * as firebase from 'firebase';
 
@@ -64,13 +63,6 @@ export default class AddMeal extends Component {
               /></TouchableOpacity>),
           }
       };
-      randomDate(low, high) {
-          var date = new Date();
-          days_past = Math.random() * (high - low) + low;
-          date.setDate(date.getDate()-days_past);
-          var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
-          return d.toString()
-      }
       state = {
           fontLoaded: false,
           paramsLoaded: false,

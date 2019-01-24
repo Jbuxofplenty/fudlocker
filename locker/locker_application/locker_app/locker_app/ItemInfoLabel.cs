@@ -11,15 +11,14 @@ namespace locker_app
 {
     class ItemInfoLabel : Label
     {
-        public ItemInfoLabel(string cost, Font textFont)
+        public ItemInfoLabel(string text, Font textFont)
         {
             this.BackColor = Color.Transparent;
             this.Font = textFont;
             this.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Text = "$" + cost;
-            this.BackColor = Color.LightSlateGray;
+            this.Text = text;
+            this.Height = 60;
             this.ForeColor = Color.White;
-            this.BringToFront();
             this.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         }
     }

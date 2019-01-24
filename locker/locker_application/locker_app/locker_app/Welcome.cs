@@ -48,18 +48,24 @@ namespace locker_app
         {
             System.Drawing.Rectangle screenSize = Screen.PrimaryScreen.WorkingArea;
             int stackSize = 0;
+            int curStackSize = 0;
+            List<Control> controls = new List<Control>();
             foreach (var control in Extensions.GetAllChildren(this).Select((x, i) => new { Value = x, Index = i }))
             {
                 if (control.Index != 0)
                 {
-                    control.Value.Location = new Point(
-                        ( screenSize.Width - control.Value.Width ) / 2,
-                        ( screenSize.Height - control.Value.Height ) / 2 + stackSize
-                    );
                     stackSize += control.Value.Height + 80;
+                    controls.Insert(0, control.Value);
                 }
             }
-                
+            foreach (var control in controls.Select((x, i) => new { Value = x, Index = i }))
+            {
+                control.Value.Location = new Point(
+                    (screenSize.Width - control.Value.Width) / 2,
+                    (screenSize.Height - stackSize) / 2 + curStackSize
+                );
+                curStackSize += control.Value.Height + 80;
+            }
         }
 
         private void welcomeButton_Click(object sender, EventArgs e)

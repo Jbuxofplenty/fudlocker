@@ -94,9 +94,9 @@ class Purchase extends Component {
         let mealData = this.state.mealData[this.props.navigation.state.params.idMeal];
         mealData["userEmail"] = firebase.auth().currentUser.email;
         var date = new Date();
-        var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
+        var d = dateformat(date, 'dddd, mmmm d, yyyy, h:MM:ss TT');
         mealData["strDatePurchased"] = d.toString();
-        mealData["datePurchased"] = date.valueOf();
+        mealData["datePurchased"] = date.now().toString();;
         mealData["pickedUp"] = false;
         mealData["forSale"] = false;
         mealData["datePickedUp"] = "N/A";
