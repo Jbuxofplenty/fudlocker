@@ -59,6 +59,7 @@ class ActiveMeals extends Component {
         claimedInventory: null,
         activeSlide: 0,
         pickedUpMeals: null,
+        pickedUp: null,
     };
    async componentDidMount() {
     await Font.loadAsync({
@@ -81,40 +82,43 @@ class ActiveMeals extends Component {
            this.setState({ mealsForSale: tempArray });
      }.bind(this));
      var temp = this.state.mealsForSale;
-     await firebase.database().ref('/meals/forSale').on('value', function(snapshot) {
-        let tempArray = {};
-        snapshot.forEach(function(childSnapshot) {
-          var childData = childSnapshot.val();
-          tempArray[childSnapshot.key] = childData;
-        });
-        this.setState({ mealsForSale: tempArray });
-     }.bind(this));
+
+     await firebase.database().ref('/restaurants/' + this.props.navigation.state.params.locationData.owner + '/inventory/pickedUp').once('value', function(snapshot) {
+            let tempArray = {};
+            snapshot.forEach(function(childSnapshot) {
+              var childData = childSnapshot.val();
+              tempArray[childSnapshot.key] = childData;
+            });
+            this.setState({ pickedUp: tempArray });
+      }.bind(this));
+     var temp1 = this.state.pickedUp;
+
      //Get the user data
      await firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.locationData.type + '/meals').once('value', function(snapshot) {
-         let tempArray = [];
+         let activeMeals = [];
+         let pickedUpMeals = [];
          snapshot.forEach(function(childSnapshot) {
            childSnapshot.forEach(function(childChildSnapshot) {
                   var childData = childChildSnapshot.val();
                   if(temp[childData.idMeal.toString()]){
-                     tempArray.push(childData);
+                     activeMeals.push(childData);
+                  }
+                  if(temp1[childData.idMeal.toString()]){
+                     pickedUpMeals.push(childData);
                   }
            });
          });
-         this.setState({ activeInventory: tempArray });
+         this.setState({ activeInventory: activeMeals });
+         this.setState({ pickedUpMeals: pickedUpMeals})
      }.bind(this));
-     await firebase.database().ref('/restaurants/' + this.props.navigation.state.params.locationData.owner + '/inventory/recent/' + this.props.navigation.state.params.locationData.type + '/').once('value', function(snapshot) {
-        let tempArray = [];
-        snapshot.forEach(function(childSnapshot) {
-           childData = childSnapshot.val();
-           tempArray.push(childData);
-        });
-        this.setState({ pickedUp: tempArray });
-     }.bind(this));
+
      return  firebase.database().ref('/restaurants/' + this.props.navigation.state.params.locationData.owner + '/inventory/claimed/' + this.props.navigation.state.params.locationData.type + '/').once('value', function(snapshot) {
                      let tempArray = [];
                      snapshot.forEach(function(childSnapshot) {
-                        childData = childSnapshot.val();
-                        tempArray.push(childData);
+                        childSnapshot.forEach(function(childChildSnapshot) {
+                           var childData = childChildSnapshot.val();
+                           tempArray.push(childData);
+                        });
                  });
          this.setState({ claimedInventory: tempArray });
      }.bind(this));
@@ -312,6 +316,10 @@ class ActiveMeals extends Component {
                             <Text style={styles.columnLabel}>Cuisine Category</Text>
                             <Text style={styles.columnLabel}>Cost</Text>
                         </View>
+                        { this.state.pickedUpMeals.length == 0 ?
+                        <View>
+                            <Text style={styles.noItems}>No Meals to Display!</Text>
+                        </View>:
                         <ScrollView>
                           {this.state.pickedUpMeals.map((datum, index) => {
                             return (
@@ -342,6 +350,7 @@ class ActiveMeals extends Component {
                             )
                           })}
                     </ScrollView>
+                    }
                  </View>
              }
             </ScrollView>

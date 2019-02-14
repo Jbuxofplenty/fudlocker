@@ -147,12 +147,11 @@ namespace locker_app
             mealsForm.ShowDialog();
         }
 
-        async private Task purchaseMeal()
+        async private Task PurchaseMeal()
         {
             var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyC6wZSSUcyYDpsuS6bTxfrnOjrY1KIi1qU"));
             var auth = await authProvider.SignInWithEmailAndPasswordAsync("locker@fudlkr.com", "Ifrickingheartfud");
             var userId = auth.User.LocalId;
-            Console.WriteLine(auth.User.LocalId);
             var firebaseClient = new FirebaseClient(
               "https://fudlkr-7fc5b.firebaseio.com",
               new FirebaseOptions
@@ -167,7 +166,10 @@ namespace locker_app
                     .Child("users/" + userId + "/orders/history/")
                     .PostAsync<JObject>(this.meal);
             await firebaseClient
-                    .Child("restaurants/" + this.meal["distributor"] + "/inventory/claimed/" + this.meal["location"] + "/")
+                    .Child("restaurants/" + this.meal["distributor"] + "/inventory/claimed/" + this.meal["location"].ToString().ToLower() + "/" + this.meal["idMeal"].ToString() + "/")
+                    .PostAsync<JObject>(this.meal);
+            await firebaseClient
+                    .Child("restaurants/" + this.meal["distributor"] + "/orders/purchased/" + this.meal["location"].ToString().ToLower() + "/" + this.meal["idMeal"].ToString() + "/")
                     .PostAsync<JObject>(this.meal);
 
             // Update that the meal has been purchased
@@ -177,7 +179,7 @@ namespace locker_app
                     .PutAsync<bool>(false);
         }
 
-        async private Task readyPurchase()
+        async private Task ReadyPurchase()
         {
             var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyC6wZSSUcyYDpsuS6bTxfrnOjrY1KIi1qU"));
             var auth = await authProvider.SignInWithEmailAndPasswordAsync("locker@fudlkr.com", "Ifrickingheartfud");
@@ -199,10 +201,45 @@ namespace locker_app
             this.meal["headshot"] = "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png";
         }
 
+        async private Task PickUpMeal()
+        {
+            var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyC6wZSSUcyYDpsuS6bTxfrnOjrY1KIi1qU"));
+            var auth = await authProvider.SignInWithEmailAndPasswordAsync("locker@fudlkr.com", "Ifrickingheartfud");
+            var userId = auth.User.LocalId;
+            var firebaseClient = new FirebaseClient(
+              "https://fudlkr-7fc5b.firebaseio.com",
+              new FirebaseOptions
+              {
+                  AuthTokenAsyncFactory = () => Task.FromResult(auth.FirebaseToken)
+              });
+
+            // Set new data
+            DateTime dateTime = DateTime.Now;
+            var date = dateTime.ToUniversalTime().Subtract(
+                new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                ).TotalMilliseconds;
+            var d = DateTime.Now.ToString("dddd, MMMM d, yyyy, h:MM:ss TT");
+            this.meal["strDatePickedUp"] = d;
+            this.meal["datePickedUp"] = date.ToString();
+            this.meal["pickedUp"] = true;
+
+            // Push the picked up meal data
+            await firebaseClient
+                    .Child("restaurants/" + this.meal["distributor"] + "/orders/completed/" + this.meal["location"].ToString().ToLower() + "/" + this.meal["idMeal"] + "/")
+                    .PostAsync<JObject>(this.meal);
+
+            // Update that the meal has been picked up
+            JObject temp = new JObject();
+            await firebaseClient
+                    .Child("restaurants/" + this.meal["distributor"] + "/inventory/pickedUp/" + this.meal["idMeal"].ToString() + "/")
+                    .PutAsync<bool>(true);
+        }
+
         async private void purchaseButton_Click(object sender, EventArgs e)
         {
-            await this.readyPurchase();
-            await this.purchaseMeal();
+            await this.ReadyPurchase();
+            await this.PurchaseMeal();
+            await this.PickUpMeal();
             this.Hide();
             Purchased purchasedForm = new Purchased();
             purchasedForm.ShowDialog();

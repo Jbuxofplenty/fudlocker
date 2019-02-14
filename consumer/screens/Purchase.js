@@ -59,7 +59,6 @@ class Purchase extends Component {
      var userId = firebase.auth().currentUser.uid;
      //Get the user data
      await firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-        console.log( snapshot.val());
          this.setState({ name: snapshot.val().name, headshot: snapshot.val().headshot });
      }.bind(this));
      return firebase.database().ref('/meals/all/meals').once('value').then(function(snapshot) {
@@ -93,10 +92,10 @@ class Purchase extends Component {
         var userId = firebase.auth().currentUser.uid;
         let mealData = this.state.mealData[this.props.navigation.state.params.idMeal];
         mealData["userEmail"] = firebase.auth().currentUser.email;
-        var date = new Date();
+        var date = Date.now();
         var d = dateformat(date, 'dddd, mmmm d, yyyy, h:MM:ss TT');
         mealData["strDatePurchased"] = d.toString();
-        mealData["datePurchased"] = date.now().toString();;
+        mealData["datePurchased"] = date.toString();;
         mealData["pickedUp"] = false;
         mealData["forSale"] = false;
         mealData["datePickedUp"] = "N/A";
@@ -106,18 +105,19 @@ class Purchase extends Component {
         mealData.paymentMethod["last4"] = "0789";
         mealData["name"] = this.state.name;
         mealData["headshot"] = this.state.headshot;
-        console.log(this.state.name, this.state.headshot);
         this.setState({mealData: mealData});
     }
 
     purchaseMeal = async () => {
         //Get the current userID
         var userId = firebase.auth().currentUser.uid;
-        await firebase.database().ref('users/' + userId + '/orders/current/').push(this.state.mealData);
-        await firebase.database().ref('users/' + userId + '/orders/history/').push(this.state.mealData);
-        await firebase.database().ref('restaurants/' + this.state.mealData.distributor + '/inventory/claimed/' + this.state.mealData.location.toLowerCase() + '/').push(this.state.mealData);
+        await firebase.database().ref('users/' + userId + '/orders/current/' + this.props.navigation.state.params.idMeal + '/').push(this.state.mealData);
+        await firebase.database().ref('users/' + userId + '/orders/history/' + this.props.navigation.state.params.idMeal + '/').push(this.state.mealData);
+        await firebase.database().ref('restaurants/' + this.state.mealData.distributor + '/inventory/claimed/' + this.state.mealData.location.toLowerCase() + '/'+this.props.navigation.state.params.idMeal+'/').push(this.state.mealData);
+        await firebase.database().ref('restaurants/' + this.state.mealData.distributor + '/orders/purchased/' + this.state.mealData.location.toLowerCase() + '/'+this.props.navigation.state.params.idMeal+'/').push(this.state.mealData);
         var temp = {};
         temp[this.state.mealData.idMeal] = false;
+        await firebase.database().ref('restaurants/' + this.state.mealData.distributor + '/inventory/pickedUp/').update(temp);
         await firebase.database().ref('meals/forSale/').update(temp);
     }
 

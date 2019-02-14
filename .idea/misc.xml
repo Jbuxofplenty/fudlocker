@@ -29,7 +29,4 @@
       </value>
     </option>
   </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/consumer/node_modules/react-native-elements/src/icons/Icon.js" />
-  </component>
 </project>

@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\assets",
+    "\\src\\assets\\scripts",
+    "\\src\\assets\\scripts\\dashboard",
+    "\\src\\assets\\scripts\\helpers",
+    "\\src\\assets\\scripts\\locations",
+    "\\src\\assets\\styles\\spec",
+    "\\src\\assets\\styles\\spec\\tools",
+    "\\webpack\\plugins",
+    "\\webpack\\rules"
+  ],
+  "SelectedNode": "\\src\\assets\\scripts\\locations\\index.js",
+  "PreviewInSolutionExplorer": false
+}

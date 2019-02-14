@@ -55,7 +55,6 @@ export default class CurrentOrders extends Component {
         });
 
       this.setState({ fontLoaded: true });
-      this.scrubCurrent();
       this.populateInfo();
     }
 
@@ -108,8 +107,10 @@ export default class CurrentOrders extends Component {
            await firebase.database().ref('/users/' + userId + '/orders/current/').once('value', function(snapshot) {
             let tempArray = [];
             snapshot.forEach(function(childSnapshot) {
-              var childData = childSnapshot.val();
-              tempArray.push(childData);
+                childSnapshot.forEach(function(childChildSnapshot) {
+                  var childData = childChildSnapshot.val();
+                  tempArray.push(childData);
+              })
             });
             this.setState({ order_data: tempArray });
           }.bind(this));
@@ -118,8 +119,10 @@ export default class CurrentOrders extends Component {
             await firebase.database().ref('/users/' + userId + '/orders/history/').once('value', function(snapshot) {
             let tempArray = [];
             snapshot.forEach(function(childSnapshot) {
-              var childData = childSnapshot.val();
-              tempArray.push(childData);
+                childSnapshot.forEach(function(childChildSnapshot) {
+                    var childData = childChildSnapshot.val();
+                    tempArray.push(childData);
+                })
             });
             this.setState({ order_data: tempArray });
           }.bind(this));

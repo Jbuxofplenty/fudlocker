@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\public\\assets",
+    "\\public\\assets\\img",
+    "\\src",
+    "\\src\\actions",
+    "\\src\\containers\\DefaultLayout",
+    "\\src\\scss",
+    "\\src\\views",
+    "\\src\\views\\Dashboard",
+    "\\src\\views\\locations",
+    "\\src\\views\\Pages\\Login"
+  ],
+  "SelectedNode": "\\src\\scss\\_dashboard.scss",
+  "PreviewInSolutionExplorer": false
+}

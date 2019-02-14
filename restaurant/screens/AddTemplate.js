@@ -285,10 +285,10 @@ class AddTemplate extends Component {
         await this.formatData();
         mealData = this.state.mealData;
     }
-    var date = new Date();
+    var date = Date.now();
     var d = dateformat(date, 'dddd, mmmm d, yyyy, h:MM:ss TT');
     mealData["strDatePackaged"] = d.toString();
-    mealData["datePackaged"] = date.now().toString();
+    mealData["datePackaged"] = date.toString();
     await firebase.database().ref('/restaurants/' + this.state.org + '/mealCounter').once('value').then(function(snapshot) {
         mealData["idMeal"] = snapshot.val();
     }.bind(this));
@@ -330,6 +330,7 @@ class AddTemplate extends Component {
     await firebase.database().ref('/meals/all/meals/'+this.state.mealData["idMeal"]+'/').push(mealData);
     await firebase.database().ref('/meals/categories/'+mealData['strCategory'].toLowerCase()+'/meals/'+this.state.mealData["idMeal"]+'/').push(mealData);
     await firebase.database().ref('/meals/locations/'+mealData['location'].toLowerCase()+'/meals/'+this.state.mealData["idMeal"]+'/').push(mealData);
+    await firebase.database().ref('/restaurants/'+mealData['distributor'].toLowerCase()+'/meals/history/'+this.state.mealData["location"].toLowerCase()+'/'+this.state.mealData["idMeal"]+'/').push(mealData);
     var forSale = {};
     forSale[mealData.idMeal] = true;
     await firebase.database().ref('/meals/forSale/').update(forSale);
@@ -527,7 +528,7 @@ class AddTemplate extends Component {
         button = <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'stretch'}}>
                     <Button
                       color="#B91717"
-                      onPress={() => {this.addNewMeal}}
+                      onPress={() => {this.addNewMeal()}}
                       title={"Cancel"}
                     />
                     <View style={{width: 10}}/>
@@ -545,7 +546,7 @@ class AddTemplate extends Component {
     else {
         button = <Button
                       color="#ABEBC6"
-                      onPress={() => {this.addNewMeal}}
+                      onPress={() => {this.addNewMeal()}}
                       title={this.state.modalButton}
                     />
     }

@@ -1,0 +1,6 @@
+{
+  "name": "AddMeal",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./AddMeal.js"
+}
