@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "fudlkr_consumer",
+    "slug": "fudlkr_consumer",
+    "description": "Fudlkr's Consumer Mobile Application.  Allows users to purchase meals at different Fudlkr locations.",
+    "sdkVersion": "31.0.0",
+    "privacy": "public",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "bundleIdentifier": "com.fudlkr.consumer"
+    },
+    "android": {
+      "package": "com.fudlkr.consumer",
+      "permissions": []
+    }
+  },
+  "name": "Fudlocker Consumer Mobile Application",
+  "description": "Purchase meals from Fudlockers",
+  "keywords": [
+    "fudlkr",
+    "restaurant",
+    "meal"
+  ],
+  "website": "http://fudlkr.com/",
+  "repository": "https://github.com/jbuxofplenty/fudlocker",
+  "logo": "http://fudlkr.com/images/fudlkr_logo.png",
+  "success_url": "/welcome"
+}

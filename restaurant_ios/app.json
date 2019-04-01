@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "foodlocker_business",
+    "slug": "foodlocker_business",
+    "description": "FoodLocker's Restaurant Mobile Application.  Allows employees of restaurants/dining halls to access FoodLockers.  Employees will keep the FoodLocker stocked and information will automatically be uploaded to a database.",
+    "sdkVersion": "31.0.0",
+    "privacy": "public",
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "bundleIdentifier": "com.fudlkr.business"
+    },
+    "android": {
+      "package": "com.fudlkr.business",
+      "permissions": []
+    }
+  },
+  "name": "Foodlocker Restaurant Mobile Application",
+  "description": "Access FoodLockers for stocking purposes.",
+  "keywords": [
+    "foodlocker",
+    "restaurant",
+    "meal"
+  ],
+  "website": "http://fudlkr.com/",
+  "repository": "https://github.com/jbuxofplenty/fudlocker",
+  "logo": "http://fudlkr.com/images/fudlkr_logo.png",
+  "success_url": "/welcome"
+}

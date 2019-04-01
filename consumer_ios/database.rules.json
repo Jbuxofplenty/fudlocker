@@ -1,0 +1,25 @@
+{
+  "rules": {
+    "users": {
+      "$user_id": {
+        ".write": "$user_id === auth.uid",
+        ".read": "$user_id === auth.uid"
+      }
+    },
+    "lockers": {
+      ".write": false,
+      ".read": true
+    },
+    "meals": {
+      ".write": false,
+      ".read": true,
+      "mealCounter": {
+        ".write": true
+      }
+    },
+    "static": {
+      ".write": false,
+      ".read": true
+    }
+  }
+}

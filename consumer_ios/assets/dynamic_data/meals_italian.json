@@ -1,0 +1,34 @@
+{
+  "meals": [
+    {
+      "idMeal": "8",
+      "strMeal": "Pepperoni Pizza",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/pep_pizza.jpg",
+      "strCategory": "Italian",
+      "strCost": 1.99,
+      "code": "#c9d8c0",
+      "calories": 200,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
+    },
+    {
+      "idMeal": "9",
+      "strMeal": "Pasta Carbonara",
+      "strArea": "Chinese",
+      "strMealThumb": "http://fudlkr.com/mobile_assets/pasta_carbonara.jpg",
+      "strCategory": "Italian",
+      "strCost": 3.99,
+      "code": "#514d0f",
+      "calories": 250,
+      "datePackaged": "11/12/2018",
+      "netWeight": 4.21,
+      "location": "C4C",
+      "distributor": "cuboulder",
+      "forSale": true
+    }
+
+  ]
+}
