@@ -8,7 +8,6 @@ import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, Keyboa
 import { Button } from 'react-native-elements';
 import {Image} from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import { LoginButton } from 'react-native-fbsdk';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -74,8 +73,8 @@ export default class LoginScreen extends Component {
     emailColor: "gray",
     passColor: "gray",
     modalVisible: false,
-    email: "jbuxofplenty@gmail.com",
-    pass: "jbuxofplenty",
+    email: "",
+    pass: "",
   }
   async componentDidMount() {
     await Font.loadAsync({

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Switch, Button, StyleSheet, Text, View, Share, WebView, Linking, TouchableOpacity, Image, Dimensions, Modal, TextInput, Platform, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Switch, Button, StyleSheet, Text, View, WebView, Linking, TouchableOpacity, Image, Dimensions, Modal, TextInput, Platform, KeyboardAvoidingView } from 'react-native'
 import { Avatar, ListItem, Icon } from 'react-native-elements'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Font } from 'expo'

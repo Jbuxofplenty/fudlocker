@@ -4,8 +4,9 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import { dataActions } from '../../actions';
 import Locations from '../Locations/Locations';
 import PriceReport from '../PriceReport/PriceReport';
-import ReactDOM from 'react-dom';
 import ActiveOrders from '../ActiveOrders/ActiveOrders';
+import ReactDOM from 'react-dom';
+const dateformat = require('dateformat');
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 const layouts = {
@@ -16,23 +17,23 @@ const layouts = {
   ],
   sm: [
     { i: 'a', h: 6, w: 3, x: 0, y: 0, static: true },
-    { i: 'b', h: 6, w: 3, x: 3, y: 0, static: true },
-    { i: 'c', h: 5, w: 6, x: 0, y: 6, static: true }
+    { i: 'b', h: 6, w: 3, x: 4, y: 0, static: true },
+    { i: 'c', h: 5, w: 12, x: 0, y: 6, static: true },
   ],
   md: [
     { i: 'a', h: 6, w: 5, x: 0, y: 0, static: true },
     { i: 'b', h: 6, w: 5, x: 5, y: 0, static: true },
-    { i: 'c', h: 5, w: 10, x: 0, y: 6, static: true }
+    { i: 'c', h: 5, w: 12, x: 0, y: 6, static: true },
   ],
   xs: [
-    { i: 'a', h: 4, w: 3, x: 0, y: 0, static: true },
-    { i: 'b', h: 4, w: 3, x: 3, y: 0, static: true },
-    { i: 'c', h: 5, w: 6, x: 0, y: 4, static: true }
+    { i: 'a', h: 6, w: 6, x: 0, y: 0, static: true },
+    { i: 'b', h: 6, w: 6, x: 6, y: 0, static: true },
+    { i: 'c', h: 5, w: 12, x: 0, y: 6, static: true },
   ],
   xxs: [
-    { i: 'a', h: 4, w: 1, x: 0, y: 0, static: true },
-    { i: 'b', h: 4, w: 1, x: 1, y: 0, static: true },
-    { i: 'c', h: 5, w: 6, x: 0, y: 4, static: true }
+    { i: 'a', h: 6, w: 6, x: 0, y: 0, static: true },
+    { i: 'b', h: 6, w: 6, x: 6, y: 0, static: true },
+    { i: 'c', h: 5, w: 12, x: 0, y: 6, static: true },
   ]
 };
 
@@ -57,7 +58,7 @@ class DashboardPage extends Component {
     const locations_container = document.querySelector('#locations_container');
     await ReactDOM.render(<Locations user={user} userData={userData} locationsData={locationsData} purchased={purchased} completed={completed} meals={meals} mealsForSale={mealsForSale} />, locations_container);
     const price_report_container = document.querySelector('#price_report_container');
-    await ReactDOM.render(<PriceReport user={user} userData={userData} purchased={purchased} completed={completed} />, price_report_container);
+    await ReactDOM.render(<PriceReport user={user} userData={userData} purchased={purchased} completed={completed} date={dateformat(Date.now(), 'dddd, mmmm d, yyyy')} startDate={Date.now() - (60 * 60 * 24 * 1000)}/>, price_report_container);
     const active_orders_container = document.querySelector('#active_orders_container');
     await ReactDOM.render(<ActiveOrders user={user} userData={userData} purchased={purchased} completed={completed} />, active_orders_container);
   }

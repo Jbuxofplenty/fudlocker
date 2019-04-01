@@ -74,8 +74,8 @@ export default class LoginScreen extends Component {
     emailColor: "gray",
     passColor: "gray",
     modalVisible: false,
-    email: "josiah.buxton@colorado.edu",
-    pass: "josiah",
+    email: "",
+    pass: "",
   }
   async componentDidMount() {
     await Font.loadAsync({
@@ -137,13 +137,6 @@ export default class LoginScreen extends Component {
               title="Login"
               textStyle={{fontSize: 30, fontFamily: 'Poor Story'}}
             />
-            <Button
-                textStyle={{fontSize: 20, fontFamily: 'Poor Story'}}
-                buttonStyle={styles.fbLoginButton}
-                onPress={() => this.props.navigation.navigate('SignUp')}
-                title="Sign Up"
-                color="#3897f1"
-              />
           </View>
         </View>
       </TouchableWithoutFeedback>

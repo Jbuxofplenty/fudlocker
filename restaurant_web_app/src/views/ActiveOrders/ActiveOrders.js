@@ -18,7 +18,6 @@ export default class ActiveOrders extends Component {
         purchasedNotCompleted.push(this.props.purchased[i]);
       }
     }
-
     return purchasedNotCompleted;
   }
 
@@ -59,7 +58,7 @@ export default class ActiveOrders extends Component {
               </tbody>
             </table>
             <div className="check-container">
-              <a href="http://fudlkr.com" className="check-text">Check all the active orders</a>
+              <a href="http://fudlkr.com" className="check-text">Check all the orders</a>
             </div>
           </div>
         </div>

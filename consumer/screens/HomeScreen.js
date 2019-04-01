@@ -43,6 +43,7 @@ static navigationOptions = ({ navigation }) => {
             meals_data: null,
             meal_type: null,
             category_data: null,
+            locations: null,
         }
       }
       searchUpdated(term) {
@@ -138,6 +139,14 @@ static navigationOptions = ({ navigation }) => {
            this.setState({ meals_data: tempArray });
            this.setState({ meal_type: "All" });
        }.bind(this));
+       await firebase.database().ref('/lockers/data').once('value', function(snapshot) {
+             let tempArray = {};
+             snapshot.forEach(function(childSnapshot) {
+               var childData = childSnapshot.val();
+               tempArray[childData.type] = childData;
+             });
+             this.setState({ locations: tempArray });
+       }.bind(this));
        await firebase.database().ref('/static/mealCategories').once('value').then(function(snapshot) {
            this.setState({ category_data: snapshot.val().meal_categories });
        }.bind(this));
@@ -207,7 +216,7 @@ static navigationOptions = ({ navigation }) => {
                         <Text style={{fontFamily: 'Poor Story', fontSize: 20, marginLeft: 10}}>{`${item.strMeal}`}</Text>
                         <View style={{flex: 1, justifyContent: 'flex-start', flexDirection: 'row'}}>
                             <Text style={{fontFamily: 'Poor Story', marginLeft: 20}}>${`${item.strCost}`}</Text>
-                            <Text style={{fontFamily: 'Poor Story', marginLeft: 40}}>{`${locs[item.location]}`}</Text>
+                            <Text style={{fontFamily: 'Poor Story', marginLeft: 40}}>{`${this.state.locations[item.location].type}`}</Text>
                         </View>
                       </View>
                       <Image source={{ uri: item.strMealThumb }} style={{width: 48, height: 48, marginRight: 20}}></Image>

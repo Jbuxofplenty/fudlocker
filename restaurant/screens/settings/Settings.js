@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Switch, StyleSheet, Text, View, Share, WebView, Linking, TouchableOpacity } from 'react-native'
+import { ScrollView, Switch, StyleSheet, Text, View, WebView, Linking, TouchableOpacity } from 'react-native'
 import { Avatar, ListItem, Icon } from 'react-native-elements'
 import { Font } from 'expo'
 import Rate, { AndroidMarket } from 'react-native-rate'
@@ -96,18 +96,19 @@ class SettingsScreen extends Component {
 
 
   shareApp = () => {
-      Share.share({
-        message: 'Hey, check out this new app I found where you can use meal swipes outside normal business hours outside of the C4C!',
-        url: 'http://fudlkr.com',
-        title: 'Fudlkr Application'
-      }, {
-        // Android only:
-        dialogTitle: 'Share Fudlkr',
-        // iOS only:
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.PostToTwitter'
-        ]
-      })
+//      Share.share({
+//        message: 'Hey, check out this new app I found where you can use meal swipes outside normal business hours outside of the C4C!',
+//        url: 'http://fudlkr.com',
+//        title: 'Fudlkr Application'
+//      }, {
+//        // Android only:
+//        dialogTitle: 'Share Fudlkr',
+//        // iOS only:
+//        excludedActivityTypes: [
+//          'com.apple.UIKit.activity.PostToTwitter'
+//        ]
+//      })
+    return;
 
   }
   rateUs = () => {

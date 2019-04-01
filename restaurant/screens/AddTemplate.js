@@ -68,6 +68,7 @@ class AddTemplate extends Component {
         shelfLife: null,
         org: null,
         locations: null,
+        locationsData: null,
         buttonTitle: null,
         modalVisible: false,
         modalMessage: "",
@@ -138,7 +139,11 @@ class AddTemplate extends Component {
       var userId = firebase.auth().currentUser.uid;
       return firebase.database().ref('/restaurants/' + org + '/lockers/').once('value').then(function(snapshot) {
          let tempArray = snapshot.val()["data"];
-         this.setState({ locations: tempArray });
+         var locationsData = {};
+         for(var item in tempArray) {
+            locationsData[tempArray[item].type] = tempArray[item];
+         }
+         this.setState({ locations: tempArray, locationsData });
       }.bind(this));
   }
 
@@ -190,7 +195,7 @@ class AddTemplate extends Component {
                      "\nCategory:\t\t" + this.state.category +
                      "\nCalories:\t\t" + this.state.calories +
                      "\nShelf Life:\t\t" + this.state.shelfLife +
-                     "\nLocation:\t\t" + this.state.location,
+                     "\nLocation:\t\t" + this.state.location.toLowerCase(),
        modalButton: "   Confirm!   ",
        modalType: "meal"});
     }
@@ -256,7 +261,7 @@ class AddTemplate extends Component {
     }
     //Get the current userID
     var userId = firebase.auth().currentUser.uid;
-    await firebase.database().ref('/restaurants/' + this.state.org + '/templates/default/').push(mealData);
+    await firebase.database().ref('/restaurants/' + this.state.org + '/templates/default/' + mealData["idTemplate"] + "/").update(mealData);
     this.setState({modalVisible: true,
                    modalTitle: "New Meal Confirmation",
                    modalMessage: "Verify the information below and click on the confirm button to generate a new meal to be stored in the locker." +
@@ -285,6 +290,27 @@ class AddTemplate extends Component {
         await this.formatData();
         mealData = this.state.mealData;
     }
+    //check to see if there is space in the locker
+    var locker = null;
+    var totalMeals = 0;
+    for(var meal in this.state.locationsData[this.state.mealData.location].lockers) {
+        if(this.state.locationsData[this.state.mealData.location].lockers[meal]) {
+            totalMeals += 1;
+        }
+    }
+    if (totalMeals >= this.state.locationsData[this.state.mealData.location].capacity) {
+        this.setState({modalMessage: "No space available in the specified locker!", modalType: "error", modalTitle: "Error!", modalVisible: true });
+        return;
+    }
+    else {
+        for (var lock in this.state.locationsData[this.state.mealData.location].lockers) {
+            if (!this.state.locationsData[this.state.mealData.location].lockers[lock]) {
+                locker = lock;
+                break;
+            }
+        }
+    }
+    mealData["locker"] = locker;
     var date = Date.now();
     var d = dateformat(date, 'dddd, mmmm d, yyyy, h:MM:ss TT');
     mealData["strDatePackaged"] = d.toString();
@@ -331,6 +357,9 @@ class AddTemplate extends Component {
     await firebase.database().ref('/meals/categories/'+mealData['strCategory'].toLowerCase()+'/meals/'+this.state.mealData["idMeal"]+'/').push(mealData);
     await firebase.database().ref('/meals/locations/'+mealData['location'].toLowerCase()+'/meals/'+this.state.mealData["idMeal"]+'/').push(mealData);
     await firebase.database().ref('/restaurants/'+mealData['distributor'].toLowerCase()+'/meals/history/'+this.state.mealData["location"].toLowerCase()+'/'+this.state.mealData["idMeal"]+'/').push(mealData);
+    var individualLocker = {};
+    individualLocker[mealData.locker] = true;
+    await firebase.database().ref('/restaurants/' + mealData['distributor'].toLowerCase() + '/lockers/data/' + this.state.locationsData[this.state.mealData.location].id + '/lockers/').update(individualLocker);
     var forSale = {};
     forSale[mealData.idMeal] = true;
     await firebase.database().ref('/meals/forSale/').update(forSale);

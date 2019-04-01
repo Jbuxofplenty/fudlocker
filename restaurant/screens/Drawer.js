@@ -127,7 +127,7 @@ class DrawerScreen extends Component {
                     <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Meal Inventory</Text>
                 </View>
                 <View>
-                  <TouchableOpacity onPress={() => {this.navigateToScreen('Inventory')}}>
+                  <TouchableOpacity onPress={() => {this.navigateToScreen('AddMeal')}}>
                       <ListItem
                         // chevron
                         title="Add Meal"

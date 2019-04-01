@@ -1,0 +1,58 @@
+.center {
+  text-align: center;
+}
+
+.form-container {
+  text-align: center;
+}
+
+.form-row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.full {
+  width: 100%;
+}
+
+.form-control {
+  color: black;
+}
+
+.buttons {
+  width: 50%;
+}
+
+.button-container {
+  width: 100%;
+}
+
+.green {
+  background-color: green;
+}
+
+.green:hover {
+  background-color: forestgreen;
+}
+
+.red {
+  background-color: red;
+}
+
+.red:hover {
+  background-color: darkred;
+}
+
+.buttons-container {
+  display: inline;
+}
+
+.modal {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 25%;
+  height: 25%;
+  background-color: white;
+}

@@ -32,6 +32,7 @@ namespace locker_app
         {
             this.welcomeButton = new System.Windows.Forms.Button();
             this.fudlkr_logo = new System.Windows.Forms.PictureBox();
+            this.lvwDevices = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.fudlkr_logo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,9 +41,10 @@ namespace locker_app
             this.welcomeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(235)))), ((int)(((byte)(198)))));
             this.welcomeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.welcomeButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.welcomeButton.Location = new System.Drawing.Point(491, 311);
+            this.welcomeButton.Location = new System.Drawing.Point(1309, 742);
+            this.welcomeButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.welcomeButton.Name = "welcomeButton";
-            this.welcomeButton.Size = new System.Drawing.Size(600, 200);
+            this.welcomeButton.Size = new System.Drawing.Size(1600, 477);
             this.welcomeButton.TabIndex = 1;
             this.welcomeButton.Text = "Welcome";
             this.welcomeButton.UseVisualStyleBackColor = false;
@@ -51,21 +53,32 @@ namespace locker_app
             // fudlkr_logo
             // 
             this.fudlkr_logo.ImageLocation = "http://fudlkr.com/images/fudlkr_logo.png";
-            this.fudlkr_logo.Location = new System.Drawing.Point(542, 40);
+            this.fudlkr_logo.Location = new System.Drawing.Point(1445, 95);
+            this.fudlkr_logo.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.fudlkr_logo.Name = "fudlkr_logo";
-            this.fudlkr_logo.Size = new System.Drawing.Size(500, 250);
+            this.fudlkr_logo.Size = new System.Drawing.Size(1333, 596);
             this.fudlkr_logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.fudlkr_logo.TabIndex = 2;
             this.fudlkr_logo.TabStop = false;
             // 
+            // lvwDevices
+            // 
+            this.lvwDevices.Location = new System.Drawing.Point(1016, 1290);
+            this.lvwDevices.Name = "lvwDevices";
+            this.lvwDevices.Size = new System.Drawing.Size(2121, 236);
+            this.lvwDevices.TabIndex = 3;
+            this.lvwDevices.UseCompatibleStateImageBehavior = false;
+            // 
             // Welcome
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.ClientSize = new System.Drawing.Size(1584, 761);
+            this.ClientSize = new System.Drawing.Size(4224, 1815);
+            this.Controls.Add(this.lvwDevices);
             this.Controls.Add(this.fudlkr_logo);
             this.Controls.Add(this.welcomeButton);
+            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Welcome";
@@ -80,6 +93,7 @@ namespace locker_app
         #endregion
         private Button welcomeButton;
         private PictureBox fudlkr_logo;
+        private ListView lvwDevices;
     }
 }
 

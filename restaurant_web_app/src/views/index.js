@@ -25,8 +25,9 @@ import Locations from './Locations';
 import PriceReport from './PriceReport';
 import ActiveOrders from './ActiveOrders';
 import AddMeal from './AddMeal';
+import FrequentUsers from './FrequentUsers';
 import Inventory from './Inventory';
-import Calendar from './Calendar';
+import ReactCalendar from './Calendar';
 import Stats from './Stats';
 import { CoreUIIcons, Flags, FontAwesome, SimpleLineIcons } from './Icons';
 import { Alerts, Badges, Modals } from './Notifications';
@@ -60,9 +61,10 @@ export {
   Locations,
   PriceReport,
   ActiveOrders,
+  FrequentUsers,
   AddMeal,
   Inventory,
-  Calendar,
+  ReactCalendar,
   Stats,
   Widgets,
   Jumbotrons,

@@ -96,6 +96,27 @@ export function data(state = initialState, action) {
         ...state,
         locations: {}
       };
+    case dataConstants.UPDATE_INVENTORY_REQUEST:
+      return {
+        ...state,
+        inventory: {
+          isPending: true
+        }
+      };
+    case dataConstants.UPDATE_INVENTORY_SUCCESS:
+      return {
+        ...state,
+        inventory: {
+          isLoaded: true,
+          isPending: false,
+          data: action.data
+        }
+      };
+    case dataConstants.UPDATE_INVENTORY_FAILURE:
+      return {
+        ...state,
+        inventory: {}
+      };
     case dataConstants.UPDATE_PICKEDUP_REQUEST:
       return {
         ...state,

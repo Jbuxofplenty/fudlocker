@@ -69,7 +69,7 @@ class LoginPage extends Component {
       <div className="split background" style={{ backgroundImage: "url(" + pathToBackground + ")" }}>
         <div className="split left">
           <div className="centered">
-            <div className="bgc-white bdrs-50p pos-r" style={{ width: 120, height: 120 }}>
+            <div className="bgc-white bdrs-50p pos-r" style={{ width: 180, height: 120 }}>
               <img className="pos-a centerXY" src={pathToLogo} width="150" height="150" alt=""/>
             </div>
           </div>

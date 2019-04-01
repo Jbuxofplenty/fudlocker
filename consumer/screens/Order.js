@@ -12,6 +12,7 @@ import {
 import PropTypes from 'prop-types'
 import { Font } from 'expo'
 import ParallaxScrollView from 'react-native-parallax-scrollview';
+import * as firebase from 'firebase';
 
 import { Colors } from '../constants'
 const dateformat = require('dateformat');
@@ -41,11 +42,21 @@ class Order extends Component {
         fontLoaded: false,
         paramsLoaded: false,
         idMeal: null,
+        locations: null,
     };
    async componentDidMount() {
      await Font.loadAsync({
         'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
      });
+
+      await firebase.database().ref('/lockers/data').once('value', function(snapshot) {
+              let tempArray = {};
+              snapshot.forEach(function(childSnapshot) {
+                var childData = childSnapshot.val();
+                tempArray[childData.type] = childData;
+              });
+              this.setState({ locations: tempArray });
+        }.bind(this));
      await this.setState({ fontLoaded: true, paramsLoaded: true, idMeal: this.props.navigation.state.params.idMeal });
    }
     _getLocationAsync = async () => {
@@ -87,14 +98,9 @@ class Order extends Component {
         };
 
       handleGetDirections () {
-            var arrayLength = fudlkr_locations.data.length;
-               for (var i = 0; i < arrayLength; i++) {
-                  if( fudlkr_locations.data[i].type.toLowerCase() == this.props.navigation.state.params.location.toLowerCase()) {
-                      latitude = fudlkr_locations.data[i].latlng.latitude;
-                      longitude = fudlkr_locations.data[i].latlng.longitude;
-                  }
-               }
-              const data = {
+            latitude = this.state.locations[this.props.navigation.state.params.location.toLowerCase()].latlng.latitude;
+            longitude = this.state.locations[this.props.navigation.state.params.location.toLowerCase()].latlng.longitude;
+            const data = {
             source: {
                 latitude: this.state.your_lat,
                 longitude: this.state.your_lng
@@ -124,7 +130,7 @@ class Order extends Component {
                             <Text style={styles.priceText}>{"Order Information"}</Text>
                             <View style={styles.lineItemContainer} >
                                 <Text style={styles.labelText}>Location:</Text>
-                                <Text style={styles.valueText}>{this.props.navigation.state.params.location}</Text>
+                                <Text style={styles.valueText}>{this.state.locations[this.props.navigation.state.params.location.toLowerCase()].title}</Text>
                             </View>
                             <View style={styles.lineItemContainer} >
                                 <Text style={styles.labelText}>Meal ID Number:</Text>
@@ -179,7 +185,7 @@ class Order extends Component {
             <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5}}>
                 <Text style={styles.priceText}>{"Location"}</Text>
                 <View style={styles.lineItemContainer} >
-                    <Text style={styles.location}>{this.props.navigation.state.params.location}</Text>
+                    <Text style={styles.location}>{this.state.locations[this.props.navigation.state.params.location].title}</Text>
                 </View>
                     <View
                         style={{
@@ -194,14 +200,8 @@ class Order extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity style={[styles.navigatorButton, { flex: 2 }]}
                             onPress={() => {
-                                 var arrayLength = fudlkr_locations.data.length;
-                                 for (var i = 0; i < arrayLength; i++) {
-                                    if( fudlkr_locations.data[i].type.toLowerCase() == this.props.navigation.state.params.location.toLowerCase()) {
-                                        latitude = fudlkr_locations.data[i].latlng.latitude;
-                                        longitude = fudlkr_locations.data[i].latlng.longitude;
-                                    }
-                                 }
-
+                                latitude = this.state.locations[this.props.navigation.state.params.location.toLowerCase()].latlng.latitude;
+                                longitude = this.state.locations[this.props.navigation.state.params.location.toLowerCase()].latlng.longitude;
                                  this.props.navigation.navigate('Home', {coords: {latitude: latitude, longitude: longitude}, searching: false});
                                 }}>
                           <Text style={styles.descriptionText}>MAP</Text>

@@ -1,17 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public\\assets",
-    "\\public\\assets\\img",
     "\\src",
     "\\src\\actions",
-    "\\src\\containers\\DefaultLayout",
-    "\\src\\scss",
-    "\\src\\views",
     "\\src\\views\\Dashboard",
-    "\\src\\views\\locations",
-    "\\src\\views\\Pages\\Login"
+    "\\src\\views\\PriceReport",
+    "\\src\\views\\RecentOrders"
   ],
-  "SelectedNode": "\\src\\scss\\_dashboard.scss",
+  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }

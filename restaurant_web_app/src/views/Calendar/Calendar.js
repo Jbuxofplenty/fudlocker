@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Calendar from 'react-calendar';
 
 class CalendarPage extends Component {
   constructor(props) {
@@ -8,22 +9,29 @@ class CalendarPage extends Component {
     this.state = {
       dropdownOpen: false,
       radioSelected: 2,
+      date: new Date(),
     };
   }
 
   async componentDidMount() {
-    const { dispatch, user, userData } = this.props;
-    //await dispatch(dataActions.addMeal());
+
   }
 
 
+  onChange = date => this.setState({ date })
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
   render() {
     return (
       <div className="data-container">
         <h6 className="header-text">Calendar</h6>
-        <div id="locations_container"></div>
+        <div id="locations_container">
+          <Calendar
+            onChange={this.onChange}
+            value={this.state.date}
+            className="calendar-container"
+          />
+        </div>
       </div>
     );
   }
@@ -40,5 +48,5 @@ function mapStateToProps(state) {
   };
 }
 
-const Calendar = connect(mapStateToProps)(CalendarPage);
-export default Calendar;
+const ReactCalendar = connect(mapStateToProps)(CalendarPage);
+export default ReactCalendar;

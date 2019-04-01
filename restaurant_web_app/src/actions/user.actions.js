@@ -21,6 +21,7 @@ function login(email, password, history) {
             tempUser["headshot"] = snapshot.val().headshot;
             tempUser["phone"] = snapshot.val().phone;
             tempUser["org"] = snapshot.val().org;
+            tempUser["idOrg"] = snapshot.val().idOrg;
             localStorage.setItem('user', JSON.stringify(user.valueOf()));
             localStorage.setItem('userData', JSON.stringify(tempUser));
             dispatch(success(user, tempUser));

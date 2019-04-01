@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Text;
+using System.Management;
 
 namespace locker_app
 {
@@ -27,6 +25,38 @@ namespace locker_app
             PrivateFontCollection pfc = new PrivateFontCollection();
             pfc.AddFontFile("fonts\\PoorStory-Regular.ttf");
             welcomeButton.Font = new Font(pfc.Families[0], 48, FontStyle.Regular);
+            // Set the view to show details.
+            lvwDevices.View = View.Details;
+
+            // Allow the user to edit item text.
+            lvwDevices.LabelEdit = true;
+
+            // Allow the user to rearrange columns.
+            lvwDevices.AllowColumnReorder = true;
+
+            // Select the item and subitems when selection is made.
+            lvwDevices.FullRowSelect = true;
+
+            // Display grid lines.
+            lvwDevices.GridLines = true;
+
+            // Sort the items in the list in ascending order.
+            lvwDevices.Sorting = SortOrder.Ascending;
+            // Attach Subitems to the ListView
+            lvwDevices.Columns.Add("Title", 200, HorizontalAlignment.Left);
+            lvwDevices.Columns.Add("ID", 200, HorizontalAlignment.Left);
+            lvwDevices.Columns.Add("Price", 400, HorizontalAlignment.Left);
+            ManagementObjectSearcher device_searcher =
+                new ManagementObjectSearcher("SELECT * FROM Win32_USBHub");
+            foreach (ManagementObject usb_device in device_searcher.Get())
+            {
+                ListViewItem new_item = lvwDevices.Items.Add(
+                    usb_device.Properties["DeviceID"].Value.ToString());
+                new_item.SubItems.Add(
+                    usb_device.Properties["PNPDeviceID"].Value.ToString());
+                new_item.SubItems.Add(
+                    usb_device.Properties["Description"].Value.ToString());
+            }
         }
 
         private void GoFullscreen(bool fullscreen)
@@ -52,7 +82,7 @@ namespace locker_app
             List<Control> controls = new List<Control>();
             foreach (var control in Extensions.GetAllChildren(this).Select((x, i) => new { Value = x, Index = i }))
             {
-                if (control.Index != 0)
+                if (control.Index != 0 && control.Index != 2)
                 {
                     stackSize += control.Value.Height + 80;
                     controls.Insert(0, control.Value);
@@ -74,6 +104,7 @@ namespace locker_app
             Meals mealsForm = new Meals();
             mealsForm.ShowDialog();
         }
+
     }
     public static class Extensions
     {

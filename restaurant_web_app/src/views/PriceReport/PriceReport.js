@@ -27,9 +27,13 @@ export default class PriceReport extends Component {
 
     var tempArray = [];
     var total = 0.0;
-    for (var i = 0; i < sortable.length && i < 10; i++) {
-      tempArray.push(sortable[i][0]);
-      total += parseFloat(sortable[i][0]['strCost']);
+    var count = 0;
+    for (var i = 0; i < sortable.length && count < 10; i++) {
+      if (parseFloat(sortable[i][0]['datePurchased']) > this.props.startDate) {
+        tempArray.push(sortable[i][0]);
+        total += parseFloat(sortable[i][0]['strCost']);
+        count++;
+      }
     }
     this.setState({ total });
     return tempArray;
@@ -66,7 +70,7 @@ export default class PriceReport extends Component {
                 <p className="mB-0">Sales Report</p>
               </div>
               <div className="peer">
-                <h3 className="text-right">${this.state.total}</h3>
+                <h3 className="text-right">${this.state.total.toFixed(2)}</h3>
               </div>
             </div>
           </div>

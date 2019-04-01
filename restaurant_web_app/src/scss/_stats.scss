@@ -1,0 +1,19 @@
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.range-select-container {
+  width: 120px;
+  text-align: center;
+}
+.select-container {
+  width: 240px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+

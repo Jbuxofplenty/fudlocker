@@ -17,7 +17,8 @@
       "bundleIdentifier": "com.fudlkr.consumer"
     },
     "android": {
-      "package": "com.fudlkr.consumer"
+      "package": "com.fudlkr.consumer",
+      "permissions": []
     }
   },
   "name": "Fudlocker Consumer Mobile Application",
