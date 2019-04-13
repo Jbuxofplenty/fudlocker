@@ -14,7 +14,7 @@ export default class ActiveOrders extends Component {
   processData() {
     var purchasedNotCompleted = [];
     for (var i in this.props.purchased) {
-      if (!(i in this.props.completed)) {
+      if (!(i in this.props.completed) && purchasedNotCompleted.length <= 10) {
         purchasedNotCompleted.push(this.props.purchased[i]);
       }
     }

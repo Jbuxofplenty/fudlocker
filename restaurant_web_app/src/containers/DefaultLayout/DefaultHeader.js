@@ -27,8 +27,10 @@ class DefaultHeaderPage extends Component {
   }
   componentDidMount() {
     var user = localStorage.getItem('user');
-    if (user.user) {
-      this.setState({ headshot: user.user.headshot });
+    if (user) {
+      if (user.user) {
+        this.setState({ headshot: user.user.headshot });
+      }
     }
   }
 

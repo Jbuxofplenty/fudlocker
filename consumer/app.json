@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "fudlkr_consumer",
+    "name": "FoodLocker",
     "slug": "fudlkr_consumer",
-    "description": "Fudlkr's Consumer Mobile Application.  Allows users to purchase meals at different Fudlkr locations.",
+    "description": "Foodlocker's Consumer Mobile Application.  Allows users to purchase meals at different Foodlocker locations.",
     "sdkVersion": "31.0.0",
     "privacy": "public",
-    "version": "1.0.0",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -14,15 +14,24 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "bundleIdentifier": "com.fudlkr.consumer"
+      "bundleIdentifier": "com.fudlkr.consumer",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allows users to upload pictures of themselves taken with their phone for their profile picture.",
+        "NSMicrophoneUsageDescription": "This app does not require access to the microphone.",
+        "NSCameraUsageDescription" : "Allows users to take a profile picture of themselves which will be uploaded to the Firebase database.",
+        "NSFaceIDUsageDescription" : "Allows the user to login to the application using biometrics"
+      }
     },
     "android": {
       "package": "com.fudlkr.consumer",
-      "permissions": []
+      "permissions": ["ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA"],
+      "versionCode": 8
     }
   },
-  "name": "Fudlocker Consumer Mobile Application",
-  "description": "Purchase meals from Fudlockers",
+  "name": "Foodlocker Consumer Mobile Application",
+  "description": "Purchase meals from Foodlockers",
   "keywords": [
     "fudlkr",
     "restaurant",

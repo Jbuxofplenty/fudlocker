@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "foodlocker_business",
+    "name": "FoodLocker Business",
     "slug": "foodlocker_business",
     "description": "FoodLocker's Restaurant Mobile Application.  Allows employees of restaurants/dining halls to access FoodLockers.  Employees will keep the FoodLocker stocked and information will automatically be uploaded to a database.",
     "sdkVersion": "31.0.0",
     "privacy": "public",
-    "version": "1.0.1",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -14,11 +14,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "bundleIdentifier": "com.fudlkr.business"
+      "bundleIdentifier": "com.fudlkr.business",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allows users to upload pictures of meals taken with their phone, rather than using generic pictures.  Same with profile picture, if desired.",
+        "NSMicrophoneUsageDescription": "This app does not require access to the microphone.",
+        "NSCameraUsageDescription" : "Allows users to take a picture of a meal to upload to the database.  Same with profile picture, if desired.",
+        "NSFaceIDUsageDescription" : "Allows the user to login to the application using biometrics"
+      }
     },
     "android": {
       "package": "com.fudlkr.business",
-      "permissions": []
+      "permissions": ["CAMERA"],
+      "versionCode": 6
     }
   },
   "name": "Foodlocker Restaurant Mobile Application",

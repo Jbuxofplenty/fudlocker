@@ -31,6 +31,10 @@ const styles = theme => ({
 
 function MealTable(props) {
   const { classes, inventory, locations, history } = props;
+  console.log(locations);
+  inventory.map(row => (
+    console.log(row)
+     ));
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>

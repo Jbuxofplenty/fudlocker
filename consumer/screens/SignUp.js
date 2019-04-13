@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { LinearGradient, Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
 
-import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Modal, Dimensions, StyleSheet} from 'react-native';
+import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Modal, Dimensions, StyleSheet, AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
 import {Image} from 'react-native' ;
 import * as firebase from 'firebase';
@@ -70,8 +70,7 @@ export default class SignUpScreen extends Component {
                   name: "",
                   phone: "",
                   mealRadius: 20,
-                  cameraPermission: null,
-                  headshot: null,
+                  headshot: "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png",
                 });
                  this.logInUser();
        }).catch(function(error) {
@@ -81,11 +80,14 @@ export default class SignUpScreen extends Component {
           this.setState({modalVisible: true});
     }.bind(this));
   }
-  componentWillUnmount() {
+
+    componentWillUnmount() {
       this.state._isMounted  = false;
     }
-  logInUser() {
+
+    async logInUser() {
     // logic to log in user through your server/API/whatever
+    await AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
     this.props.screenProps.isLoggedIn(); // sets state in parent component which will now update and render Home
   }
 
@@ -154,6 +156,7 @@ export default class SignUpScreen extends Component {
                     autoCapitalize={'none'}
                     placeholder="Email Address"
                     onChangeText={(value) => {this.handleEmailEdit(value)}}
+                    keyboardType={'email-address'}
                     placeholderColor="#c4c3cb" style={[styles.loginFormTextInput, {fontSize: 16, fontFamily: 'Poor Story', borderColor: this.state.emailColor}]}
                     ref={component => this._in1 = component}
                     onEndEditing={() => {this._in2.focus();}}

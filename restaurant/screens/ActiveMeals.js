@@ -60,6 +60,7 @@ class ActiveMeals extends Component {
         activeSlide: 0,
         pickedUpMeals: null,
         pickedUp: null,
+        mealsToAdd: null,
     };
    async componentDidMount() {
     await Font.loadAsync({
@@ -67,62 +68,73 @@ class ActiveMeals extends Component {
     });
     var temp = this.props.navigation.state.params;
     this.setState({ fontLoaded: true, paramsLoaded: true });
-    this.populateInfo();
+    this.populateMealsForSale();
    }
 
-   async populateInfo() {
+   async populateMealsForSale() {
      //Get the current userID
      var userId = firebase.auth().currentUser.uid;
-     await firebase.database().ref('/meals/forSale').once('value', function(snapshot) {
+     firebase.database().ref('/meals/forSale').on('value', function(snapshot) {
            let tempArray = {};
            snapshot.forEach(function(childSnapshot) {
              var childData = childSnapshot.val();
              tempArray[childSnapshot.key] = childData;
            });
            this.setState({ mealsForSale: tempArray });
+           this.populateInfo(tempArray);
      }.bind(this));
-     var temp = this.state.mealsForSale;
-
-     await firebase.database().ref('/restaurants/' + this.props.navigation.state.params.locationData.owner + '/inventory/pickedUp').once('value', function(snapshot) {
-            let tempArray = {};
-            snapshot.forEach(function(childSnapshot) {
-              var childData = childSnapshot.val();
-              tempArray[childSnapshot.key] = childData;
-            });
-            this.setState({ pickedUp: tempArray });
+     firebase.database().ref('/meals/all').on('value', function(snapshot) {
+           if(this.state.mealsForSale) {
+              this.populateInfo(this.state.mealsForSale);
+           }
       }.bind(this));
-     var temp1 = this.state.pickedUp;
-
-     //Get the user data
-     await firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.locationData.type + '/meals').once('value', function(snapshot) {
-         let activeMeals = [];
-         let pickedUpMeals = [];
-         snapshot.forEach(function(childSnapshot) {
-           childSnapshot.forEach(function(childChildSnapshot) {
-                  var childData = childChildSnapshot.val();
-                  if(temp[childData.idMeal.toString()]){
-                     activeMeals.push(childData);
-                  }
-                  if(temp1[childData.idMeal.toString()]){
-                     pickedUpMeals.push(childData);
-                  }
-           });
-         });
-         this.setState({ activeInventory: activeMeals });
-         this.setState({ pickedUpMeals: pickedUpMeals})
-     }.bind(this));
-
-     return  firebase.database().ref('/restaurants/' + this.props.navigation.state.params.locationData.owner + '/inventory/claimed/' + this.props.navigation.state.params.locationData.type + '/').once('value', function(snapshot) {
-                     let tempArray = [];
-                     snapshot.forEach(function(childSnapshot) {
-                        childSnapshot.forEach(function(childChildSnapshot) {
-                           var childData = childChildSnapshot.val();
-                           tempArray.push(childData);
-                        });
-                 });
-         this.setState({ claimedInventory: tempArray });
-     }.bind(this));
    }
+
+   async populateInfo(mealsForSale) {
+    await firebase.database().ref('/restaurants/' + this.props.navigation.state.params.locationData.owner + '/inventory/pickedUp').once('value', function(snapshot) {
+           let tempArray = {};
+           snapshot.forEach(function(childSnapshot) {
+             var childData = childSnapshot.val();
+             tempArray[childSnapshot.key] = childData;
+           });
+           this.setState({ pickedUp: tempArray });
+     }.bind(this));
+    var temp1 = this.state.pickedUp;
+
+    //Get the user data
+    await firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.locationData.type + '/meals').once('value', function(snapshot) {
+        let activeMeals = [];
+        let pickedUpMeals = [];
+        let mealsToAdd = [];
+        snapshot.forEach(function(childSnapshot) {
+          childSnapshot.forEach(function(childChildSnapshot) {
+                 var childData = childChildSnapshot.val();
+                 if(childData && mealsForSale[childData.idMeal.toString()] && childData.inLocker){
+                    activeMeals.push(childData);
+                 }
+                 if(childData && mealsForSale[childData.idMeal.toString()] && !childData.inLocker){
+                    mealsToAdd.push(childData);
+                 }
+                 if(temp1[childData.idMeal.toString()]){
+                    pickedUpMeals.push(childData);
+                 }
+          });
+        });
+        this.setState({ activeInventory: activeMeals, pickedUpMeals, mealsToAdd });
+    }.bind(this));
+
+    return  firebase.database().ref('/restaurants/' + this.props.navigation.state.params.locationData.owner + '/inventory/claimed/' + this.props.navigation.state.params.locationData.type + '/').once('value', function(snapshot) {
+                    let tempArray = [];
+                    snapshot.forEach(function(childSnapshot) {
+                       childSnapshot.forEach(function(childChildSnapshot) {
+                          var childData = childChildSnapshot.val();
+                          tempArray.push(childData);
+                       });
+                });
+        this.setState({ claimedInventory: tempArray });
+    }.bind(this));
+  }
+
    renderItemTemp ({item, index}, parallaxProps) {
         return (
             <TouchableOpacity key={index} onPress={() => {
@@ -353,6 +365,52 @@ class ActiveMeals extends Component {
                     }
                  </View>
              }
+             { this.state.mealsToAdd == null ? null:
+                 <View style={{backgroundColor: '#F9F9F9', borderRadius: 10, marginBottom: 5, paddingBottom: 5, paddingHorizontal: 5, width: '95%',alignItems: 'center', alignSelf: 'center'}}>
+                     <Text style={styles.priceText}>{"Needs to Be Added"}</Text>
+                     <View style={styles.columnsContainer}>
+                         <Text style={styles.columnLabel}>ID</Text>
+                         <Text style={styles.columnLabel}>Meal Name</Text>
+                         <Text style={styles.columnLabel}>Location</Text>
+                         <Text style={styles.columnLabel}>Cost</Text>
+                     </View>
+                     { this.state.mealsToAdd.length == 0 ?
+                     <View>
+                         <Text style={styles.noItems}>No Meals to Display!</Text>
+                     </View>:
+                     <ScrollView>
+                       {this.state.mealsToAdd.map((datum, index) => {
+                         return (
+                           <TouchableOpacity key={index} onPress={() => {
+                                 this.props.navigation.navigate('Meal', {'title': datum.strMeal,
+                                                                         'img': datum.strMealThumb,
+                                                                         'cost': datum.strCost,
+                                                                         'calories': datum.calories,
+                                                                         'strCategory': datum.strCategory,
+                                                                         'location': datum.location,
+                                                                         'idMeal': datum.idMeal,
+                                                                         'strIdMeal': "Meal ID #"+datum.idMeal,
+                                                                         'shelfLife': datum.shelfLife,
+                                                                         'datePackaged': datum.strDatePackaged,
+                                                                         'pickedUp': datum.pickedUp,
+                                                                         'datePurchased': datum.strDatePurchased,
+                                                                         'forSale': datum.forSale,
+                                                                         'headshot': datum.headshot,
+                                                                         'name': datum.name});
+                            }}>
+                             <View style={styles.mealContainer}>
+                               <Text style={styles.mealItem}>{datum.idMeal}</Text>
+                               <Text style={styles.mealItem}>{datum.strMeal}</Text>
+                               <Text style={styles.mealItem}>{datum.location}</Text>
+                               <Text style={styles.mealItem}>${datum.strCost}</Text>
+                             </View>
+                           </TouchableOpacity>
+                         )
+                       })}
+                 </ScrollView>
+                 }
+              </View>
+          }
             </ScrollView>
         </View>
     )

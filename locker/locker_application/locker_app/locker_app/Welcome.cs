@@ -1,23 +1,123 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing.Text;
-using System.Management;
+using System.Diagnostics;
 
 namespace locker_app
 {
     public partial class Welcome : Form
     {
         public FormWindowState WindowState { get; set; }
+        public string code = "";
+        public string thankText = "";
+        public string lockerText = "";
 
         public Welcome()
         {
             InitializeComponent();
             this.GoFullscreen(true);
             this.ReformatControls();
+            this.KeyPreview = true;
+            this.KeyPress +=
+                new KeyPressEventHandler(Welcome_KeyPress);
+        }
+
+        void Welcome_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                code += "\n";
+                bool goToPurchased = SendToPython();
+                code = "";
+                if (goToPurchased)
+                {
+                    this.Hide();
+                    Purchased purchasedForm = new Purchased(thankText, lockerText);
+                    purchasedForm.ShowDialog();
+                }
+            }
+            else
+            {
+                code += e.KeyChar.ToString();
+            }
+            e.Handled = true;
+        }
+
+        private bool SendToPython()
+        {
+            // full path of python interpreter  
+            string powershell = @"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe";
+
+            // python app to call  
+            string myPythonApp = "C:\\Users\\jbuxofplenty\\Documents\\DejaFood\\fudlocker\\locker\\locker_application\\plc_communication\\foodlocker_background.py";
+
+            // Create new process start info 
+            ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(powershell);
+
+            string python = @"C:\Users\jbuxofplenty\AppData\Local\Programs\Python\Python37-32\python.exe";
+
+            if (System.Environment.OSVersion.Version.Major >= 6)
+            {
+                myProcessStartInfo.Verb = "runas";
+            }
+
+            // make sure we can read the output from stdout 
+            myProcessStartInfo.UseShellExecute = false;
+            myProcessStartInfo.RedirectStandardOutput = true;
+            myProcessStartInfo.UseShellExecute = false;
+            myProcessStartInfo.CreateNoWindow = true;
+
+            // start python app with 3 arguments  
+            // 1st argument is pointer to itself, 2nd and 3rd are actual arguments we want to send
+            string code_send = code.ToString().TrimEnd('\r', '\n');
+            myProcessStartInfo.Arguments = python + " " + myPythonApp + " " + code_send + " null";
+
+            Debug.WriteLine(myProcessStartInfo.Arguments);
+
+            Process myProcess = new Process();
+            // assign start information to the process 
+            myProcess.StartInfo = myProcessStartInfo;
+
+            // start process 
+            myProcess.Start();
+
+            StringBuilder q = new StringBuilder();
+            while (!myProcess.HasExited)
+            {
+                q.Append(myProcess.StandardOutput.ReadToEnd());
+            }
+            string myString = q.ToString();
+
+            // wait exit signal from the app we called 
+            myProcess.WaitForExit();
+
+            // close the process 
+            myProcess.Close();
+
+            // write the output we got from python app 
+            Debug.WriteLine("Value received from script: " + myString);
+            string[] ssize = myString.Split('\t');
+            if(ssize[0]=="dropOff")
+            {
+                thankText = "Meal Drop Off!";
+                lockerText = "Please place the " + ssize[1] + " in locker #" + ssize[2].TrimEnd('\r', '\n') + ".";
+                return true;
+            }
+            else if (ssize[0] == "pickUp")
+            {
+                thankText = "Thank you for your purchase!";
+                lockerText = "Locker #" + ssize[2].TrimEnd('\r', '\n') + " is opening with your " + ssize[1] + "!";
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void WelcomeLoad(object sender, EventArgs e)
@@ -25,38 +125,7 @@ namespace locker_app
             PrivateFontCollection pfc = new PrivateFontCollection();
             pfc.AddFontFile("fonts\\PoorStory-Regular.ttf");
             welcomeButton.Font = new Font(pfc.Families[0], 48, FontStyle.Regular);
-            // Set the view to show details.
-            lvwDevices.View = View.Details;
 
-            // Allow the user to edit item text.
-            lvwDevices.LabelEdit = true;
-
-            // Allow the user to rearrange columns.
-            lvwDevices.AllowColumnReorder = true;
-
-            // Select the item and subitems when selection is made.
-            lvwDevices.FullRowSelect = true;
-
-            // Display grid lines.
-            lvwDevices.GridLines = true;
-
-            // Sort the items in the list in ascending order.
-            lvwDevices.Sorting = SortOrder.Ascending;
-            // Attach Subitems to the ListView
-            lvwDevices.Columns.Add("Title", 200, HorizontalAlignment.Left);
-            lvwDevices.Columns.Add("ID", 200, HorizontalAlignment.Left);
-            lvwDevices.Columns.Add("Price", 400, HorizontalAlignment.Left);
-            ManagementObjectSearcher device_searcher =
-                new ManagementObjectSearcher("SELECT * FROM Win32_USBHub");
-            foreach (ManagementObject usb_device in device_searcher.Get())
-            {
-                ListViewItem new_item = lvwDevices.Items.Add(
-                    usb_device.Properties["DeviceID"].Value.ToString());
-                new_item.SubItems.Add(
-                    usb_device.Properties["PNPDeviceID"].Value.ToString());
-                new_item.SubItems.Add(
-                    usb_device.Properties["Description"].Value.ToString());
-            }
         }
 
         private void GoFullscreen(bool fullscreen)
@@ -82,7 +151,7 @@ namespace locker_app
             List<Control> controls = new List<Control>();
             foreach (var control in Extensions.GetAllChildren(this).Select((x, i) => new { Value = x, Index = i }))
             {
-                if (control.Index != 0 && control.Index != 2)
+                if (control.Index != 0)
                 {
                     stackSize += control.Value.Height + 80;
                     controls.Insert(0, control.Value);
@@ -100,9 +169,25 @@ namespace locker_app
 
         private void welcomeButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Meals mealsForm = new Meals();
-            mealsForm.ShowDialog();
+            bool IsMouse = (e is System.Windows.Forms.MouseEventArgs);
+            if(IsMouse)
+            {
+                this.Hide();
+                Meals mealsForm = new Meals();
+                mealsForm.ShowDialog();
+            }
+            else
+            {
+                code += "\n";
+                bool goToPurchased = SendToPython();
+                code = "";
+                if(goToPurchased)
+                {
+                    this.Hide();
+                    Purchased purchasedForm = new Purchased(thankText, lockerText);
+                    purchasedForm.ShowDialog();
+                }
+            }
         }
 
     }

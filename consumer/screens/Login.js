@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { LinearGradient, Font } from 'expo';
+import { LinearGradient, Font, LocalAuthentication } from 'expo';
 import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
 import * as EmailValidator from 'email-validator';
 
-import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Modal, Dimensions, StyleSheet} from 'react-native';
+import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Modal, Dimensions, StyleSheet, Image, Platform, AsyncStorage} from 'react-native';
 import { Button } from 'react-native-elements';
-import {Image} from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 
 const height = Dimensions.get('window').height;
@@ -18,12 +17,13 @@ export default class LoginScreen extends Component {
   }
     verifyUserData() {
         let validated = true;
-        if(EmailValidator.validate(this.state.email)) {
+        if(EmailValidator.validate(this.state.email.trim())) {
             this.setState({ emailColor: 'green' });
         }
         else {
             validated = false;
             this.setState({ emailColor: 'red' });
+            this.setState({ errorTitle: "Error!"});
             this.setState({ errorMessage: 'Email formatted incorrectly!'});
             this.setState({ modalVisible: true });
             return validated;
@@ -34,34 +34,54 @@ export default class LoginScreen extends Component {
         else {
             validated = false;
             this.setState({ passColor: 'red' });
+            this.setState({ errorTitle: "Error!"});
             this.setState({ errorMessage: 'Password formatted incorrectly! It must be at least 6 characters long.'});
             this.setState({ modalVisible: true });
             return validated;
         }
 
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.pass).then((authData) => {
-               this.logInUser();
-            }).catch(function(error) {
-             // Handle Errors here.
-             var errorCode = error.code;
-             var errorMessage = error.message;
-             if (errorCode === 'auth/wrong-password') {
-               this.setState({ passColor: 'red' });
-               this.setState({ errorMessage: 'Password Incorrect!'});
-               this.setState({ modalVisible: true });
-             } else {
-               this.setState({ emailColor: 'red' });
-               this.setState({ passColor: 'red' });
-               this.setState({ errorMessage: 'Email and/or Password Incorrect!'});
-               this.setState({ modalVisible: true });
-             }
-           }.bind(this));
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .then(function() {
+            firebase.auth().signInWithEmailAndPassword(this.state.email.trim(), this.state.pass).then((authData) => {
+                 // Store the credentials
+                 this.logInUser();
+               }).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode === 'auth/wrong-password') {
+                  this.setState({ passColor: 'red' });
+                  this.setState({ errorTitle: "Error!"});
+                  this.setState({ errorMessage: 'Password Incorrect!'});
+                  this.setState({ modalVisible: true });
+                } else {
+                  this.setState({ emailColor: 'red' });
+                  this.setState({ passColor: 'red' });
+                  this.setState({ errorTitle: "Error!"});
+                  this.setState({ errorMessage: 'Email and/or Password Incorrect!'});
+                  this.setState({ modalVisible: true });
+                }
+              }.bind(this));
+          }.bind(this))
+          .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+          });
         return validated;
       }
-  logInUser() {
+
+  async logInUser() {
     // logic to log in user through your server/API/whatever
-    this.props.screenProps.isLoggedIn(); // sets state in parent component which will now update and render Home
     // set logged in status in AsyncStorage
+    try {
+        await AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
+      } catch (error) {
+        // Error saving data
+        console.log(error);
+      }
+    this.props.screenProps.isLoggedIn(); // sets state in parent component which will now update and render Home
+
   }
    closeModal = () => {
            this.setState({ modalVisible: false });
@@ -75,14 +95,19 @@ export default class LoginScreen extends Component {
     modalVisible: false,
     email: "",
     pass: "",
-  }
-  async componentDidMount() {
-    await Font.loadAsync({
-        'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
-    });
+    compatible: null,
+    errorTitle: "Error",
+    errorMessage: "",
 
-    this.setState({ fontLoaded: true });
+  }
+
+    async componentDidMount() {
+        await Font.loadAsync({
+            'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
+        });
+        this.setState({ fontLoaded: true });
     }
+
     handleEmailEdit(value) {
       this.setState({
           email: value
@@ -93,81 +118,83 @@ export default class LoginScreen extends Component {
       this.setState({
           pass: value
       });
+
     }
 
   render() {
       if (this.state.fontLoaded){
-    return (
-      <KeyboardAvoidingView style={styles.containerView} behavior="padding">
+        return (
+          <KeyboardAvoidingView style={styles.containerView} behavior="padding">
 
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.loginScreenContainer}>
-          <View style={styles.loginFormView}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.loginScreenContainer}>
+              <View style={styles.loginFormView}>
 
-          <LinearGradient
-                    colors={['#ABEBC6', '#2ECC71']}
-                    style={styles.loginScreenGradient}
-                  />
+              <LinearGradient
+                        colors={['#ABEBC6', '#2ECC71']}
+                        style={styles.loginScreenGradient}
+                      />
 
-          <Image style={styles.loginScreenLogo}
-            source={require("./../assets/images/fudlkr_logo.png")}
-          />
-            <TextInput
-                autoCapitalize={'none'}
-                onChangeText={(value) => {this.handleEmailEdit(value)}}
-                placeholder="Email Address"
-                placeholderColor="#c4c3cb"
-                style={[styles.loginFormTextInput, {fontSize: 16, fontFamily: 'Poor Story', borderColor: this.state.emailColor}]}
-                ref={component => this._in1 = component}
-                onEndEditing={() => {this._in2.focus();}}
-                />
-            <TextInput
-                autoCapitalize={'none'}
-                placeholder="Password"
-                onChangeText={(value) => {this.handlePassEdit(value)}}
-                placeholderColor="#c4c3cb"
-                style={[styles.loginFormTextInput, {fontSize: 16, fontFamily: 'Poor Story', borderColor: this.state.passColor}]}
-                secureTextEntry={true}
-                ref={component => this._in2 = component}
-            />
-            <Button
-              buttonStyle={styles.loginButton}
-              onPress={() => {this.verifyUserData()}}
-              title="Login"
-              textStyle={{fontSize: 30, fontFamily: 'Poor Story'}}
-            />
-            <Button
-                textStyle={{fontSize: 20, fontFamily: 'Poor Story'}}
-                buttonStyle={styles.fbLoginButton}
-                onPress={() => this.props.navigation.navigate('SignUp')}
-                title="Sign Up"
-                color="#3897f1"
+              <Image style={styles.loginScreenLogo}
+                source={require("./../assets/images/fudlkr_logo.png")}
               />
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-      <Modal
-       animationType="fade"
-       transparent={true}
-       visible={this.state.modalVisible}
-       onRequestClose={this.closeModal}
-      >
-       <View style={styles.modalContainer}>
-         <Text style={styles.title}>
-           {"Error!"}
-         </Text>
-         <Text style={styles.description}>
-           {this.state.errorMessage}
-         </Text>
-         <Button
-           color="#ABEBC6"
-           onPress={this.closeModal}
-           title="    OK    "
-         />
-       </View>
-     </Modal>
-      </KeyboardAvoidingView>
-    )
+                <TextInput
+                    autoCapitalize={'none'}
+                    onChangeText={(value) => {this.handleEmailEdit(value)}}
+                    placeholder="Email Address"
+                    placeholderColor="#c4c3cb"
+                    style={[styles.loginFormTextInput, {fontSize: 16, fontFamily: 'Poor Story', borderColor: this.state.emailColor}]}
+                    keyboardType={'email-address'}
+                    ref={component => this._in1 = component}
+                    onEndEditing={() => {this._in2.focus();}}
+                    />
+                <TextInput
+                    autoCapitalize={'none'}
+                    placeholder="Password"
+                    onChangeText={(value) => {this.handlePassEdit(value)}}
+                    placeholderColor="#c4c3cb"
+                    style={[styles.loginFormTextInput, {fontSize: 16, fontFamily: 'Poor Story', borderColor: this.state.passColor}]}
+                    secureTextEntry={true}
+                    ref={component => this._in2 = component}
+                />
+                <Button
+                  buttonStyle={styles.loginButton}
+                  onPress={() => {this.verifyUserData()}}
+                  title="Login"
+                  textStyle={{fontSize: 30, fontFamily: 'Poor Story'}}
+                />
+                <Button
+                    textStyle={{fontSize: 20, fontFamily: 'Poor Story'}}
+                    buttonStyle={styles.fbLoginButton}
+                    onPress={() => this.props.navigation.navigate('SignUp')}
+                    title="Sign Up"
+                    color="#3897f1"
+                  />
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+          <Modal
+           animationType="fade"
+           transparent={true}
+           visible={this.state.modalVisible}
+           onRequestClose={this.closeModal}
+          >
+           <View style={styles.modalContainer}>
+             <Text style={styles.title}>
+               {this.state.errorTitle}
+             </Text>
+             <Text style={styles.description}>
+               {this.state.errorMessage}
+             </Text>
+             <Button
+               color="#ABEBC6"
+               onPress={this.closeModal}
+               title="    OK    "
+             />
+           </View>
+         </Modal>
+          </KeyboardAvoidingView>
+        )
     }
     else {
         return null

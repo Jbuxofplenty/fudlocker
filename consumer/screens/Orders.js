@@ -45,10 +45,12 @@ export default class CurrentOrders extends Component {
           var d = dateformat(date, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
           return d.toString()
     };
+
     state = {
         fontLoaded: false,
         order_data: null,
     };
+
     async componentDidMount() {
       await Font.loadAsync({
           'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
@@ -99,7 +101,7 @@ export default class CurrentOrders extends Component {
        }
      }
 
-     async populateInfo() {
+    async populateInfo() {
        //Get the current userID
        var userId = firebase.auth().currentUser.uid;
        //Get the user data
@@ -127,7 +129,7 @@ export default class CurrentOrders extends Component {
             this.setState({ order_data: tempArray });
           }.bind(this));
        }
-     }
+    }
   render() {
     if(this.state.order_data != null ) {
         return (

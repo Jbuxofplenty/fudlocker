@@ -79,17 +79,43 @@ class StatisticsPage extends Component {
     this.handleRangeChange = this.handleRangeChange.bind(this);
   }
 
-  async componentDidMount() {
-    const { dispatch, user, userData } = this.props;
-    await dispatch(dataActions.populateStatistics());
-    var locationsData = JSON.parse(localStorage.getItem('locations'));
-    var purchased = JSON.parse(localStorage.getItem('purchased'));
-    var completed = JSON.parse(localStorage.getItem('completed'));
-    var inventory = JSON.parse(localStorage.getItem('inventory'));
-    this.setState({ locationsData, purchased, completed, inventory });
+  async updateData() {
+    const { dispatch, user, userData, history } = this.props;
+    if (user && userData && userData.org) {
+      await dispatch(dataActions.populateStatistics());
+      var locationsData = JSON.parse(localStorage.getItem('locations'));
+      var purchased = JSON.parse(localStorage.getItem('purchased'));
+      var completed = JSON.parse(localStorage.getItem('completed'));
+      var inventory = JSON.parse(localStorage.getItem('inventory'));
+      if (locationsData && purchased && completed && inventory) {
+        this.setState({ locationsData, purchased, completed, inventory });
 
-    this.processData();
-    this.plotGraphs(user, userData);
+        if (this.processData()) {
+          this.plotGraphs(user, userData);
+        }
+      }
+    }
+    else {
+      if (!user) {
+        alert('No logged in user!');
+      }
+      else {
+        alert('Logged in user not associated with an organization!');
+        localStorage.setItem('user', null);
+      }
+      window.clearInterval();
+      history.push('login');
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+  }
+
+  componentDidMount() {
+    this.updateData();
+    var intervalId = setInterval(() => { this.updateData() }, 100000);
+    this.setState({ intervalId });
   }
 
   async plotGraphs(user, userData) {
@@ -128,18 +154,16 @@ class StatisticsPage extends Component {
       var data = [];
       var i = 0;
       var total = 0.0;
+
       Object.entries(this.state.purchased).forEach(entry => {
         let key = entry[0];
         let value = entry[1];
         sortable.push([value, this.state.purchased[key]['datePurchased']]);
       });
-      console.log(sortable);
 
       sortable.sort(function (a, b) {
         return a[1] - b[1];
       });
-      console.log(sortable[i][1]);
-      console.log(this.state.startDate);
 
       while (i < sortable.length && parseFloat(sortable[i][1]) < this.state.startDate) {
         i++;
@@ -294,7 +318,6 @@ class StatisticsPage extends Component {
       for (var user in tempUserOrders) {
         tempArray.push({ name: user, orders: tempUserOrders[user], lastPurchased: dateformat(tempUserOrderTimes[user], 'dddd, mmmm d, yyyy'), headshot: tempUserOrderHeadshots[user] });
       }
-
       this.setState({ salesData: lineChartData, orderCategoriesData: pieData, orderTitle: tempOrderTitle, usersData: tempArray });
     }
   }

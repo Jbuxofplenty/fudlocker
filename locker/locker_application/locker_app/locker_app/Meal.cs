@@ -2,7 +2,7 @@
 using System.Net;
 using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Diagnostics;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -60,7 +60,7 @@ namespace locker_app
             var picture = new PictureBox
             {
                 Name = "mealPicture",
-                Size = new Size(this.labelsHeight-150, this.labelsHeight-100),
+                Size = new Size(this.labelsHeight-400, this.labelsHeight- 400),
                 Location = new Point(100, 100),
                 Image = Image.FromStream(wc.OpenRead(this.meal["strMealThumb"].ToString())),
                 SizeMode = PictureBoxSizeMode.StretchImage,
@@ -69,8 +69,33 @@ namespace locker_app
 
             // update label text fields
             MealLabel.Text = this.meal["strMeal"].ToString();
-            costLabel.Text = "Cost: " + this.meal["strCost"].ToString();
-            datePackagedLabel.Text = "Date Packaged: " + this.meal["strDatePackaged"].ToString();
+            costLabel.Text = "Cost: $" + this.meal["strCost"].ToString();
+            int myLimit = 30;
+            string sentence = "Date Packaged: " + this.meal["strDatePackaged"].ToString();
+            string[] words = sentence.Split(' ');
+
+            StringBuilder newSentence = new StringBuilder();
+
+
+            string line = "";
+            foreach (string word in words)
+            {
+                if ((line + word).Length > myLimit)
+                {
+                    newSentence.AppendLine(line);
+                    line = "";
+                }
+
+                line += string.Format("{0} ", word);
+            }
+
+            if (line.Length > 0)
+                newSentence.AppendLine(line);
+
+            Debug.WriteLine(newSentence.ToString());
+
+            datePackagedLabel.Text = newSentence.ToString();
+
             caloriesLabel.Text = "Estimated Calories: " + this.meal["calories"].ToString();
             categoryLabel.Text = "Category: " + this.meal["strCategory"].ToString();
             purchaseButton.Text = "Purchase " + this.meal["strMeal"].ToString() + "!";
@@ -112,7 +137,7 @@ namespace locker_app
                     (this.windowSize.Width) / 2,
                     (this.windowSize.Height - stackSize) / 2 + curStackSize
                 );
-                curStackSize += control.Value.Height + 80;
+                curStackSize += control.Value.Height + 60;
             }
             this.labelsHeight = stackSize;
         }
@@ -123,7 +148,7 @@ namespace locker_app
             PrivateFontCollection pfc = new PrivateFontCollection();
             pfc.AddFontFile("fonts\\PoorStory-Regular.ttf");
             this.PoorStory = new Font(pfc.Families[0], 48, FontStyle.Regular);
-            this.PoorStory32 = new Font(pfc.Families[0], 32, FontStyle.Regular);
+            this.PoorStory32 = new Font(pfc.Families[0], 28, FontStyle.Regular);
             MealLabel.Font = this.PoorStory;
             costLabel.Font = this.PoorStory32;
             datePackagedLabel.Font = this.PoorStory32;
@@ -190,14 +215,14 @@ namespace locker_app
             var date = dateTime.ToUniversalTime().Subtract(
                 new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 ).TotalMilliseconds;
-            var d = DateTime.Now.ToString("dddd, MMMM d, yyyy, h:MM:ss TT");
+            var d = DateTime.Now.ToString("dddd, MMMM d, yyyy, h:MM:ss tt");
             this.meal["strDatePurchased"] = d;
             this.meal["datePurchased"] = date.ToString();
             this.meal["pickedUp"] = false;
             this.meal["forSale"] = false;
             this.meal["datePickedUp"] = "N/A";
             this.meal["paymentMethod"] = new JObject();
-            this.meal["name"] = "locker";
+            this.meal["name"] = "c4c";
             this.meal["headshot"] = "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png";
         }
 
@@ -233,6 +258,62 @@ namespace locker_app
             await firebaseClient
                     .Child("restaurants/" + this.meal["distributor"] + "/inventory/pickedUp/" + this.meal["idMeal"].ToString() + "/")
                     .PutAsync<bool>(true);
+
+            this.SendToPython((string)this.meal["locker"]);
+        }
+
+        private void SendToPython(string locker)
+        {
+            // full path of python interpreter  
+            string powershell = @"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe";
+
+            // python app to call  
+            string myPythonApp = "C:\\Users\\jbuxofplenty\\Documents\\DejaFood\\fudlocker\\locker\\locker_application\\plc_communication\\foodlocker_background.py";
+
+            // Create new process start info 
+            ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(powershell);
+
+            string python = @"C:\Users\jbuxofplenty\AppData\Local\Programs\Python\Python37-32\python.exe";
+
+            if (System.Environment.OSVersion.Version.Major >= 6)
+            {
+                myProcessStartInfo.Verb = "runas";
+            }
+
+            // make sure we can read the output from stdout 
+            myProcessStartInfo.UseShellExecute = false;
+            myProcessStartInfo.RedirectStandardOutput = true;
+            myProcessStartInfo.UseShellExecute = false;
+            myProcessStartInfo.CreateNoWindow = true;
+
+            // start python app with 3 arguments  
+            // 1st argument is pointer to itself, 2nd and 3rd are actual arguments we want to send 
+            myProcessStartInfo.Arguments = python + " " + myPythonApp + " null " + locker;
+
+            Debug.WriteLine(myProcessStartInfo.Arguments);
+
+            Process myProcess = new Process();
+            // assign start information to the process 
+            myProcess.StartInfo = myProcessStartInfo;
+
+            // start process 
+            myProcess.Start();
+
+            StringBuilder q = new StringBuilder();
+            while (!myProcess.HasExited)
+            {
+                q.Append(myProcess.StandardOutput.ReadToEnd());
+            }
+            string myString = q.ToString();
+
+            // wait exit signal from the app we called 
+            myProcess.WaitForExit();
+
+            // close the process 
+            myProcess.Close();
+
+            // write the output we got from python app 
+            Debug.WriteLine("Value received from script: " + myString);
         }
 
         async private void purchaseButton_Click(object sender, EventArgs e)
@@ -241,7 +322,7 @@ namespace locker_app
             await this.PurchaseMeal();
             await this.PickUpMeal();
             this.Hide();
-            Purchased purchasedForm = new Purchased();
+            Purchased purchasedForm = new Purchased("Thank you for your purchase!", "Locker #" + (string)this.meal["locker"] + " is opening with your " + (string)this.meal["strMeal"] + "!");
             purchasedForm.ShowDialog();
         }
     }

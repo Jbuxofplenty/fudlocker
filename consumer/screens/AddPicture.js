@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { Camera, Permissions } from 'expo';
+import { Text, View, TouchableOpacity, Button, Image } from 'react-native';
+import { Camera, Permissions, ImagePicker } from 'expo';
 import * as firebase from 'firebase';
 import { Icon } from 'react-native-elements';
 
@@ -29,16 +29,6 @@ export default class AddPicture extends React.Component {
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
-    this.populateInfo();
-  }
-
-  populateInfo() {
-    //Get the current userID
-    var userId = firebase.auth().currentUser.uid;
-    //Get the user data
-    return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-      this.setState({ hasCameraPermission: snapshot.val().cameraPermission });
-    }.bind(this));
   }
 
   snap = async () => {
@@ -48,6 +38,18 @@ export default class AddPicture extends React.Component {
       this.props.navigation.goBack();
     }
   };
+
+    _pickImage = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+      });
+
+      if (!result.cancelled) {
+          this.props.navigation.state.params.returnData(result);
+          this.props.navigation.goBack();
+      }
+    };
 
   render() {
     const { hasCameraPermission } = this.state;
@@ -99,6 +101,21 @@ export default class AddPicture extends React.Component {
                     type='ionicon'
                     color='white'
                     containerStyle={{backgroundColor: 'transparent', marginLeft: 10, marginBottom: 20}}
+                 />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  flex: 0.1,
+                  alignSelf: 'flex-end',
+                  alignItems: 'center',
+                }}
+                onPress={this._pickImage}>
+                <Icon
+                    name='md-images'
+                    size={30}
+                    type='ionicon'
+                    color='white'
+                    containerStyle={{backgroundColor: 'transparent', marginBottom: 20}}
                  />
               </TouchableOpacity>
               <TouchableOpacity

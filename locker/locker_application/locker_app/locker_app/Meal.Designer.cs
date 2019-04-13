@@ -109,9 +109,9 @@
             // 
             this.purchaseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.purchaseButton.ForeColor = System.Drawing.Color.White;
-            this.purchaseButton.Location = new System.Drawing.Point(600, 577);
+            this.purchaseButton.Location = new System.Drawing.Point(618, 577);
             this.purchaseButton.Name = "purchaseButton";
-            this.purchaseButton.Size = new System.Drawing.Size(749, 72);
+            this.purchaseButton.Size = new System.Drawing.Size(534, 72);
             this.purchaseButton.TabIndex = 7;
             this.purchaseButton.Text = "Purchase Meal!";
             this.purchaseButton.UseVisualStyleBackColor = false;
@@ -123,7 +123,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1446, 644);
+            this.ClientSize = new System.Drawing.Size(1284, 644);
             this.Controls.Add(this.purchaseButton);
             this.Controls.Add(this.categoryLabel);
             this.Controls.Add(this.caloriesLabel);

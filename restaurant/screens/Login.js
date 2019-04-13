@@ -4,7 +4,7 @@ import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
 import * as EmailValidator from 'email-validator';
 
-import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Modal, Dimensions, StyleSheet} from 'react-native';
+import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Modal, Dimensions, StyleSheet, AsyncStorage} from 'react-native';
 import { Button } from 'react-native-elements';
 import {Image} from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
@@ -19,7 +19,7 @@ export default class LoginScreen extends Component {
   }
     verifyUserData() {
         let validated = true;
-        if(EmailValidator.validate(this.state.email)) {
+        if(EmailValidator.validate(this.state.email.trim())) {
             this.setState({ emailColor: 'green' });
         }
         else {
@@ -39,28 +39,53 @@ export default class LoginScreen extends Component {
             this.setState({ modalVisible: true });
             return validated;
         }
-
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.pass).then((authData) => {
-               this.logInUser();
-            }).catch(function(error) {
-             // Handle Errors here.
-             var errorCode = error.code;
-             var errorMessage = error.message;
-             if (errorCode === 'auth/wrong-password') {
-               this.setState({ passColor: 'red' });
-               this.setState({ errorMessage: 'Password Incorrect!'});
-               this.setState({ modalVisible: true });
-             } else {
-               this.setState({ emailColor: 'red' });
-               this.setState({ passColor: 'red' });
-               this.setState({ errorMessage: 'Email and/or Password Incorrect!'});
-               this.setState({ modalVisible: true });
-             }
-           }.bind(this));
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .then(function() {
+            firebase.auth().signInWithEmailAndPassword(this.state.email.trim(), this.state.pass).then((authData) => {
+                this.checkOrg();
+             }).catch(function(error) {
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              if (errorCode === 'auth/wrong-password') {
+                this.setState({ passColor: 'red' });
+                this.setState({ errorMessage: 'Password Incorrect!'});
+                this.setState({ modalVisible: true });
+              } else {
+                this.setState({ emailColor: 'red' });
+                this.setState({ passColor: 'red' });
+                this.setState({ errorMessage: 'Email and/or Password Incorrect!'});
+                this.setState({ modalVisible: true });
+              }
+            }.bind(this));
+          }.bind(this))
+          .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+          });
         return validated;
       }
-  logInUser() {
-    // logic to log in user through your server/API/whatever
+
+  async checkOrg() {
+    //Get the current userID
+    var userId = await firebase.auth().currentUser.uid;
+    //Get the user data
+    await firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+          if(snapshot.val().org){
+            this.logInUser();
+          }
+          else {
+            this.setState({ emailColor: 'red' });
+            this.setState({ passColor: 'red' });
+            this.setState({ errorMessage: 'User not associated with an organization!'});
+            this.setState({ modalVisible: true });
+          }
+      }.bind(this));
+  }
+
+  async logInUser() {
+    await AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
     this.props.screenProps.isLoggedIn(); // sets state in parent component which will now update and render Home
     // set logged in status in AsyncStorage
   }
@@ -117,6 +142,7 @@ export default class LoginScreen extends Component {
                 autoCapitalize={'none'}
                 onChangeText={(value) => {this.handleEmailEdit(value)}}
                 placeholder="Email Address"
+                keyboardType={'email-address'}
                 placeholderColor="#c4c3cb"
                 style={[styles.loginFormTextInput, {fontSize: 16, fontFamily: 'Poor Story', borderColor: this.state.emailColor}]}
                 ref={component => this._in1 = component}

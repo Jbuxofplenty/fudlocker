@@ -1,4 +1,5 @@
 import React from 'react';
+import { Font } from 'expo';
 import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
 
 import LoginScreen from './screens/Login';
@@ -6,6 +7,7 @@ import SignUpScreen from './screens/SignUp';
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/profile/Profile';
 import MealScreen from './screens/Meal';
+import * as firebase from 'firebase';
 
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import AppNavigator from './navigation/AppNavigator';
@@ -22,26 +24,50 @@ console.warn = message => {
 };
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state ={
-        isLoggedIn: false };
-  }
+    constructor(props) {
+        super(props);
+        this.state ={
+            isLoggedIn: "waiting" };
+    }
+  
 
-  componentDidMount() {
-    AsyncStorage.getItem('loggedInStatus',
-    (value) => {
-      this.setState({ loggedInStatus: value });
-    });
-  }
+    async checkLoggedIn() {
+        var value = false;
+        try {
+           value = await AsyncStorage.getItem('isLoggedIn');
+        } catch (error) {
+          value = false;
+        }
+        if(value !== null) {
+            value = JSON.parse(value);
+        }
+        return value;
+    }
+
+    async componentDidMount() {
+        var isLoggedIn = await this.checkLoggedIn();
+        await Font.loadAsync({
+            'Poor Story': require('./assets/fonts/PoorStory-Regular.ttf'),
+        });
+        await firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            this.setState({ isLoggedIn });
+          } else {
+            this.setState({ isLoggedIn: false });
+          }
+        }.bind(this));
+    }
 
 
   render() {
-        if (this.state.loggedInStatus === 'loggedIn') {
-          return <AppNavigator screenProps={{ isLoggedIn: () => this.setState({ loggedInStatus: 'loggedOut' }) }}/>
+        if(this.state.isLoggedIn === "waiting"){
+            return null;
+        }
+        if (this.state.isLoggedIn) {
+          return <AppNavigator screenProps={{ isLoggedIn: () => this.setState({ isLoggedIn: false }) }}/>
         }
         else {
-          return <LoginNavigator screenProps={{ isLoggedIn: () => this.setState({ loggedInStatus: 'loggedIn' }) }}/>
+          return <LoginNavigator screenProps={{ isLoggedIn: () => this.setState({ isLoggedIn: true }) }}/>
         }
   }
 }

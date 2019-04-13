@@ -62,7 +62,7 @@ class PersonalInfo extends Component {
     //Get the current userID
     var userId = firebase.auth().currentUser.uid;
     //Get the user data
-    return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+    return firebase.database().ref('/users/' + userId).on('value', function(snapshot) {
         this.setState({ name: snapshot.val().name });
         this.setState({ tempName: snapshot.val().name });
         this.setState({ headshot: snapshot.val().headshot });
@@ -74,7 +74,8 @@ class PersonalInfo extends Component {
   }
 
   returnData(tempPic) {
-      this.setState({ tempPicture: this.state.headshot, headshot: tempPic.uri, pictureUndo: true });
+      this.setState({ tempPicture: this.state.headshot });
+      this.setState({ headshot: tempPic.uri, pictureUndo: true });
   }
 
   toggleNameEdit() {
@@ -161,8 +162,9 @@ class PersonalInfo extends Component {
         }).catch(function(error) {
           // An error happened.
         });
+        this.setState({tempPass: "", temp1Pass: ""});
    }
-
+   
    async updateHeadshot() {
       this.setState({modalVisible: true, modalMessage: "\n\n", modalTitle: "Uploading...", buttonVisible: false});
       //Get the current userID
@@ -188,13 +190,12 @@ class PersonalInfo extends Component {
       firebase.database().ref('users/' + userId + '/').update({
         headshot: this.state.imageUrl
       });
-      console.log(this.state.imageUrl);
-      this.setState({modalVisible: true, modalMessage: "Headshot uploaded to profile successfully. \n\n", modalTitle: "Success!", buttonVisible: true});
+      this.setState({modalVisible: true, modalMessage: "Headshot uploaded to profile successfully. \n\n", modalTitle: "Success!", buttonVisible: true, pictureUndo: false });
    }
 
   render() {
     const picUndo =   <TouchableOpacity
-                         onPress={() => {this.setState({headshot: this.state.tempPicture, pictureUndo: false })}}
+                         onPress={() => {this.setState({headshot: this.state.tempPicture, pictureUndo: false, tempPicture: null })}}
                          style={{backgroundColor: 'transparent', flex: 2, alignSelf: 'flex-end'}}>
                          <Icon
                               name='md-undo'
@@ -301,6 +302,7 @@ class PersonalInfo extends Component {
                                 <TextInput
                                      style={styles.emailInput}
                                      onChangeText={(email) => this.setState({email})}
+                                     keyboardType={'email-address'}
                                      value={this.state.email}
                                      textContentType={'emailAddress'}
                                      autoFocus={true}

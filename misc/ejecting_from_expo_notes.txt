@@ -1,0 +1,31 @@
+Add to ReadMe
+
+“npm run eject”
+select export to a regular react native project
+choose the name you would like the project to display 
+choose what you want the projects to be called
+run “npm install”
+select iOS folder and open in Xcode
+go to the build setting for the project and select the development team
+do the same for projectnameTests
+run “npm run iOS “
+in directory change index.js to reflect the name of the project
+
+
+Getting app on phone 
+
+once running on Xcode set deployment to generic iOS device
+Exporting Xcode project as .ipa
+
+go to product -> archive
+once archiving is completed select export from right hand side menu
+select save for device development
+follow Xcode prompts for certificate signing 
+once certificates have been signed save .ipa file to desktop
+Installing .ipa file on iOS device
+
+plug in iOS device
+in Xcode go to window -> devices and simulators
+select plugged in device
+hit the plus sign above the list of apps you have created 
+select the .ipa file from the newly created folder 

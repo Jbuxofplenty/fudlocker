@@ -2,10 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\actions",
-    "\\src\\views\\Dashboard",
-    "\\src\\views\\PriceReport",
-    "\\src\\views\\RecentOrders"
+    "\\src\\actions"
   ],
   "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false

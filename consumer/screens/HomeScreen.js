@@ -27,38 +27,39 @@ static navigationOptions = ({ navigation }) => {
        return {
           title: "Home",
           headerLeft: (<View></View>),
+        }
+    };
+  constructor(props) {
+    super(props);
+    this.state = {
+        searchTerm: '',
+        searching: false,
+        coords: null,
+        location: null,
+        errorMessage: null,
+        fontLoaded: false,
+        markers: null,
+        mealRadius: null,
+        meals_data: null,
+        meal_type: null,
+        category_data: null,
+        locations: null,
     }
-  };
-    constructor(props) {
-        super(props);
-        this.state = {
-            searchTerm: '',
-            searching: false,
-            coords: null,
-            location: null,
-            errorMessage: null,
-            fontLoaded: false,
-            markers: null,
-            mealRadius: null,
-            meals_data: null,
-            meal_type: null,
-            category_data: null,
-            locations: null,
-        }
-      }
-      searchUpdated(term) {
-        if(term == ''){
-            this.setState({ searching: false });
-        }
-        else {
-            this.setState({ searching: true });
-        }
-        this.setState({ searchTerm: term });
-      }
+  }
 
-    location_selected = false;
+  searchUpdated(term) {
+    if(term == ''){
+        this.setState({ searching: false });
+    }
+    else {
+        this.setState({ searching: true });
+    }
+    this.setState({ searchTerm: term });
+  }
 
-   async componentDidMount() {
+  location_selected = false;
+
+  async componentDidMount() {
     await Font.loadAsync({
         'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
     });
@@ -68,28 +69,35 @@ static navigationOptions = ({ navigation }) => {
     await Font.loadAsync({
         'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')
     });
-
-    this.setState({ fontLoaded: true });
-    this.populateInfo();
-
-}
-
-  componentWillMount() {
+    var permission = await this._getPermission();
+    if(permission) {
+        this._getLocationAsync();
+    }
     this.state.searching = false;
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
         errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
       });
     }
+    this.setState({ fontLoaded: true });
+    this.populateInfo();
+
   }
 
-  _getLocationAsync = async () => {
+  _getPermission = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
       this.setState({
         errorMessage: 'Permission to access location was denied',
       });
+      return false;
     }
+    else {
+        return true;
+    }
+  }
+
+  _getLocationAsync = async () => {
     let location = await Location.getCurrentPositionAsync({});
     var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, this.state.mealRadius*1609.34);
     if(!this.location_selected){
@@ -97,60 +105,60 @@ static navigationOptions = ({ navigation }) => {
     }
   };
 
-    populateInfo = async () => {
-        //Get the current userID
-        let location = await Location.getCurrentPositionAsync({});
-        var userId = firebase.auth().currentUser.uid;
-        //Get the user data
-        await firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-            this.setState({ mealRadius: snapshot.val().mealRadius });
-            var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, snapshot.val().mealRadius*1609.34);
-            if(!this.location_selected){
-                this.setState({coords: coords});
-            }
-        }.bind(this));
-        await firebase.database().ref('/lockers/data').once('value').then(function(snapshot) {
-            let tempArray = [];
-            snapshot.forEach(function(childSnapshot) {
-                var childData = childSnapshot.val();
-                tempArray.push(childData);
-            });
-            this.setState({ markers: tempArray });
-        }.bind(this));
-        await firebase.database().ref('/meals/forSale').once('value').then(function(snapshot) {
-               let tempArray = {};
-               snapshot.forEach(function(childSnapshot) {
-                 var childData = childSnapshot.val();
-                 tempArray[childSnapshot.key] = childData;
-               });
-               this.setState({ meals_forSale: tempArray });
-           }.bind(this));
-        var temp = this.state.meals_forSale;
-        await firebase.database().ref('/meals/all/meals').once('value').then(function(snapshot) {
-           let tempArray = [];
+  populateInfo = async () => {
+    //Get the current userID
+    let location = await Location.getCurrentPositionAsync({});
+    var userId = await firebase.auth().currentUser.uid;
+    //Get the user data
+    await firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+        this.setState({ mealRadius: snapshot.val().mealRadius });
+        var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, snapshot.val().mealRadius*1609.34);
+        if(!this.location_selected){
+            this.setState({coords: coords});
+        }
+    }.bind(this));
+    await firebase.database().ref('/lockers/data').once('value').then(function(snapshot) {
+        let tempArray = [];
+        snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            tempArray.push(childData);
+        });
+        this.setState({ markers: tempArray });
+    }.bind(this));
+    await firebase.database().ref('/meals/forSale').once('value').then(function(snapshot) {
+           let tempArray = {};
            snapshot.forEach(function(childSnapshot) {
-             childSnapshot.forEach(function(childChildSnapshot) {
-                  var childData = childChildSnapshot.val();
-                  if(temp[childData.idMeal.toString()]){
-                    tempArray.push(childData);
-                  }
-             });
+             var childData = childSnapshot.val();
+             tempArray[childSnapshot.key] = childData;
            });
-           this.setState({ meals_data: tempArray });
-           this.setState({ meal_type: "All" });
+           this.setState({ meals_forSale: tempArray });
        }.bind(this));
-       await firebase.database().ref('/lockers/data').once('value', function(snapshot) {
-             let tempArray = {};
-             snapshot.forEach(function(childSnapshot) {
-               var childData = childSnapshot.val();
-               tempArray[childData.type] = childData;
-             });
-             this.setState({ locations: tempArray });
-       }.bind(this));
-       await firebase.database().ref('/static/mealCategories').once('value').then(function(snapshot) {
-           this.setState({ category_data: snapshot.val().meal_categories });
-       }.bind(this));
-      }
+    var temp = this.state.meals_forSale;
+    await firebase.database().ref('/meals/all/meals').once('value').then(function(snapshot) {
+       let tempArray = [];
+       snapshot.forEach(function(childSnapshot) {
+         childSnapshot.forEach(function(childChildSnapshot) {
+              var childData = childChildSnapshot.val();
+              if(temp[childData.idMeal.toString()]){
+                tempArray.push(childData);
+              }
+         });
+       });
+       this.setState({ meals_data: tempArray });
+       this.setState({ meal_type: "All" });
+   }.bind(this));
+   await firebase.database().ref('/lockers/data').once('value', function(snapshot) {
+         let tempArray = {};
+         snapshot.forEach(function(childSnapshot) {
+           var childData = childSnapshot.val();
+           tempArray[childData.type] = childData;
+         });
+         this.setState({ locations: tempArray });
+   }.bind(this));
+   await firebase.database().ref('/static/mealCategories').once('value').then(function(snapshot) {
+       this.setState({ category_data: snapshot.val().meal_categories });
+   }.bind(this));
+  }
 
   regionFrom(lat, lon, distance) {
           distance = distance/2
@@ -297,7 +305,7 @@ static navigationOptions = ({ navigation }) => {
                   round
                   platform="android"
                   clearIcon={{ type: 'font-awesome', name: 'chevron-left' }}
-                  placeholder="Find F&#xFC;d"
+                  placeholder="Find Food"
                   lightTheme
                   showLoading
                   inputStyle={{fontFamily: 'Poor Story'}}

@@ -11,6 +11,19 @@ import * as EmailValidator from 'email-validator';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
+
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyC6wZSSUcyYDpsuS6bTxfrnOjrY1KIi1qU",
+    authDomain: "fudlkr-7fc5b.firebaseapp.com",
+    databaseURL: "https://fudlkr-7fc5b.firebaseio.com",
+    projectId: "fudlkr-7fc5b",
+    storageBucket: "fudlkr-7fc5b.appspot.com",
+    messagingSenderId: "471202846868"
+  };
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
 export default class SignUpScreen extends Component {
   constructor(props) {
     super(props);

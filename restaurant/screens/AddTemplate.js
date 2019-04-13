@@ -215,6 +215,7 @@ class AddTemplate extends Component {
     mealData["strCost"] = "" + this.state.cost;
     mealData["strTemplate"] = this.state.templateTitle;
     mealData["strTemplateThumb"] = this.state.backgroundImage;
+    mealData["inLocker"] = false;
     await this.setState({ mealData });
   }
 
@@ -372,7 +373,7 @@ class AddTemplate extends Component {
      'strCategory': this.state.mealData['strCategory'],
      'location': this.state.mealData['location'],
      'forSale': this.state.mealData['forSale'],
-     'idMeal': this.state.mealData['strIdMeal'],
+     'idMeal': this.state.mealData['idMeal'],
      'strIdMeal': this.state.mealData['strIdMeal'],
      'shelfLife': this.state.mealData['shelfLife'],
      'datePackaged': this.state.mealData['strDatePackaged'],
@@ -425,6 +426,7 @@ class AddTemplate extends Component {
                     <TextInput
                         style={styles.input}
                         autoCapitalize={'words'}
+                        onFocus={() => this.setState({templateTitle: ""})}
                         onChangeText={(templateTitle) => this.setState({templateTitle})}
                         value={this.state.templateTitle}
                    />
@@ -434,6 +436,7 @@ class AddTemplate extends Component {
                     <TextInput
                         style={styles.input}
                         autoCapitalize={'words'}
+                        onFocus={() => this.setState({mealTitle: ""})}
                         onChangeText={(mealTitle) => this.setState({mealTitle})}
                         value={this.state.mealTitle}
                    />
@@ -443,6 +446,7 @@ class AddTemplate extends Component {
                     <TextInput
                         style={styles.input}
                         onChangeText={(cost) => {this.setState({cost})}}
+                        onFocus={() => this.setState({cost: ""})}
                         onEndEditing={() => {
                             if(this.verifyCost()){
                                 var temp = (parseFloat(this.state.cost, 10)).toFixed(2);
@@ -475,6 +479,7 @@ class AddTemplate extends Component {
                   <TextInput
                         style={styles.input}
                         onChangeText={(calories) => this.setState({calories})}
+                        onFocus={() => this.setState({calories: ""})}
                         onEndEditing={() => {
                         if(this.verifyCalories()){
                             var temp = String(parseInt(this.state.cost, 10));

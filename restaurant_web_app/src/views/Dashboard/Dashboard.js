@@ -44,23 +44,50 @@ class DashboardPage extends Component {
     this.state = {
       dropdownOpen: false,
       radioSelected: 2,
+      intervalId: null,
     };
   }
 
-  async componentDidMount() {
-    const { dispatch, user, userData } = this.props;
-    await dispatch(dataActions.populateDashboard());
-    var locationsData = JSON.parse(localStorage.getItem('locations'));
-    var purchased = JSON.parse(localStorage.getItem('purchased'));
-    var completed = JSON.parse(localStorage.getItem('completed'));
-    var meals = JSON.parse(localStorage.getItem('meals'));
-    var mealsForSale = JSON.parse(localStorage.getItem('mealsForSale'));
-    const locations_container = document.querySelector('#locations_container');
-    await ReactDOM.render(<Locations user={user} userData={userData} locationsData={locationsData} purchased={purchased} completed={completed} meals={meals} mealsForSale={mealsForSale} />, locations_container);
-    const price_report_container = document.querySelector('#price_report_container');
-    await ReactDOM.render(<PriceReport user={user} userData={userData} purchased={purchased} completed={completed} date={dateformat(Date.now(), 'dddd, mmmm d, yyyy')} startDate={Date.now() - (60 * 60 * 24 * 1000)}/>, price_report_container);
-    const active_orders_container = document.querySelector('#active_orders_container');
-    await ReactDOM.render(<ActiveOrders user={user} userData={userData} purchased={purchased} completed={completed} />, active_orders_container);
+  updateData() {
+    const { dispatch, user, userData, history } = this.props;
+    if (user && userData && userData.org) {
+      dispatch(dataActions.populateDashboard());
+      var locationsData = JSON.parse(localStorage.getItem('locations'));
+      var purchased = JSON.parse(localStorage.getItem('purchased'));
+      var completed = JSON.parse(localStorage.getItem('completed'));
+      var meals = JSON.parse(localStorage.getItem('meals'));
+      var mealsForSale = JSON.parse(localStorage.getItem('mealsForSale'));
+      if (locationsData && purchased && completed && meals && mealsForSale) {
+        const locations_container = document.querySelector('#locations_container');
+        ReactDOM.render(<Locations user={user} userData={userData} locationsData={locationsData} purchased={purchased} completed={completed} meals={meals} mealsForSale={mealsForSale} startDate={Date.now() - (60 * 60 * 24 * 1000)} />, locations_container);
+        const price_report_container = document.querySelector('#price_report_container');
+        ReactDOM.render(<PriceReport user={user} userData={userData} purchased={purchased} completed={completed} date={dateformat(Date.now(), 'dddd, mmmm d, yyyy')} startDate={Date.now() - (60 * 60 * 24 * 1000)} />, price_report_container);
+        const active_orders_container = document.querySelector('#active_orders_container');
+        ReactDOM.render(<ActiveOrders user={user} userData={userData} purchased={purchased} completed={completed} />, active_orders_container);
+        window.clearInterval();
+      }
+    }
+    else {
+      clearInterval(this.state.intervalId);
+      if (!user) {
+        alert('No logged in user!');
+      }
+      else {
+        alert('Logged in user not associated with an organization!');
+        localStorage.setItem('user', null);
+      }
+      history.replace('login');
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+  }
+
+  componentDidMount() {
+    this.updateData();
+    var intervalId = setInterval(this.updateData() , 2000);
+    this.setState({ intervalId });
   }
 
 

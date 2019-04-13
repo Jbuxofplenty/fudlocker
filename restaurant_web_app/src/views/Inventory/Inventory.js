@@ -11,17 +11,42 @@ class InventoryPage extends Component {
       dropdownOpen: false,
       inventory: null,
       locations: null,
+      intervalId: null,
     };
   }
 
-  async componentDidMount() {
-    const { dispatch } = this.props;
-    await dispatch(dataActions.populateInventory());
-    var temp = await localStorage.getItem('inventory');
-    var inventory = Object.values(JSON.parse(temp));
-    temp = localStorage.getItem('locations');
-    var locations = JSON.parse(temp);
-    await this.setState({ inventory, locations });
+  async updateData() {
+    const { dispatch, user, userData, history } = this.props;
+    if (user && userData && userData.org) {
+      await dispatch(dataActions.populateInventory());
+      var inventory = await JSON.parse(localStorage.getItem('inventory'));
+      var locations = await JSON.parse(localStorage.getItem('locations'));
+      if (inventory && locations) {
+        inventory = Object.values(inventory);
+        await this.setState({ inventory, locations });
+      }
+    }
+    else {
+      if (!user) {
+        alert('No logged in user!');
+      }
+      else {
+        alert('Logged in user not associated with an organization!');
+        localStorage.setItem('user', null);
+      }
+      window.clearInterval();
+      history.push('login');
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+  }
+
+  componentDidMount() {
+    this.updateData();
+    var intervalId = setInterval(() => { this.updateData() }, 2000);
+    this.setState({ intervalId });
   }
 
 

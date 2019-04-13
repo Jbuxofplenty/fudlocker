@@ -54,7 +54,7 @@
             this.backButton.TabIndex = 1;
             this.backButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.backButton.UseVisualStyleBackColor = true;
-            this.backButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.backButton_MouseClick);
+            this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
             // Meals
             // 

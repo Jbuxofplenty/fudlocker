@@ -60,11 +60,11 @@ namespace locker_app
             // 
             this.lockerLabel.AutoSize = true;
             this.lockerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lockerLabel.Location = new System.Drawing.Point(105, 442);
+            this.lockerLabel.Location = new System.Drawing.Point(24, 440);
             this.lockerLabel.Name = "lockerLabel";
-            this.lockerLabel.Size = new System.Drawing.Size(1344, 73);
+            this.lockerLabel.Size = new System.Drawing.Size(1506, 73);
             this.lockerLabel.TabIndex = 4;
-            this.lockerLabel.Text = "Locker door containing your meal is opening...";
+            this.lockerLabel.Text = "Locker door containing your meal is opening............";
             // 
             // Purchased
             // 

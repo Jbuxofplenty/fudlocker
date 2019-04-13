@@ -38,17 +38,23 @@ export default class Locations extends Component {
       }
     }
 
-    // First value is location data, second is how many meals in locker, third is purchased meals from locker, fourth is completed transactions
+    // First value is location data, second is how many meals in locker, third is purchased meals from locker, fourth is completed transactions, fifth is how many meals need to be added to locker
     for (i in this.props.locationsData) {
-      locations[this.props.locationsData[i].type] = [this.props.locationsData[i], 0, 0];
+      locations[this.props.locationsData[i].type] = [this.props.locationsData[i], 0, 0, 0, 0];
     }
-
     for (i in mealsForSale) {
-      locations[mealsForSale[i].location.toLowerCase()][1] += 1
+      if (mealsForSale[i].inLocker) {
+        locations[mealsForSale[i].location.toLowerCase()][1] += 1
+      }
+      else {
+        locations[mealsForSale[i].location.toLowerCase()][4] += 1
+      }
     }
 
     for (i in this.props.purchased) {
-      locations[this.props.purchased[i].location.toLowerCase()][2] += 1
+      if (this.props.purchased[i].datePurchased >= this.props.startDate) {
+        locations[this.props.purchased[i].location.toLowerCase()][2] += 1
+      }
     }
 
     return locations;
@@ -78,6 +84,11 @@ export default class Locations extends Component {
                 <div className="center">
                   <Typography component="p" variant="caption">
                     Current Meals in Locker: {temp[i][1]}/{temp[i][0].capacity}
+                  </Typography>
+                </div>
+                <div className="center">
+                  <Typography component="p" variant="caption">
+                    Hosted Meals Not In Locker: {temp[i][4]}/{temp[i][0].capacity}
                   </Typography>
                 </div>
                 <div className="center">

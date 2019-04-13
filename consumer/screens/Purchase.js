@@ -20,6 +20,7 @@ import getDirections from 'react-native-google-maps-directions';
 import fudlkr_locations from '../assets/static_data/fudlkr_locations.json';
 import { SelectPayment } from 'react-native-checkout'
 import * as firebase from 'firebase';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 class Purchase extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -45,14 +46,15 @@ class Purchase extends Component {
         current_mealData: null,
         name: null,
         headshot: null,
+        readyPurchaseClicked: false,
     };
     async componentDidMount() {
-    await Font.loadAsync({
-        'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
-    });
-    var temp = this.props.navigation.state.params;
-    this.setState({ fontLoaded: true, paramsLoaded: true });
-    this.populateInfo();
+        await Font.loadAsync({
+            'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
+        });
+        var temp = this.props.navigation.state.params;
+        this.setState({ fontLoaded: true, paramsLoaded: true });
+        this.populateInfo();
     }
     async populateInfo() {
      //Get the current userID
@@ -72,6 +74,7 @@ class Purchase extends Component {
         this.setState({ mealData: temp });
      }.bind(this));
     }
+
     _getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
         if (status !== 'granted') {
@@ -90,7 +93,12 @@ class Purchase extends Component {
 
     readyPurchase = async () => {
         var userId = firebase.auth().currentUser.uid;
-        let mealData = this.state.mealData[this.props.navigation.state.params.idMeal];
+        if(!this.state.readyPurchaseClicked) {
+            mealData = this.state.mealData[this.props.navigation.state.params.idMeal];
+        }
+        else {
+            mealData = this.state.mealData;
+        }
         mealData["userEmail"] = firebase.auth().currentUser.email;
         var date = Date.now();
         var d = dateformat(date, 'dddd, mmmm d, yyyy, h:MM:ss TT');
@@ -105,7 +113,7 @@ class Purchase extends Component {
         mealData.paymentMethod["last4"] = "0789";
         mealData["name"] = this.state.name;
         mealData["headshot"] = this.state.headshot;
-        this.setState({mealData: mealData});
+        this.setState({mealData: mealData, readyPurchaseClicked: true});
     }
 
     purchaseMeal = async () => {
@@ -298,6 +306,7 @@ class Purchase extends Component {
              onPress={() => {
                 this.closeModal();
                 this.purchaseMeal();
+                this.props.navigation.dispatch(StackActions.popToTop());
                 this.props.navigation.navigate('Order', {
                     'title': this.state.mealData.strMeal,
                     'img': this.state.mealData.strMealThumb,

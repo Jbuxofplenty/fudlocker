@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Timers;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Text;
 
@@ -14,6 +10,9 @@ namespace locker_app
 {
     public partial class Purchased : Form
     {
+        string thankText;
+        string lockerText;
+
         private void Navigate()
         {
             this.Hide();
@@ -23,12 +22,14 @@ namespace locker_app
 
         public FormWindowState WindowState { get; set; }
 
-        public Purchased()
+        public Purchased(string thankText, string lockerText)
         {
             InitializeComponent();
             this.GoFullscreen(true);
             this.ReformatControls();
             AppTimer timer = new AppTimer(10);
+            this.thankText = thankText;
+            this.lockerText = lockerText;
         }
 
         private void GoFullscreen(bool fullscreen)
@@ -77,6 +78,8 @@ namespace locker_app
         {
             PrivateFontCollection pfc = new PrivateFontCollection();
             pfc.AddFontFile("fonts\\PoorStory-Regular.ttf");
+            thankLabel.Text = this.thankText;
+            lockerLabel.Text = this.lockerText;
             thankLabel.Font = new Font(pfc.Families[0], 48, FontStyle.Regular);
             lockerLabel.Font = new Font(pfc.Families[0], 48, FontStyle.Regular);
         }

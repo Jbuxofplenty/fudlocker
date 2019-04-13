@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, Text, View, StyleSheet, Image, Button, TouchableOpacity, TouchableHighlight, SectionList, Keyboard, ScrollView, Dimensions } from 'react-native';
+import { Platform, Text, View, StyleSheet, Image, Button, TouchableOpacity, TouchableHighlight, SectionList, Keyboard, ScrollView, Dimensions, AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { DrawerActions } from 'react-navigation-drawer';
 import { Font, LinearGradient } from 'expo';
@@ -25,15 +25,23 @@ class DrawerScreen extends Component {
         headshot: null,
     }
 
-    populateInfo() {
+    async populateInfo() {
         //Get the current userID
-        var userId = firebase.auth().currentUser.uid;
-        //Get the user data
-        return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-           this.setState({ name: snapshot.val().name });
-           this.setState({ email: snapshot.val().email });
-           this.setState({ headshot: snapshot.val().headshot });
-        }.bind(this));
+        await firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                //Get the user data
+                firebase.database().ref('/users/' + user.uid).on('value', function(snapshot) {
+                   this.setState({ name: snapshot.val().name });
+                   this.setState({ email: snapshot.val().email });
+                   this.setState({ headshot: snapshot.val().headshot });
+                }.bind(this));
+            } else {
+              // No user is signed in.
+              AsyncStorage.setItem('isLoggedIn', JSON.stringify(false));
+              firebase.auth().signOut();
+              this.props.screenProps.isLoggedIn();
+            }
+          }.bind(this));
     }
 
    async componentDidMount() {
@@ -49,9 +57,8 @@ class DrawerScreen extends Component {
      await Font.loadAsync({
        'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')
      });
-
+     await this.populateInfo();
      this.setState({ fontLoaded: true });
-     this.populateInfo();
 
    }
 
@@ -60,9 +67,12 @@ class DrawerScreen extends Component {
       this.props.navigation.dispatch(DrawerActions.closeDrawer());
     }
 
-    logOutUser() {
+    async logOutUser() {
+      await AsyncStorage.setItem('isLoggedIn', JSON.stringify(false));
+      await firebase.auth().signOut();
       this.props.screenProps.isLoggedIn();
     }
+
   render () {
     return (
       <View style={{paddingVertical: 40}}>

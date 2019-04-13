@@ -45,37 +45,44 @@ class Location extends Component {
     });
     var temp = this.props.navigation.state.params;
     this.setState({ fontLoaded: true, paramsLoaded: true });
-    this.populateInfo();
+    this.populateMealsForSale();
    }
 
-   async populateInfo() {
+   componentWillUnmount() {
+     firebase.database().ref('/meals/forSale').off();
+   }
+
+   async populateMealsForSale() {
      //Get the current userID
-     var userId = firebase.auth().currentUser.uid;
-     await firebase.database().ref('/meals/forSale').once('value').then(function(snapshot) {
+     firebase.database().ref('/meals/forSale').on('value', function(snapshot) {
            let tempArray = {};
            snapshot.forEach(function(childSnapshot) {
              var childData = childSnapshot.val();
              tempArray[childSnapshot.key] = childData;
            });
            this.setState({ meals_forSale: tempArray });
+           this.populateInfo(tempArray);
        }.bind(this));
-     var temp = this.state.meals_forSale;
-     //Get the user data
-     return firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.meal_type + '/meals').once('value').then(function(snapshot) {
-         let tempArray = [];
-         snapshot.forEach(function(childSnapshot) {
-           childSnapshot.forEach(function(childChildSnapshot) {
-               var childData = childChildSnapshot.val();
-               if(temp[childData.idMeal.toString()]){
-                  tempArray.push(childData);
-               }
-          });
-         });
-         this.setState({ location_data: tempArray });
-         this.setState({ location: this.props.navigation.state.params.meal_type });
-         this.setState({ title: this.props.navigation.state.params.title })
-     }.bind(this));
    }
+
+   async populateInfo(meals_forSale) {
+     if(meals_forSale) {
+          firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.meal_type + '/meals').once('value').then(function(snapshot) {
+            let tempArray = [];
+            snapshot.forEach(function(childSnapshot) {
+              childSnapshot.forEach(function(childChildSnapshot) {
+                  var childData = childChildSnapshot.val();
+                  if(childData && meals_forSale[childData.idMeal.toString()] && childData.inLocker){
+                     tempArray.push(childData);
+                  }
+             });
+            });
+            this.setState({ location_data: tempArray });
+            this.setState({ location: this.props.navigation.state.params.meal_type });
+            this.setState({ title: this.props.navigation.state.params.title })
+        }.bind(this));
+     }
+  }
 
   renderDetail = () => {
     return (

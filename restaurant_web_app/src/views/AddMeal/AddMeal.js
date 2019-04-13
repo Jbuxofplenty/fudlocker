@@ -27,7 +27,6 @@ const customStyles = {
   }
 };
 
-
 class AddMealPage extends Component {
   constructor(props) {
     super(props);
@@ -62,29 +61,50 @@ class AddMealPage extends Component {
     this.setState({ modalVisible: false });
   }
 
-  async componentDidMount() {
-    const { dispatch } = this.props;
-    await dispatch(dataActions.populateAddMeal());
-    await dispatch(dataActions.populateDashboard());
-    var locations = Object.values(JSON.parse(localStorage.getItem('locations')));
-    await dispatch(dataActions.populateInventory());
-    var inventory = await JSON.parse(localStorage.getItem('inventory'));
-    await this.setState({ locations, inventory });
-    this.generateOptions(locations);
-    if (this.props.location.state) {
-      await this.setState({ mealData: this.props.location.state.meal, existingMeal: true });
-      let blob = await fetch(this.props.location.state.meal.strTemplateThumb).then(r => r.blob());
-      this.pond.addFile(blob);
-      document.getElementById("meal_name").value = this.props.location.state.meal.strTemplate;
-      document.getElementById("meal_cat").value = this.props.location.state.meal.strCategory;
-      document.getElementById("cost").value = this.props.location.state.meal.strCost;
-      document.getElementById("calories").value = this.props.location.state.meal.calories;
-      document.getElementById("locations").value = this.props.location.state.meal.location;
-      document.getElementById("weight").value = this.props.location.state.meal.netWeight;
-      document.getElementById("shelf_life").value = this.props.location.state.meal.shelfLife;
+  async updateData() {
+    const { dispatch, user, userData, history } = this.props;
+    if (user && userData && userData.org) {
+      await dispatch(dataActions.populateAddMeal());
+      await dispatch(dataActions.populateDashboard());
+      await dispatch(dataActions.populateInventory());
+      var inventory = JSON.parse(localStorage.getItem('inventory'));
+      var locations = JSON.parse(localStorage.getItem('locations'));
+      if (locations && inventory) {
+        locations = Object.values(JSON.parse(localStorage.getItem('locations')));
+        await this.setState({ locations, inventory });
+        this.generateOptions(locations);
+        if (this.props.location.state) {
+          await this.setState({ mealData: this.props.location.state.meal, existingMeal: true });
+          let blob = await fetch(this.props.location.state.meal.strTemplateThumb).then(r => r.blob());
+          this.pond.addFile(blob);
+          document.getElementById("meal_name").value = this.props.location.state.meal.strTemplate;
+          document.getElementById("meal_cat").value = this.props.location.state.meal.strCategory;
+          document.getElementById("cost").value = this.props.location.state.meal.strCost;
+          document.getElementById("calories").value = this.props.location.state.meal.calories;
+          document.getElementById("locations").value = this.props.location.state.meal.location;
+          document.getElementById("weight").value = this.props.location.state.meal.netWeight;
+          document.getElementById("shelf_life").value = this.props.location.state.meal.shelfLife;
+          window.clearInterval();
+        }
+        var locationsData = await this.processData();
+        this.setState({ locationsData });
+      }
     }
-    var locationsData = await this.processData();
-    this.setState({ locationsData });
+    else {
+      if (!user) {
+        alert('No logged in user!');
+      }
+      else {
+        alert('Logged in user not associated with an organization!');
+        localStorage.setItem('user', null);
+      }
+      window.clearInterval();
+      history.push('login');
+    }
+  }
+
+  componentDidMount() {
+    this.updateData();
   }
 
   async processData() {
@@ -247,6 +267,10 @@ class AddMealPage extends Component {
             break;
           }
         }
+        if (locker === null) {
+          alert("No space available in the specified locker!");
+          return;
+        }
       }
       mealData["locker"] = locker;
 
@@ -264,6 +288,7 @@ class AddMealPage extends Component {
       mealData["idMeal"] = "0" + this.props.userData.idOrg + "" + mealData["idMeal"];
       mealData["strIdMeal"] = "Meal ID #" + mealData["idMeal"];
       mealData["forSale"] = true;
+      mealData["inLocker"] = false;
       if (this.state.files[0]) {
         const blob = new Blob([this.state.files[0]], { type: "image/jpeg" });
         if (this.state.imageUrl == null) {
@@ -290,7 +315,8 @@ class AddMealPage extends Component {
       var forSale = {};
       forSale[mealData.idMeal] = true;
       await fire.database().ref('/meals/forSale/').update(forSale);
-      alert("Meal Added to Location Successfuly!");
+      alert("Meal Added to Location Successfuly! " + mealData["strIdMeal"]);
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -298,6 +324,7 @@ class AddMealPage extends Component {
     var add = await this.validateData();
     var mealData = this.state.mealData;
     if (add) {
+      mealData["strTemplate"] = mealData["strMeal"];
       //Get the current userID
       mealData["code"] = 'rgb(' + Math.floor(Math.random() * 255).toString() + ', ' + Math.floor(Math.random() * 255).toString() + ', ' + Math.floor(Math.random() * 255).toString() + ')';
       await fire.database().ref('/restaurants/' + this.props.userData.org + '/templateCounter').once('value').then(function (snapshot) {
@@ -310,20 +337,23 @@ class AddMealPage extends Component {
       mealData["idTemplate"] = "1" + this.props.userData.idOrg + "" + mealData["idTemplate"]
       if (this.state.files[0]) {
         const blob = new Blob([this.state.files[0]], { type: "image/jpeg" });
-        if (this.state.imageUrl == null) {
-          var picRef = fire.storage().ref('/meals/').child(mealData["idMeal"] + '.jpeg ');
+        if (this.state.imageUrl === null) {
+          var picRef = fire.storage().ref('/meals/').child(mealData["idTemplate"] + '.jpeg ');
           await picRef.put(blob).then(function (snapshot) { });
           await picRef.getDownloadURL().then(function (url) {
             this.setState({ imageUrl: url })
           }.bind(this));
           mealData["strMealThumb"] = this.state.imageUrl;
+          mealData["strTemplateThumb"] = this.state.imageUrl;
         }
       }
       else {
         mealData["strMealThumb"] = "http://fudlkr.com/mobile_assts/green.png";
+        mealData["strTemplateThumb"] = "http://fudlkr.com/mobile_assts/green.png";
       }
       await fire.database().ref('/restaurants/' + this.props.userData.org + '/templates/default/' + mealData.idTemplate + '/').update(mealData);
       alert("Template Added to Inventory Successfuly!");
+      this.addNewMeal();
     }
   }
 
@@ -386,6 +416,7 @@ class AddMealPage extends Component {
                     <option>Asian</option>
                     <option>Italian</option>
                     <option>Mexican</option>
+                    <option>Meat</option>
                     <option>Salads</option>
                   </select>
                 </div>

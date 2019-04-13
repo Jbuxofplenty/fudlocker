@@ -35,87 +35,91 @@ export default class Meals extends Component {
            },
        };
      };
+
     state = {
         fontLoaded: false,
         meals_data: null,
         meal_type: null,
         meals_forSale: null,
      };
+
     async componentDidMount() {
         await Font.loadAsync({
             'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
         });
         this.setState({ fontLoaded: true });
-        this.populateInfo();
+        this.populateMealsForSale();
     }
 
-   async populateInfo() {
+   componentWillUnmount() {
+     firebase.database().ref('/meals/forSale').off();
+   }
+
+   async populateMealsForSale() {
      //Get the current userID
      var userId = firebase.auth().currentUser.uid;
-     await firebase.database().ref('/meals/forSale').once('value', function(snapshot) {
-              let tempArray = {};
-              snapshot.forEach(function(childSnapshot) {
-                var childData = childSnapshot.val();
-                tempArray[childSnapshot.key] = childData;
-              });
-              this.setState({ meals_forSale: tempArray });
-          }.bind(this));
-     var temp = this.state.meals_forSale;
-     await firebase.database().ref('/meals/forSale').on('value', function(snapshot) {
-           let tempArray = {};
-           snapshot.forEach(function(childSnapshot) {
-             var childData = childSnapshot.val();
-             tempArray[childSnapshot.key] = childData;
-           });
-           this.setState({ meals_forSale: tempArray });
-       }.bind(this));
-     //Get the user data
-     if(this.props.navigation.state.params.meal_type == "All") {
-         await firebase.database().ref('/meals/all/meals').once('value', function(snapshot) {
-             let tempArray = [];
-             snapshot.forEach(function(childSnapshot) {
-               childSnapshot.forEach(function(childChildSnapshot) {
-                    var childData = childChildSnapshot.val();
-                    if(temp[childData.idMeal.toString()]){
-                       tempArray.push(childData);
-                    }
-               });
-             });
-             this.setState({ meals_data: tempArray });
-             this.setState({ meal_type: this.props.navigation.state.params.meal_type });
-         }.bind(this));
-     }
-     else if(this.props.navigation.state.params.meal_type.toLowerCase() == "farrand" || this.props.navigation.state.params.meal_type.toLowerCase() == "c4c" || this.props.navigation.state.params.meal_type.toLowerCase() == "village") {
-       await firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.meal_type.toLowerCase() + '/meals').once('value', function(snapshot) {
-            let tempArray = [];
-            snapshot.forEach(function(childSnapshot) {
-              childSnapshot.forEach(function(childChildSnapshot) {
-                  var childData = childChildSnapshot.val();
-                  if(temp[childData.idMeal.toString()]){
-                     tempArray.push(childData);
-                  }
-             });
-            });
-            this.setState({ meals_data: tempArray });
-            this.setState({ meal_type: this.props.navigation.state.params.meal_type });
-        }.bind(this));
-     }
-     else {
-         await firebase.database().ref('/meals/categories/' + this.props.navigation.state.params.meal_type.toLowerCase() + '/meals').once('value', function(snapshot) {
-             let tempArray = [];
-             snapshot.forEach(function(childSnapshot) {
-               childSnapshot.forEach(function(childChildSnapshot) {
-                   var childData = childChildSnapshot.val();
-                   if(temp[childData.idMeal.toString()]){
-                      tempArray.push(childData);
-                   }
-              });
-             });
-             this.setState({ meals_data: tempArray });
-             this.setState({ meal_type: this.props.navigation.state.params.meal_type });
-         }.bind(this));
-     }
+     firebase.database().ref('/meals/forSale').on('value', function(snapshot) {
+          let tempArray = {};
+          snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            tempArray[childSnapshot.key] = childData;
+          });
+          this.setState({ meals_forSale: tempArray });
+          this.populateInfo(tempArray);
+      }.bind(this));
    }
+
+   async populateInfo(meals_forSale) {
+        if(meals_forSale) {
+            if(this.props.navigation.state.params.meal_type == "All") {
+                await firebase.database().ref('/meals/all/meals').once('value', function(snapshot) {
+                    let tempArray = [];
+                    snapshot.forEach(function(childSnapshot) {
+                      childSnapshot.forEach(function(childChildSnapshot) {
+                           var childData = childChildSnapshot.val();
+                           if(childData && meals_forSale[childData.idMeal.toString()] && childData.inLocker){
+                              tempArray.push(childData);
+                           }
+                      });
+                    });
+                    this.setState({ meals_data: tempArray });
+                    this.setState({ meal_type: this.props.navigation.state.params.meal_type });
+                }.bind(this));
+            }
+            else if(this.props.navigation.state.params.meal_type.toLowerCase() == "farrand" || this.props.navigation.state.params.meal_type.toLowerCase() == "c4c" || this.props.navigation.state.params.meal_type.toLowerCase() == "village") {
+              await firebase.database().ref('/meals/locations/' + this.props.navigation.state.params.meal_type.toLowerCase() + '/meals').once('value', function(snapshot) {
+                   let tempArray = [];
+                   snapshot.forEach(function(childSnapshot) {
+                     childSnapshot.forEach(function(childChildSnapshot) {
+                         var childData = childChildSnapshot.val();
+                         if(childData && meals_forSale[childData.idMeal.toString()] && childData.inLocker){
+                            tempArray.push(childData);
+                         }
+                    });
+                   });
+                   this.setState({ meals_data: tempArray });
+                   this.setState({ meal_type: this.props.navigation.state.params.meal_type });
+               }.bind(this));
+            }
+            else {
+                await firebase.database().ref('/meals/categories/' + this.props.navigation.state.params.meal_type.toLowerCase() + '/meals').once('value', function(snapshot) {
+                    let tempArray = [];
+                    snapshot.forEach(function(childSnapshot) {
+                      childSnapshot.forEach(function(childChildSnapshot) {
+                          var childData = childChildSnapshot.val();
+                          if(childData && meals_forSale[childData.idMeal.toString()] && childData.inLocker){
+                             tempArray.push(childData);
+                          }
+                     });
+                    });
+                    this.setState({ meals_data: tempArray });
+                    this.setState({ meal_type: this.props.navigation.state.params.meal_type });
+                }.bind(this));
+            }
+        }
+
+      }
+
 render() {
     if(this.state.meals_data != null) {
         return (

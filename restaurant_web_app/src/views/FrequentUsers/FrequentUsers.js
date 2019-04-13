@@ -36,11 +36,35 @@ export default class FrequentUsers extends Component {
       purchasedNotCompleted: null,
       uid: null,
       total: null,
+      usersData: null,
     };
   }
 
+  processData() {
+    var usersData = [];
+    var sortable = [];
+    Object.entries(this.props.usersData).forEach(entry => {
+      let value = entry[1].orders;
+      sortable.push([entry[1], value]);
+    });
+
+    sortable.sort(function (a, b) {
+      return b[1] - a[1];
+    });
+    sortable.forEach(entry => {
+      if (usersData.length <= 6) {
+        usersData.push(entry[0]);
+      }
+    });
+    this.setState({ usersData });
+  }
+
+  componentDidMount() {
+    this.processData();
+  }
+
   render() {
-    if (this.props.usersData) {
+    if (this.state.usersData) {
       return (
         <div>
           <Paper className={styles.root}>
@@ -54,7 +78,7 @@ export default class FrequentUsers extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-              {this.props.usersData.map((row, index) => (
+              {this.state.usersData.map((row, index) => (
                   <TableRow className="meal-row-item" key={index}>
                     <CustomTableCell component="th" scope="row">
                       {row.name}
