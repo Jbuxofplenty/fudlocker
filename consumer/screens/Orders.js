@@ -17,7 +17,6 @@ import GridView from 'react-native-super-grid';
 import { LinearGradient, Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
 const dateformat = require('dateformat');
-import { SelectPayment } from 'react-native-checkout'
 import * as firebase from 'firebase';
 
 var height = Dimensions.get('window').height;

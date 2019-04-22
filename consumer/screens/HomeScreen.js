@@ -44,6 +44,7 @@ static navigationOptions = ({ navigation }) => {
         meal_type: null,
         category_data: null,
         locations: null,
+        location_selected: false,
     }
   }
 
@@ -56,8 +57,6 @@ static navigationOptions = ({ navigation }) => {
     }
     this.setState({ searchTerm: term });
   }
-
-  location_selected = false;
 
   async componentDidMount() {
     await Font.loadAsync({
@@ -100,8 +99,8 @@ static navigationOptions = ({ navigation }) => {
   _getLocationAsync = async () => {
     let location = await Location.getCurrentPositionAsync({});
     var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, this.state.mealRadius*1609.34);
-    if(!this.location_selected){
-        this.setState({coords: coords});
+    if(!this.state.location_selected){
+        this.setState({ coords });
     }
   };
 
@@ -111,9 +110,13 @@ static navigationOptions = ({ navigation }) => {
     var userId = await firebase.auth().currentUser.uid;
     //Get the user data
     await firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+        var temp = snapshot.val().mealRadius;
+        if(temp === 0 || temp === null || temp === undefined) {
+            temp = 15;
+        }
         this.setState({ mealRadius: snapshot.val().mealRadius });
-        var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, snapshot.val().mealRadius*1609.34);
-        if(!this.location_selected){
+        var coords = this.regionFrom(location.coords.latitude, location.coords.longitude, temp*1609.34);
+        if(!this.state.location_selected){
             this.setState({coords: coords});
         }
     }.bind(this));
@@ -161,23 +164,23 @@ static navigationOptions = ({ navigation }) => {
   }
 
   regionFrom(lat, lon, distance) {
-          distance = distance/2
-          const circumference = 40075
-          const oneDegreeOfLatitudeInMeters = 111.32 * 1000
-          const angularDistance = distance/circumference
+      distance = distance/2
+      const circumference = 40075
+      const oneDegreeOfLatitudeInMeters = 111.32 * 1000
+      const angularDistance = distance/circumference
+      const latitudeDelta = distance / oneDegreeOfLatitudeInMeters
+      const longitudeDelta = Math.abs(Math.atan2(
+              Math.sin(angularDistance)*Math.cos(lat),
+              Math.cos(angularDistance) - Math.sin(lat) * Math.sin(lat)))
 
-          const latitudeDelta = distance / oneDegreeOfLatitudeInMeters
-          const longitudeDelta = Math.abs(Math.atan2(
-                  Math.sin(angularDistance)*Math.cos(lat),
-                  Math.cos(angularDistance) - Math.sin(lat) * Math.sin(lat)))
+      return result = {
+          latitude: lat,
+          longitude: lon,
+          latitudeDelta,
+          longitudeDelta,
+      }
+  };
 
-          return result = {
-              latitude: lat,
-              longitude: lon,
-              latitudeDelta,
-              longitudeDelta,
-          }
-      };
   toggleSearching () {
     Keyboard.dismiss();
     this.setState({ searching: !this.state.searching });
@@ -198,7 +201,7 @@ static navigationOptions = ({ navigation }) => {
                             <Text style={{fontFamily: 'Poor Story', marginLeft: 20}}>{`${item.description}`}</Text>
                         </View>
                       </View>
-                      <Image source={{ uri: item.image }} style={{width: 48, height: 48, marginRight: 20}}></Image>
+                      <Image source={{ uri: item.image === '' ? item.image : null }} style={{width: 48, height: 48, marginRight: 20}}></Image>
                  </View>
             </TouchableHighlight>
           </View>
@@ -227,7 +230,7 @@ static navigationOptions = ({ navigation }) => {
                             <Text style={{fontFamily: 'Poor Story', marginLeft: 40}}>{`${this.state.locations[item.location].type}`}</Text>
                         </View>
                       </View>
-                      <Image source={{ uri: item.strMealThumb }} style={{width: 48, height: 48, marginRight: 20}}></Image>
+                      <Image source={{ uri: item.strMealThumb === '' ? item.strMealThumb : null }} style={{width: 48, height: 48, marginRight: 20}}></Image>
                  </View>
             </TouchableHighlight>
           </View>
@@ -245,7 +248,7 @@ static navigationOptions = ({ navigation }) => {
                <View style={{flex: 1, flexDirection: 'column'}}>
                       <Text style={{fontFamily: 'Poor Story', fontSize: 20, marginLeft: 10}}>{`${item.title}`}</Text>
                     </View>
-                    <Image source={{ uri: item.strCategoryThumb }} style={{width: 48, height: 48, marginRight: 20}}></Image>
+                    <Image source={{ uri: item.strCategoryThumb === '' ? item.strCategoryThumb : null }} style={{width: 48, height: 48, marginRight: 20}}></Image>
                </View>
           </TouchableHighlight>
         </View>
@@ -260,13 +263,14 @@ static navigationOptions = ({ navigation }) => {
     }
 
   render() {
-    if(this.state.markers != null && this.state.meals_data != null && this.state.category_data != null) {
-      let ps = this.props;
-        if(this.props.navigation.state.params != null && !this.location_selected) {
-            this.location_selected = true;
+    if(this.state.markers != null && this.state.meals_data != null && this.state.category_data != null && this.state.coords !== null) {
+        let ps = this.props;
+        if(this.props.navigation.state.params != null && !this.state.location_selected) {
+            this.state.location_selected = true;
             var coords = this.regionFrom(this.props.navigation.state.params.coords.latitude, this.props.navigation.state.params.coords.longitude, 1000);
             this.state.coords=coords;
         }
+        console.log(this.state.coords);
         const data = [this.state.markers, this.state.meals_data, this.state.category_data];
         const keys = [LOCATION_KEYS_TO_FILTERS, MEAL_KEYS_TO_FILTERS, CATEGORY_KEYS_TO_FILTERS];
         const scopes = ["Locations", "Meals", "Categories"];
@@ -275,7 +279,6 @@ static navigationOptions = ({ navigation }) => {
             filtered_datum = data[index].filter(createFilter(this.state.searchTerm, keys[index]));
             filtered_data.push(filtered_datum);
         }
-
         const renderLocationItem = ({item, section}) => (this._renderLocationItem(item, section))
         const renderMealItem = ({item, section}) => (this._renderMealItem(item, section))
         const renderCategoryItem = ({item, section}) => (this._renderCategoryItem(item, section))
@@ -295,28 +298,6 @@ static navigationOptions = ({ navigation }) => {
         </View>
           return (
           <View style={{ flex: 1 }}>
-          {
-             ps && this.state.fontLoaded && this.state.mealRadius != null ? (
-             <View>
-               <SearchBar
-                  onChangeText={(term) => { this.searchUpdated(term) }}
-                  onCancel={() => {this.toggleSearching()}}
-                  onClear={() => {this.toggleSearching()}}
-                  round
-                  platform="android"
-                  clearIcon={{ type: 'font-awesome', name: 'chevron-left' }}
-                  placeholder="Find Food"
-                  lightTheme
-                  showLoading
-                  inputStyle={{fontFamily: 'Poor Story'}}
-                  value={this.state.searchTerm}
-
-                 />
-               <SearchResults show={this.state.searching}/>
-            </View>
-
-             ) : null
-          }
             <MapView
                       style={{
                         flex: 1

@@ -6,14 +6,33 @@
         ".read": "$user_id === auth.uid"
       }
     },
+    "restaurants": {
+      "cuboulder": {
+        ".write": "'cuboulder' === auth.token.org",
+        ".read": "'cuboulder' === auth.token.org",
+        "inventory": {
+          "claimed": {
+            ".write": true,
+          },
+          "pickedUp": {
+            ".write": true,
+          }
+        },
+        "orders": {
+          "purchased": {
+            ".write": true
+          }
+        }
+      }
+    },
     "lockers": {
       ".write": false,
       ".read": true
     },
     "meals": {
-      ".write": false,
+      ".write": "auth.token.org !== null",
       ".read": true,
-      "mealCounter": {
+      "forSale": {
         ".write": true
       }
     },

@@ -19,7 +19,6 @@ import { Icon } from 'react-native-elements';
 import { LinearGradient, Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
 const dateformat = require('dateformat');
-import { SelectPayment } from 'react-native-checkout'
 import { DrawerActions } from 'react-navigation-drawer';
 import * as firebase from 'firebase';
 

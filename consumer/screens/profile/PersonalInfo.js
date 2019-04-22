@@ -475,7 +475,7 @@ class PersonalInfo extends Component {
                           </View>
                       </View>;
 
-    if (this.state.fontLoaded && this.state.name != null ){
+    if (this.state.fontLoaded && this.state.name != null && this.state.headshot != null){
             return (
             <KeyboardAvoidingView style={{flex: 1}} behavior="padding" keyboardVerticalOffset={Header.HEIGHT+25}>
                 <ParallaxScrollView

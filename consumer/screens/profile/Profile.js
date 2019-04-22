@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Switch, StyleSheet, Text, View, WebView, Linking, TouchableOpacity, Share } from 'react-native'
+import { ScrollView, Switch, StyleSheet, Text, View, WebView, Linking, TouchableOpacity, Share, Platform } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { Font } from 'expo'
 import Rate, { AndroidMarket } from 'react-native-rate'
@@ -113,12 +113,14 @@ class SettingsScreen extends Component {
               fallbackPlatformURL:"http://www.fudlkr.com/index.html",
           }
 
-          Rate.rate(options, success=>{
-              if (success) {
-                  // this technically only tells us if the user successfully went to the Review Page. Whether they actually did anything, we do not know.
-                  this.setState({rated:true})
-              }
-          })
+          if(Platform.OS !== 'ios') {
+              Rate.rate(options, success=>{
+                  if (success) {
+                      // this technically only tells us if the user successfully went to the Review Page. Whether they actually did anything, we do not know.
+                      this.setState({rated:true})
+                  }
+              })
+          }
   }
   onChangePushNotifications = () => {
     this.setState(state => ({
@@ -130,7 +132,7 @@ class SettingsScreen extends Component {
   }
 
   render() {
-    if (this.state.fontLoaded && this.state.name != null ){
+    if (this.state.fontLoaded && this.state.name != null && this.state.headshot != null){
     return (
       <ScrollView style={styles.scroll}>
         <TouchableOpacity

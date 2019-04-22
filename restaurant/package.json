@@ -16,7 +16,6 @@
     "firebase-tools": "^6.6.0",
     "react": "^16.8.6",
     "react-native": "^0.57.7",
-    "react-native-checkout": "0.0.8",
     "react-native-elements": "^0.19.1",
     "react-native-fbsdk": "^0.8.0",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",

@@ -7,6 +7,7 @@ import { Button } from 'react-native-elements';
 import {Image} from 'react-native' ;
 import * as firebase from 'firebase';
 import * as EmailValidator from 'email-validator';
+import stripe from 'tipsi-stripe'
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -18,6 +19,11 @@ const firebaseConfig = {
     messagingSenderId: "471202846868"
   };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+//stripe.setOptions({
+//  publishableKey: 'pk_test_AwYXl4L5SkYcnnhIdU2DQAeE',
+//  androidPayMode: 'test',
+//})
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;

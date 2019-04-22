@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   loginButton: {
     backgroundColor: '#3897f1',
     borderRadius: 5,
-    height: 45,
+    height: Platform.OS === 'ios' ? 55: 45,
     marginTop: 10,
   },
   fbLoginButton: {

@@ -1,10 +1,10 @@
 {
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "devToolsPort": 19002,
-  "webpackServerPort": null
+  "packagerPort": 19001,
+  "packagerPid": 313,
+  "expoServerNgrokUrl": "https://8v-xy7.jbuxofplenty.consumer.exp.direct",
+  "packagerNgrokUrl": "https://packager.8v-xy7.jbuxofplenty.consumer.exp.direct",
+  "ngrokPid": 337,
+  "expoServerPort": 19000,
+  "webpackServerPort": null,
+  "devToolsPort": 19002
 }

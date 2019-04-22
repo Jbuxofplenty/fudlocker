@@ -46,8 +46,7 @@ LocationsStack.navigationOptions = {
     <TabBarIcon
       focused={focused}
       name={
-        Platform.OS === 'ios'
-          ? `ios-map${focused ? '' : '-outline'}` : 'md-map'
+        Platform.OS === 'ios' ? 'ios-map' : 'md-map'
       }
     />
   ),
@@ -89,7 +88,7 @@ AddMealStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-filing${focused ? '' : '-outline'}` : 'md-filing'}
+      name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
     />
   ),
   tabBarOptions: {
@@ -129,7 +128,7 @@ SettingsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-cog${focused ? '' : '-outline'}` : 'md-cog'}
+      name={Platform.OS === 'ios' ? 'ios-cog' : 'md-cog'}
     />
   ),
   tabBarOptions: {

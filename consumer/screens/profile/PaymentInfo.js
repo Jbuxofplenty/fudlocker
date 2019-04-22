@@ -5,8 +5,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Font } from 'expo'
 import Rate, { AndroidMarket } from 'react-native-rate'
 import ToggleSwitch from 'toggle-switch-react-native'
-import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input"
 import * as firebase from 'firebase';
+import { PaymentCardTextField } from 'tipsi-stripe'
 
 import BaseIcon from './Icon'
 import Chevron from './Chevron'
@@ -93,10 +93,10 @@ class PaymentInfo extends Component {
         //Get the user data
         return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
             this.setState({ name: snapshot.val().name });
-            this.setState({ address1: snapshot.val().paymentInfo[0].billingAddress.street1 });
-            this.setState({ address2: snapshot.val().paymentInfo[0].billingAddress.street2 });
-            this.setState({ city: snapshot.val().paymentInfo[0].billingAddress.city });
-            this.setState({ state: snapshot.val().paymentInfo[0].billingAddress.state });
+            this.setState({ address1: "" });
+            this.setState({ address2: "" });
+            this.setState({ city: "" });
+            this.setState({ state: "" });
             this.setState({ tempPhone: snapshot.val().phone });
         }.bind(this));
       }
@@ -139,19 +139,14 @@ class PaymentInfo extends Component {
                                 </Text>
                             </View>
                         </View>
-                        <View ref={component => this._CCInputView = component} pointerEvents={this.state.pEvents}>
-                            <LiteCreditCardInput
-                                ref={component => this._CCInput = component}
-                            />
-                        </View>
                         <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-                            <TouchableOpacity style={styles.editContainer} onPress={() => {this.props.navigation.navigate('AddNewCard')}}>
+                            <TouchableOpacity style={styles.editContainer} onPress={() => {}}>
                                <Text style={styles.edit}>add </Text>
                             </TouchableOpacity>
                             <View style={styles.separatorContainer}>
                                    <Text style={styles.edit}>|</Text>
                                </View>
-                            <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({pEvents: 'auto'});this._CCInput.focus("number");this.toggleCardEdit();}}>
+                            <TouchableOpacity style={styles.editContainer} onPress={() => {}}>
                                 <Text style={styles.edit}>edit</Text>
                             </TouchableOpacity>
                         </View>
@@ -260,10 +255,6 @@ class PaymentInfo extends Component {
                             </View>
                         </View>
                         <View ref={component => this._CCInputViewEdit = component} pointerEvents={this.state.pEvents}>
-                            <LiteCreditCardInput
-                                autoFocus={true}
-                                ref={component => this._CCInputEdit = component}
-                            />
                         </View>
                         <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
                             <TouchableOpacity style={styles.editContainer} onPress={() => {Keyboard.dismiss();this.setState({pEvents: 'none'}); this.toggleCardEdit();}}>
@@ -354,7 +345,7 @@ class PaymentInfo extends Component {
                             </Text>
                         </View>
                         <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-                            <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({pEvents: 'auto'});this._CCInput.focus("number");this.toggleAddressEdit();}}>
+                            <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({pEvents: 'auto'}); this.toggleAddressEdit();}}>
                                 <Text style={styles.edit}>edit</Text>
                             </TouchableOpacity>
                         </View>
@@ -383,19 +374,14 @@ class PaymentInfo extends Component {
                                     </Text>
                                 </View>
                             </View>
-                            <View ref={component => this._CCInputView = component} pointerEvents={this.state.pEvents}>
-                                <LiteCreditCardInput
-                                    ref={component => this._CCInput = component}
-                                />
-                            </View>
                             <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-                                <TouchableOpacity style={styles.editContainer} onPress={() => {this.props.navigation.navigate('AddNewCard')}}>
+                                <TouchableOpacity style={styles.editContainer} onPress={() => {}}>
                                    <Text style={styles.edit}>add </Text>
                                 </TouchableOpacity>
                                 <View style={styles.separatorContainer}>
                                        <Text style={styles.edit}>|</Text>
                                    </View>
-                                <TouchableOpacity style={styles.editContainer} onPress={() => {this.setState({pEvents: 'auto'});this._CCInput.focus("number");this.toggleCardEdit();}}>
+                                <TouchableOpacity style={styles.editContainer} onPress={() => {}}>
                                     <Text style={styles.edit}>edit</Text>
                                 </TouchableOpacity>
                             </View>
@@ -656,4 +642,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlignVertical: 'center'
     },
+  field: {
+    width: 300,
+    color: '#449aeb',
+    borderColor: '#000',
+    borderWidth: 1,
+    borderRadius: 5,
+  },
 });

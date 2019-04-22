@@ -74,144 +74,107 @@ class DrawerScreen extends Component {
     }
 
   render () {
-    return (
-      <View style={{paddingVertical: 40}}>
-      <LinearGradient
-          colors={['#2ECC71', '#2ECC71']}
-          style={styles.loginScreenGradient}
-        />
-        <ScrollView style={styles.scroll}>
-                <TouchableOpacity
-                    onPress={() => this.navigateToScreen('PersonalInfo')}
-                >
-                <View style={styles.userImage}>
-                    <Avatar
-                      rounded
-                      xlarge
-                      source={{
-                        uri: this.state.headshot,
-                      }}
-                    />
-                  </View>
-                <View style={styles.userRow}>
-                  <View>
-                    <Text style={{ fontFamily: 'Poor Story', fontSize: 16, color: 'white', alignSelf: 'center' }}>{this.state.name}</Text>
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontSize: 16,
-                        fontFamily: 'Poor Story',
-                        alignSelf: 'center'
-                      }}
+    if(this.state.headshot == null) {
+        return null
+    }
+    else {
+        return (
+          <View style={{paddingVertical: 40}}>
+          <LinearGradient
+              colors={['#2ECC71', '#2ECC71']}
+              style={styles.loginScreenGradient}
+            />
+            <ScrollView style={styles.scroll}>
+                    <TouchableOpacity
+                        onPress={() => this.navigateToScreen('PersonalInfo')}
                     >
-                      {this.state.email}
-                    </Text>
-                   </View>
-                </View>
-                </TouchableOpacity>
-                <View style={styles.categoryContainer}>
-                    <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Fudlkr Locations</Text>
-                </View>
-                <View>
-                  <TouchableOpacity onPress={() => {this.navigateToScreen('Locations')}}>
-                      <ListItem
-                        // chevron
-                        title="Locations"
-                        titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                        rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                        containerStyle={styles.listItemContainer}
-                        leftIcon={
-                          <BaseIcon
-                            containerStyle={{ backgroundColor: 'transparent' }}
-                            icon={{
-                              type: 'ionicon',
-                              name: 'md-map',
-                            }}
-                          />
-                        }
-                        rightIcon={<Chevron/>}
-                      />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.categoryContainer}>
-                    <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Meal Inventory</Text>
-                </View>
-                <View>
-                  <TouchableOpacity onPress={() => {this.navigateToScreen('AddMeal')}}>
-                      <ListItem
-                        // chevron
-                        title="Add Meal"
-                        titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                        rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                        containerStyle={styles.listItemContainer}
-                        leftIcon={
-                          <BaseIcon
-                            containerStyle={{ backgroundColor: 'transparent' }}
-                            icon={{
-                              type: 'ionicon',
-                              name: 'md-filing',
-                            }}
-                          />
-                        }
-                        rightIcon={<Chevron/>}
-                      />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => {this.props.navigation.navigate('AddTemplate', {
-                                                'title': "Add New Template",
-                                                'img': "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png",
-                                                'detail': "",
-                                                'cost': "",
-                                                'calories': "",
-                                                'strCategory': "",
-                                                'location': "",
-                                                'idMeal': "",
-                                                'shelfLife': "",
-                                                'templateData': {"strMealThumb": "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png"}});
-                                                this.props.navigation.dispatch(DrawerActions.closeDrawer());}}>
-                    <ListItem
-                      // chevron
-                      title="Add Template"
-                      titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                      rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                      containerStyle={styles.listItemContainer}
-                      leftIcon={
-                        <BaseIcon
-                          containerStyle={{ backgroundColor: 'transparent' }}
-                          icon={{
-                            type: 'ionicon',
-                            name: 'md-add',
+                    <View style={styles.userImage}>
+                        <Avatar
+                          rounded
+                          xlarge
+                          source={{
+                            uri: this.state.headshot,
                           }}
                         />
-                      }
-                      rightIcon={<Chevron/>}
-                    />
-                </TouchableOpacity>
-                  </View>
-                <View style={styles.categoryContainer}>
-                    <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Account</Text>
-                </View>
-                <View>
-                  <TouchableOpacity onPress={() => this.navigateToScreen('Settings')}>
-                      <ListItem
-                          title="Settings"
-                          titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
-                          rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
-                          containerStyle={styles.listItemContainer}
-                          leftIcon={
-                            <BaseIcon
-                              containerStyle={{ backgroundColor: 'transparent' }}
-                              icon={{
-                                type: 'ionicon',
-                                name: 'md-cog',
-                              }}
-                            />
-                          }
-                          rightIcon={<Chevron />}
-                        />
+                      </View>
+                    <View style={styles.userRow}>
+                      <View>
+                        <Text style={{ fontFamily: 'Poor Story', fontSize: 16, color: 'white', alignSelf: 'center' }}>{this.state.name}</Text>
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontSize: 16,
+                            fontFamily: 'Poor Story',
+                            alignSelf: 'center'
+                          }}
+                        >
+                          {this.state.email}
+                        </Text>
+                       </View>
+                    </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.logOutUser()}>
+                    <View style={styles.categoryContainer}>
+                        <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Fudlkr Locations</Text>
+                    </View>
+                    <View>
+                      <TouchableOpacity onPress={() => {this.navigateToScreen('Locations')}}>
+                          <ListItem
+                            // chevron
+                            title="Locations"
+                            titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                            containerStyle={styles.listItemContainer}
+                            leftIcon={
+                              <BaseIcon
+                                containerStyle={{ backgroundColor: 'transparent' }}
+                                icon={{
+                                  type: 'ionicon',
+                                  name: 'md-map',
+                                }}
+                              />
+                            }
+                            rightIcon={<Chevron/>}
+                          />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.categoryContainer}>
+                        <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Meal Inventory</Text>
+                    </View>
+                    <View>
+                      <TouchableOpacity onPress={() => {this.navigateToScreen('AddMeal')}}>
+                          <ListItem
+                            // chevron
+                            title="Add Meal"
+                            titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                            rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                            containerStyle={styles.listItemContainer}
+                            leftIcon={
+                              <BaseIcon
+                                containerStyle={{ backgroundColor: 'transparent' }}
+                                icon={{
+                                  type: 'ionicon',
+                                  name: 'md-filing',
+                                }}
+                              />
+                            }
+                            rightIcon={<Chevron/>}
+                          />
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={() => {this.props.navigation.navigate('AddTemplate', {
+                                                    'title': "Add New Template",
+                                                    'img': "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png",
+                                                    'detail': "",
+                                                    'cost': "",
+                                                    'calories': "",
+                                                    'strCategory': "",
+                                                    'location': "",
+                                                    'idMeal': "",
+                                                    'shelfLife': "",
+                                                    'templateData': {"strMealThumb": "https://s3-us-west-1.amazonaws.com/fudlkr.com/mobile_assets/green.png"}});
+                                                    this.props.navigation.dispatch(DrawerActions.closeDrawer());}}>
                         <ListItem
-                          title="Log Out"
+                          // chevron
+                          title="Add Template"
                           titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
                           rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
                           containerStyle={styles.listItemContainer}
@@ -220,17 +183,59 @@ class DrawerScreen extends Component {
                               containerStyle={{ backgroundColor: 'transparent' }}
                               icon={{
                                 type: 'ionicon',
-                                name: 'md-log-out',
+                                name: 'md-add',
                               }}
                             />
                           }
-                          rightIcon={<Chevron />}
+                          rightIcon={<Chevron/>}
                         />
                     </TouchableOpacity>
-                </View>
-              </ScrollView>
-      </View>
-    );
+                      </View>
+                    <View style={styles.categoryContainer}>
+                        <Text style={{fontFamily: 'Poor Story', fontSize: 20, color: 'black'}}>Account</Text>
+                    </View>
+                    <View>
+                      <TouchableOpacity onPress={() => this.navigateToScreen('Settings')}>
+                          <ListItem
+                              title="Settings"
+                              titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                              rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                              containerStyle={styles.listItemContainer}
+                              leftIcon={
+                                <BaseIcon
+                                  containerStyle={{ backgroundColor: 'transparent' }}
+                                  icon={{
+                                    type: 'ionicon',
+                                    name: 'md-cog',
+                                  }}
+                                />
+                              }
+                              rightIcon={<Chevron />}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.logOutUser()}>
+                            <ListItem
+                              title="Log Out"
+                              titleStyle={{fontFamily: 'Poor Story', fontSize: 16, color: 'white'}}
+                              rightTitleStyle={{ fontFamily: 'Poor Story', fontSize: 15, marginRight: 15, color: 'white' }}
+                              containerStyle={styles.listItemContainer}
+                              leftIcon={
+                                <BaseIcon
+                                  containerStyle={{ backgroundColor: 'transparent' }}
+                                  icon={{
+                                    type: 'ionicon',
+                                    name: 'md-log-out',
+                                  }}
+                                />
+                              }
+                              rightIcon={<Chevron />}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                  </ScrollView>
+          </View>
+        );
+    }
   }
 }
 

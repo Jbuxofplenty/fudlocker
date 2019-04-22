@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "fudlkr-7fc5b"
+    "default": "fudlkr-7fc5b",
+    "foodlocker": "fudlkr-7fc5b"
   }
 }

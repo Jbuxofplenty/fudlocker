@@ -21,6 +21,7 @@ export default class AddPicture extends React.Component {
    };
   state = {
     hasCameraPermission: null,
+    hasCameraRollPermission: null,
     type: Camera.Constants.Type.back,
     flashMode: Camera.Constants.FlashMode.auto,
     flashOn: true,
@@ -29,6 +30,8 @@ export default class AddPicture extends React.Component {
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
+    const { roll_status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    this.setState({ hasCameraRollPermission: status === 'granted' });
   }
 
   snap = async () => {
@@ -52,7 +55,7 @@ export default class AddPicture extends React.Component {
     };
 
   render() {
-    const { hasCameraPermission } = this.state;
+    const { hasCameraPermission, hasCameraRollPermission } = this.state;
     const flashOn = <Icon
                        name='md-flash'
                        size={30}
@@ -103,21 +106,23 @@ export default class AddPicture extends React.Component {
                     containerStyle={{backgroundColor: 'transparent', marginLeft: 10, marginBottom: 20}}
                  />
               </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  flex: 0.1,
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                }}
-                onPress={this._pickImage}>
-                <Icon
-                    name='md-images'
-                    size={30}
-                    type='ionicon'
-                    color='white'
-                    containerStyle={{backgroundColor: 'transparent', marginBottom: 20}}
-                 />
-              </TouchableOpacity>
+              { hasCameraRollPermission === null ? null :
+                  <TouchableOpacity
+                    style={{
+                      flex: 0.1,
+                      alignSelf: 'flex-end',
+                      alignItems: 'center',
+                    }}
+                    onPress={this._pickImage}>
+                    <Icon
+                        name='md-images'
+                        size={30}
+                        type='ionicon'
+                        color='white'
+                        containerStyle={{backgroundColor: 'transparent', marginBottom: 20}}
+                     />
+                  </TouchableOpacity>
+              }
               <TouchableOpacity
                   style={{
                     flex: 0.1,

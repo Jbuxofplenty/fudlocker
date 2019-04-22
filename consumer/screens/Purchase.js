@@ -9,6 +9,7 @@ import {
   Dimensions,
   Modal,
   Button,
+  Platform,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { Font } from 'expo'
@@ -18,7 +19,6 @@ const dateformat = require('dateformat');
 
 import getDirections from 'react-native-google-maps-directions';
 import fudlkr_locations from '../assets/static_data/fudlkr_locations.json';
-import { SelectPayment } from 'react-native-checkout'
 import * as firebase from 'firebase';
 import { StackActions, NavigationActions } from 'react-navigation';
 
@@ -41,13 +41,13 @@ class Purchase extends Component {
         fontLoaded: false,
         paramsLoaded: false,
         modalVisible: false,
-        paymentSource: '',
         mealData: null,
         current_mealData: null,
         name: null,
         headshot: null,
         readyPurchaseClicked: false,
     };
+
     async componentDidMount() {
         await Font.loadAsync({
             'Poor Story': require('../assets/fonts/PoorStory-Regular.ttf'),
@@ -56,6 +56,7 @@ class Purchase extends Component {
         this.setState({ fontLoaded: true, paramsLoaded: true });
         this.populateInfo();
     }
+
     async populateInfo() {
      //Get the current userID
      var userId = firebase.auth().currentUser.uid;
@@ -93,6 +94,7 @@ class Purchase extends Component {
 
     readyPurchase = async () => {
         var userId = firebase.auth().currentUser.uid;
+        console.log(this.state.mealData);
         if(!this.state.readyPurchaseClicked) {
             mealData = this.state.mealData[this.props.navigation.state.params.idMeal];
         }
@@ -269,24 +271,24 @@ class Purchase extends Component {
                     {this.renderDescription()}
                 </View>
               <View style={styles.paymentMethodContainer}>
-                  {<Text style={[styles.detailText,{color: 'black'}]}>Select a Payment Method to Continue</Text>}
+                  {<Text style={[styles.detailText,{color: 'black'}]}>Press the button below to purchase your meal!</Text>}
+                  { Platform.OS === 'ios' ?
+                     <View style={styles.iosButton}>
+                      <Button
+                           color="#FFF"
+                           onPress={() => {
+                              this.setState({ modalVisible: true }); this.readyPurchase();}}
+                           title={"  Purchase " + this.props.navigation.state.params.title+ "  "}
+                         />
+                      </View> :
+                      <Button
+                         color="#ABEBC6"
+                         onPress={() => {
+                            this.setState({ modalVisible: true }); this.readyPurchase();}}
+                         title={"  Purchase " + this.props.navigation.state.params.title+ "  "}
+                       />
+                  }
               </View>
-                <SelectPayment
-                  enableApplePay={true} // optional, default: false
-                  applePayHandler={() => {this.setState({modalVisible: true});this.setState({paymentSource: 'Apple Pay'})}} // optional
-                  paymentSources={[
-                    {last4: '1234', brand: 'American Express', more: 'stuff' },
-                    {last4: '2345', brand: 'Visa', more: 'stuff' },
-                  ]} // mandatory, See: [Customer Object](https://stripe.com/docs/api/node#customer_object) -> sources -> data for Stripe format.
-                  addCardHandler={() => {this.props.navigation.navigate("AddPurchaseCard");}}
-                  selectPaymentHandler={(paymentSource) => {this.setState({modalVisible: true});this.setState({paymentSource: paymentSource});this.readyPurchase();}}
-                  styles={{addButton: {marginTop: 0, marginBottom: 0},
-                    addButtonText: {fontFamily: 'Poor Story', fontWeight: 'normal', fontSize: 22},
-                    paymentMethodsInnerContainer: { borderTopWidth: 0, borderBottomWidth: 0},
-                    cardTextLast4: {fontFamily: 'Poor Story', fontWeight: 'normal', fontSize: 22, color: 'green'},
-                    cardTextEndingIn: {fontFamily: 'Poor Story', fontWeight: 'normal', fontSize: 18},
-                    cardTextType: {fontFamily: 'Poor Story', fontWeight: 'normal', fontSize: 22, color: 'green'}}}
-                />
           </View>
         <Modal
          animationType="fade"
@@ -299,31 +301,58 @@ class Purchase extends Component {
              {"Confirm this transaction!"}
            </Text>
            <Text style={styles.description}>
-             {"You will be able to pickup your " + this.props.navigation.state.params.title + " in " + this.props.navigation.state.params.location + " for the next 4 hours. \n\nYou've chosen to use your " + this.state.paymentSource["brand"] + " to pay for this transaction\n\n"}
+             {"You will be able to pickup your " + this.props.navigation.state.params.title + " in " + this.props.navigation.state.params.location + " for the next 4 hours. \n\nYou've chosen to use your Visa to pay for this transaction\n\n"}
            </Text>
-           <Button
-             color="#ABEBC6"
-             onPress={() => {
-                this.closeModal();
-                this.purchaseMeal();
-                this.props.navigation.dispatch(StackActions.popToTop());
-                this.props.navigation.navigate('Order', {
-                    'title': this.state.mealData.strMeal,
-                    'img': this.state.mealData.strMealThumb,
-                    'cost': this.state.mealData.strCost,
-                    'calories':this.state.mealData.calories,
-                    'strCategory': this.state.mealData.strCategory,
-                    'location': this.state.mealData.location,
-                    'paymentMethod': {"brand": "Visa", "expiry": "02/22", "cvc": "300", "last4": "1234"},
-                    'lockerCode': this.state.mealData.lockerCode,
-                    'strIdMeal': this.state.mealData.strIdMeal,
-                    'strIdOrder': "Order ID #" + this.state.mealData.idMeal,
-                    'datePackaged': this.state.mealData.strDatePackaged,
-                    'datePurchased': this.state.mealData.strDatePurchased,
-                    'pickedUp': this.state.mealData.pickedUp,
-                    'idMeal': this.state.mealData.idMeal});}}
-             title={"  Pay $" + this.props.navigation.state.params.cost + "  "}
-           />
+           { Platform.OS === 'ios' ?
+           <View style={styles.iosButton}>
+            <Button
+                color="#FFF"
+                onPress={() => {
+                   this.closeModal();
+                   this.purchaseMeal();
+                   this.props.navigation.dispatch(StackActions.popToTop());
+                   this.props.navigation.navigate('Order', {
+                       'title': this.state.mealData.strMeal,
+                       'img': this.state.mealData.strMealThumb,
+                       'cost': this.state.mealData.strCost,
+                       'calories':this.state.mealData.calories,
+                       'strCategory': this.state.mealData.strCategory,
+                       'location': this.state.mealData.location,
+                       'paymentMethod': {"brand": "Visa", "expiry": "02/22", "cvc": "300", "last4": "1234"},
+                       'lockerCode': this.state.mealData.lockerCode,
+                       'strIdMeal': this.state.mealData.strIdMeal,
+                       'strIdOrder': "Order ID #" + this.state.mealData.idMeal,
+                       'datePackaged': this.state.mealData.strDatePackaged,
+                       'datePurchased': this.state.mealData.strDatePurchased,
+                       'pickedUp': this.state.mealData.pickedUp,
+                       'idMeal': this.state.mealData.idMeal});}}
+                title={"  Pay $" + this.props.navigation.state.params.cost + "  "} />
+              </View>
+                : <Button
+                     color="#ABEBC6"
+                     onPress={() => {
+                        this.closeModal();
+                        this.purchaseMeal();
+                        this.props.navigation.dispatch(StackActions.popToTop());
+                        this.props.navigation.navigate('Order', {
+                            'title': this.state.mealData.strMeal,
+                            'img': this.state.mealData.strMealThumb,
+                            'cost': this.state.mealData.strCost,
+                            'calories':this.state.mealData.calories,
+                            'strCategory': this.state.mealData.strCategory,
+                            'location': this.state.mealData.location,
+                            'paymentMethod': {"brand": "Visa", "expiry": "02/22", "cvc": "300", "last4": "1234"},
+                            'lockerCode': this.state.mealData.lockerCode,
+                            'strIdMeal': this.state.mealData.strIdMeal,
+                            'strIdOrder': "Order ID #" + this.state.mealData.idMeal,
+                            'datePackaged': this.state.mealData.strDatePackaged,
+                            'datePurchased': this.state.mealData.strDatePurchased,
+                            'pickedUp': this.state.mealData.pickedUp,
+                            'idMeal': this.state.mealData.idMeal});}}
+                     title={"  Pay $" + this.props.navigation.state.params.cost + "  "}
+                   />
+           }
+
          </View>
        </Modal>
         </View>
@@ -338,11 +367,19 @@ export default Purchase;
 const styles = StyleSheet.create({
 cardContainer: {
     flex: 1,
+    marginVertical: 20,
   },
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    marginBottom: 70,
+  },
+  iosButton: {
+    flexDirection: 'row',
+    backgroundColor: "#2ECC71",
+    height: 45,
+    marginTop: 30,
   },
   modalContainer: {
     flex: 1,
@@ -389,7 +426,8 @@ cardContainer: {
     backgroundColor: '#FFF',
     justifyContent: 'space-between',
     flexDirection: 'column',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginVertical: 30,
   },
   mainviewStyle: {
     flex: 1,

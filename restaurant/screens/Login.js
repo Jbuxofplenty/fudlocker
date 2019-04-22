@@ -4,7 +4,7 @@ import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
 import * as EmailValidator from 'email-validator';
 
-import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Modal, Dimensions, StyleSheet, AsyncStorage} from 'react-native';
+import {Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Modal, Dimensions, StyleSheet, AsyncStorage, Platform} from 'react-native';
 import { Button } from 'react-native-elements';
 import {Image} from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   loginButton: {
     backgroundColor: '#3897f1',
     borderRadius: 5,
-    height: 45,
+    height: Platform.OS === 'ios' ? 55: 45,
     marginTop: 10,
   },
   fbLoginButton: {

@@ -12,12 +12,15 @@ import {
   Picker,
   Button,
   Modal,
+  Platform,
+  ActionSheetIOS,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Font } from 'expo';
 import { Header } from 'react-navigation';
 import ParallaxScrollView from 'react-native-parallax-scrollview';
 import * as firebase from 'firebase';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 import { Colors } from '../constants'
 const dateformat = require('dateformat');
@@ -29,6 +32,41 @@ function wp (percentage) {
     const value = (percentage * SCREEN_WIDTH) / 100;
     return Math.round(value);
 }
+
+const CATEGORIES = [
+    'Asian',
+    'American',
+    'Appetizers',
+    'Italian',
+    'Meat',
+    'Mexican',
+    'Salads',
+];
+
+const CATEGORIES_DICT = {
+    'Asian': 'asian',
+    'American': 'american',
+    'Appetizers': 'apps',
+    'Italian': 'italian',
+    'Meat': 'meat',
+    'Mexican': 'mexican',
+    'Salads': 'salads',
+};
+
+const SHELF_LIVES = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+];
 
 const slideHeight = SCREEN_HEIGHT * 0.36;
 const slideWidth = wp(75);
@@ -63,6 +101,9 @@ class AddTemplate extends Component {
         category: null,
         calories: null,
         location: null,
+        strLocation: null,
+        locationsPicker: null,
+        locationsDict: null,
         cost: null,
         pictureUndo: false,
         shelfLife: null,
@@ -115,6 +156,8 @@ class AddTemplate extends Component {
                     category: this.props.navigation.state.params.strCategory,
                     calories: String(this.props.navigation.state.params.calories),
                     location: this.props.navigation.state.params.location,
+                    strLocation: this.props.navigation.state.params.location,
+                    strLocation: this.props.navigation.state.params.location,
                     shelfLife: String(this.props.navigation.state.params.shelfLife),
                     templateData: this.props.navigation.state.params.templateData,
                     initialPicURI: this.props.navigation.state.params.templateData.strTemplateThumb,
@@ -140,10 +183,14 @@ class AddTemplate extends Component {
       return firebase.database().ref('/restaurants/' + org + '/lockers/').once('value').then(function(snapshot) {
          let tempArray = snapshot.val()["data"];
          var locationsData = {};
+         let tempArray1 = [];
+         let locationsDict = {};
          for(var item in tempArray) {
             locationsData[tempArray[item].type] = tempArray[item];
+            tempArray1.push(tempArray[item].title);
+            locationsDict[tempArray[item].title] = tempArray[item].type;
          }
-         this.setState({ locations: tempArray, locationsData });
+         this.setState({ locations: tempArray, locationsData, locationsPicker: tempArray1, locationsDict });
       }.bind(this));
   }
 
@@ -200,6 +247,7 @@ class AddTemplate extends Component {
        modalType: "meal"});
     }
   }
+
   async formatData() {
     // format data to send to firebase
     var userId = firebase.auth().currentUser.uid;
@@ -209,7 +257,12 @@ class AddTemplate extends Component {
     mealData["shelfLife"] = this.state.shelfLife;
     mealData["distributor"] = this.state.org;
     mealData["forSale"] = true;
-    mealData["location"] = this.state.location;
+    if(Platform.OS === 'ios') {
+        mealData["location"] = this.state.strLocation;
+    }
+    else {
+        mealData["location"] = this.state.location;
+    }
     mealData["netWeight"] = 4.21;
     mealData["strCategory"] = this.state.category;
     mealData["strCost"] = "" + this.state.cost;
@@ -366,6 +419,7 @@ class AddTemplate extends Component {
     await firebase.database().ref('/meals/forSale/').update(forSale);
 
     await this.setState({modalVisible: false, modalType: "error", mealData: mealData});
+    this.props.navigation.dispatch(StackActions.popToTop());
     this.props.navigation.navigate('Meal', {'title': this.state.mealData['strMeal'],
      'img': this.state.mealData['strMealThumb'],
      'cost': this.state.mealData['strCost'],
@@ -416,6 +470,24 @@ class AddTemplate extends Component {
      this.setState({ modalVisible: false });
   };
 
+  showActionSheet = (options, type) => {
+      ActionSheetIOS.showActionSheetWithOptions({
+         options: options,
+       },
+       (buttonIndex) => {
+          if(type === "category") {
+              this.setState({ category: options[buttonIndex] });
+          }
+          else if(type === "shelfLife") {
+              this.setState({ shelfLife: options[buttonIndex] });
+          }
+          else {
+              this.setState({ location: options[buttonIndex] });
+              this.setState({ strLocation: this.state.locationsDict[options[buttonIndex]] });
+          }
+       })
+    }
+
   renderDescription = () => {
     return (
         <ScrollView style={{flex: 1}}>
@@ -459,20 +531,22 @@ class AddTemplate extends Component {
               </View>
               <View style={styles.lineItemContainer} >
                   <Text style={styles.labelText}>Cuisine Category:</Text>
-                   <Picker
-                        selectedValue={this.state.category.toLowerCase()}
-                        style={{width: '50%', backgroundColor: 'white', height: 30}}
-                        itemStyle={styles.pickerItem}
-                        onValueChange={(category) => this.setState({category})}
-                        mode={'dropdown'}>
-                        <Picker.Item label="Asian" value="asian" />
-                        <Picker.Item label="American" value="american" />
-                        <Picker.Item label="Appetizers" value="apps" />
-                        <Picker.Item label="Italian" value="italian" />
-                        <Picker.Item label="Meat" value="meat" />
-                        <Picker.Item label="Mexican" value="mexican" />
-                        <Picker.Item label="Salads" value="salads" />
-                   </Picker>
+                  {Platform.OS === 'ios' ? <Text style={styles.input} onPress={() => this.showActionSheet(CATEGORIES, "category")}>{this.state.category}</Text> :
+                       <Picker
+                            selectedValue={this.state.category.toLowerCase()}
+                            style={{width: '50%', backgroundColor: 'white', height: 30}}
+                            itemStyle={styles.pickerItem}
+                            onValueChange={(category) => this.setState({category})}
+                            mode={'dropdown'}>
+                            <Picker.Item label="Asian" value="asian" />
+                            <Picker.Item label="American" value="american" />
+                            <Picker.Item label="Appetizers" value="apps" />
+                            <Picker.Item label="Italian" value="italian" />
+                            <Picker.Item label="Meat" value="meat" />
+                            <Picker.Item label="Mexican" value="mexican" />
+                            <Picker.Item label="Salads" value="salads" />
+                       </Picker>
+                  }
               </View>
               <View style={styles.lineItemContainer} >
                   <Text style={styles.labelText}>Estimated Calories:</Text>
@@ -492,38 +566,42 @@ class AddTemplate extends Component {
               </View>
               <View style={styles.lineItemContainer} >
                   <Text style={styles.labelText}>Shelf Life (days):</Text>
-                   <Picker
-                        selectedValue={this.state.shelfLife}
-                        style={{width: '50%', backgroundColor: 'white', height: 30}}
-                        itemStyle={styles.pickerItem}
-                        onValueChange={(shelfLife) => this.setState({shelfLife})}
-                        mode={'dropdown'}>
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                        <Picker.Item label="7" value="7" />
-                        <Picker.Item label="8" value="8" />
-                        <Picker.Item label="9" value="9" />
-                        <Picker.Item label="10" value="10" />
-                        <Picker.Item label="11" value="11" />
-                        <Picker.Item label="12" value="12" />
-                   </Picker>
+                  {Platform.OS === 'ios' ? <Text style={styles.input} onPress={() => this.showActionSheet(SHELF_LIVES, "shelfLife")}>{this.state.shelfLife}</Text> :
+                       <Picker
+                            selectedValue={this.state.shelfLife}
+                            style={{width: '50%', backgroundColor: 'white', height: 30}}
+                            itemStyle={styles.pickerItem}
+                            onValueChange={(shelfLife) => this.setState({shelfLife})}
+                            mode={'dropdown'}>
+                            <Picker.Item label="1" value="1" />
+                            <Picker.Item label="2" value="2" />
+                            <Picker.Item label="3" value="3" />
+                            <Picker.Item label="4" value="4" />
+                            <Picker.Item label="5" value="5" />
+                            <Picker.Item label="6" value="6" />
+                            <Picker.Item label="7" value="7" />
+                            <Picker.Item label="8" value="8" />
+                            <Picker.Item label="9" value="9" />
+                            <Picker.Item label="10" value="10" />
+                            <Picker.Item label="11" value="11" />
+                            <Picker.Item label="12" value="12" />
+                       </Picker>
+                  }
               </View>
               <View style={styles.lineItemContainer} >
                    <Text style={styles.labelText}>Location:</Text>
-                   <Picker
-                        selectedValue={this.state.location.toLowerCase()}
-                        style={{width: '50%', backgroundColor: 'white', height: 30}}
-                        itemStyle={styles.pickerItem}
-                        onValueChange={(location) => this.setState({location})}
-                        mode={'dropdown'}>
-                        {this.state.locations.map((item, index) => {
-                            return (<Picker.Item label={item.title} value={item.type} key={item.title}/>)
-                        })}
-                   </Picker>
+                   {Platform.OS === 'ios' ? <Text style={styles.input} onPress={() => this.showActionSheet(this.state.locationsPicker, "location")}>{this.state.location}</Text> :
+                       <Picker
+                            selectedValue={this.state.location.toLowerCase()}
+                            style={{width: '50%', backgroundColor: 'white', height: 30}}
+                            itemStyle={styles.pickerItem}
+                            onValueChange={(location) => this.setState({location})}
+                            mode={'dropdown'}>
+                            {this.state.locations.map((item, index) => {
+                                return (<Picker.Item label={item.title} value={item.type} key={item.title}/>)
+                            })}
+                       </Picker>
+                   }
             </View>
             <Button
               buttonStyle={styles.addNewButton}
@@ -553,7 +631,7 @@ class AddTemplate extends Component {
     let button;
     if(this.state.modalType == "error"){
         button = <Button
-                      color="#ABEBC6"
+                      color={Platform.OS === 'ios' ? "#006400" :"#ABEBC6"}
                       onPress={this.closeModal}
                       title={this.state.modalButton}
                     />
@@ -567,7 +645,7 @@ class AddTemplate extends Component {
                     />
                     <View style={{width: 10}}/>
                     <Button
-                      color="#ABEBC6"
+                      color={Platform.OS === 'ios' ? "#006400" :"#ABEBC6"}
                       onPress={() => {this.addNewTemplate()}}
                       title={"Add New"}
                     />
@@ -579,7 +657,7 @@ class AddTemplate extends Component {
              }
     else {
         button = <Button
-                      color="#ABEBC6"
+                      color={Platform.OS === 'ios' ? "#006400" :"#ABEBC6"}
                       onPress={() => {this.addNewMeal()}}
                       title={this.state.modalButton}
                     />

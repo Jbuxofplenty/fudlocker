@@ -66,7 +66,7 @@ class DrawerScreen extends Component {
   }
 
   render () {
-    if(this.state.email != null) {
+    if(this.state.email != null && this.state.headshot != null) {
         return (
           <View style={{paddingVertical: 40}}>
           <LinearGradient

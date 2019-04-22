@@ -63,8 +63,7 @@ HomeStack.navigationOptions = {
     <TabBarIcon
       focused={focused}
       name={
-        Platform.OS === 'ios'
-          ? `ios-home${focused ? '' : '-outline'}` : 'md-home'
+        Platform.OS === 'ios' ? 'ios-home' : 'md-home'
       }
     />
   ),
@@ -115,7 +114,7 @@ MealStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-pizza${focused ? '' : '-outline'}` : 'md-pizza'}
+      name={Platform.OS === 'ios' ? 'ios-pizza' : 'md-pizza'}
     />
   ),
   tabBarOptions: {
@@ -162,7 +161,7 @@ OrderStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-pricetag${focused ? '' : '-outline'}` : 'md-pricetag'}
+      name={Platform.OS === 'ios' ? 'ios-pricetag' : 'md-pricetag'}
     />
   ),
   tabBarOptions: {
